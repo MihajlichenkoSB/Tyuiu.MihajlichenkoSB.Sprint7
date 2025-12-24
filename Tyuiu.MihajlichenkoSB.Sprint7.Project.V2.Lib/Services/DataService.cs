@@ -1,4 +1,6 @@
 ﻿using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
+
+using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
             return owners;
         }
 
+        public Owner GetOwnerById(int id)
+        {
+            return owners.FirstOrDefault(o => o.Id == id);
+        }
+
         // Методы для магазинов
         public void AddStore(Store store)
         {
@@ -30,6 +37,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
         public List<Store> GetStores()
         {
             return stores;
+        }
+
+        public Store GetStoreById(int id)
+        {
+            return stores.FirstOrDefault(s => s.Id == id);
         }
 
         // Статистика
@@ -53,7 +65,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
             return owners.Count;
         }
 
-        // ВРЕМЕННО закомментируй или измени этот класс
+        // Класс для статистики магазинов
         public class StoreStats
         {
             public int Count { get; set; }
@@ -63,18 +75,64 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
             public decimal MinRevenue { get; set; }
         }
 
-        // ВРЕМЕННО закомментируй этот метод или сделай проще
+        // Метод для расчета статистики магазинов
         public StoreStats CalculateStoreStats()
         {
+            if (stores.Count == 0)
+            {
+                return new StoreStats
+                {
+                    Count = 0,
+                    TotalRevenue = 0,
+                    AverageRevenue = 0,
+                    MaxRevenue = 0,
+                    MinRevenue = 0
+                };
+            }
+
             return new StoreStats
             {
                 Count = stores.Count,
-                // Пока оставь нули, пока не добавишь MonthlyRevenue
-                TotalRevenue = 0, // stores.Sum(s => s.MonthlyRevenue),
-                AverageRevenue = 0, // stores.Average(s => s.MonthlyRevenue),
-                MaxRevenue = 0, // stores.Max(s => s.MonthlyRevenue),
-                MinRevenue = 0 // stores.Min(s => s.MonthlyRevenue)
+                TotalRevenue = stores.Sum(s => s.MonthlyRevenue),
+                AverageRevenue = stores.Average(s => s.MonthlyRevenue),
+                MaxRevenue = stores.Max(s => s.MonthlyRevenue),
+                MinRevenue = stores.Min(s => s.MonthlyRevenue)
             };
+        }
+
+        // Новые методы для поиска
+        public List<Owner> SearchOwners(string searchText)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+                return owners;
+
+            return owners.Where(o =>
+                o.FullName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                o.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                o.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        public List<Store> SearchStores(string searchText)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+                return stores;
+
+            return stores.Where(s =>
+                s.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                s.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                s.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        // Метод для удаления магазина по ID
+        public bool RemoveStore(int id)
+        {
+            var store = stores.FirstOrDefault(s => s.Id == id);
+            if (store != null)
+            {
+                stores.Remove(store);
+                return true;
+            }
+            return false;
         }
     }
 }

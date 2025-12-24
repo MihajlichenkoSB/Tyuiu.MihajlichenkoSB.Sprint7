@@ -1,5 +1,6 @@
 ﻿using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
 using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Test
 {
@@ -41,6 +42,19 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Test
 
             // Assert
             Assert.AreEqual(6000, total);
+        }
+
+        [TestMethod]
+        public void GetStoreCount_Empty_ReturnsZero()
+        {
+            // Arrange
+            var service = new DataService();
+
+            // Act
+            var count = service.GetStoreCount();
+
+            // Assert
+            Assert.AreEqual(0, count);
         }
     }
 }

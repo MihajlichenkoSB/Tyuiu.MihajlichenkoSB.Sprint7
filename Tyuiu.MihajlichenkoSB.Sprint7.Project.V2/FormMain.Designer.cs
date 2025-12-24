@@ -28,570 +28,581 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.menuStripMain_MBS = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItemFile_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemLoadData_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemSaveData_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemExit_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemData_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemAddOwner_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemAddStore_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemEdit_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDelete_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemAnalysis_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemStats_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemCharts_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemHelp_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemUserGuide_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemAbout_MBS = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMain_MBS = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonAddOwner_MBS = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAddStore_MBS = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonSave_MBS = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLoad_MBS = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonStats_MBS = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonChart_MBS = new System.Windows.Forms.ToolStripButton();
-            this.statusStripMain_MBS = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelInfo_MBS = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelDate_MBS = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelTime_MBS = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelTitle_MBS = new System.Windows.Forms.Label();
-            this.panelSearch_MBS = new System.Windows.Forms.Panel();
-            this.labelSearch_MBS = new System.Windows.Forms.Label();
-            this.textBoxSearch_MBS = new System.Windows.Forms.TextBox();
-            this.buttonSearch_MBS = new System.Windows.Forms.Button();
-            this.comboBoxFilter_MBS = new System.Windows.Forms.ComboBox();
-            this.tabControlMain_MBS = new System.Windows.Forms.TabControl();
-            this.tabPageOwners_MBS = new System.Windows.Forms.TabPage();
-            this.dataGridViewOwners_MBS = new System.Windows.Forms.DataGridView();
-            this.tabPageStores_MBS = new System.Windows.Forms.TabPage();
-            this.dataGridViewStores_MBS = new System.Windows.Forms.DataGridView();
-            this.panelControls_MBS = new System.Windows.Forms.Panel();
-            this.buttonAddOwner_MBS = new System.Windows.Forms.Button();
-            this.buttonAddStore_MBS = new System.Windows.Forms.Button();
-            this.buttonEditItem_MBS = new System.Windows.Forms.Button();
-            this.buttonDeleteItem_MBS = new System.Windows.Forms.Button();
-            this.buttonSaveData_MBS = new System.Windows.Forms.Button();
-            this.buttonLoadData_MBS = new System.Windows.Forms.Button();
-            this.buttonShowStats_MBS = new System.Windows.Forms.Button();
-            this.buttonShowChart_MBS = new System.Windows.Forms.Button();
-            this.menuStripMain_MBS.SuspendLayout();
-            this.toolStripMain_MBS.SuspendLayout();
-            this.statusStripMain_MBS.SuspendLayout();
-            this.panelSearch_MBS.SuspendLayout();
-            this.tabControlMain_MBS.SuspendLayout();
-            this.tabPageOwners_MBS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOwners_MBS)).BeginInit();
-            this.tabPageStores_MBS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStores_MBS)).BeginInit();
-            this.panelControls_MBS.SuspendLayout();
-            this.SuspendLayout();
+            menuStripMain_MBS = new MenuStrip();
+            toolStripMenuItemFile_MBS = new ToolStripMenuItem();
+            toolStripMenuItemLoadData_MBS = new ToolStripMenuItem();
+            toolStripMenuItemSaveData_MBS = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripMenuItemExit_MBS = new ToolStripMenuItem();
+            toolStripMenuItemData_MBS = new ToolStripMenuItem();
+            toolStripMenuItemAddOwner_MBS = new ToolStripMenuItem();
+            toolStripMenuItemAddStore_MBS = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
+            toolStripMenuItemEdit_MBS = new ToolStripMenuItem();
+            toolStripMenuItemDelete_MBS = new ToolStripMenuItem();
+            toolStripMenuItemAnalysis_MBS = new ToolStripMenuItem();
+            toolStripMenuItemStats_MBS = new ToolStripMenuItem();
+            toolStripMenuItemCharts_MBS = new ToolStripMenuItem();
+            toolStripMenuItemHelp_MBS = new ToolStripMenuItem();
+            toolStripMenuItemUserGuide_MBS = new ToolStripMenuItem();
+            toolStripMenuItemAbout_MBS = new ToolStripMenuItem();
+            toolStripMain_MBS = new ToolStrip();
+            toolStripButtonAddOwner_MBS = new ToolStripButton();
+            toolStripButtonAddStore_MBS = new ToolStripButton();
+            toolStripSeparator3 = new ToolStripSeparator();
+            toolStripButtonSave_MBS = new ToolStripButton();
+            toolStripButtonLoad_MBS = new ToolStripButton();
+            toolStripSeparator4 = new ToolStripSeparator();
+            toolStripButtonStats_MBS = new ToolStripButton();
+            toolStripButtonChart_MBS = new ToolStripButton();
+            statusStripMain_MBS = new StatusStrip();
+            toolStripStatusLabelInfo_MBS = new ToolStripStatusLabel();
+            toolStripStatusLabelDate_MBS = new ToolStripStatusLabel();
+            toolStripStatusLabelTime_MBS = new ToolStripStatusLabel();
+            labelTitle_MBS = new Label();
+            panelSearch_MBS = new Panel();
+            labelSearch_MBS = new Label();
+            textBoxSearch_MBS = new TextBox();
+            buttonSearch_MBS = new Button();
+            comboBoxFilter_MBS = new ComboBox();
+            tabControlMain_MBS = new TabControl();
+            tabPageOwners_MBS = new TabPage();
+            dataGridViewOwners_MBS = new DataGridView();
+            tabPageStores_MBS = new TabPage();
+            dataGridViewStores_MBS = new DataGridView();
+            panelControls_MBS = new Panel();
+            buttonAddOwner_MBS = new Button();
+            buttonAddStore_MBS = new Button();
+            buttonEditItem_MBS = new Button();
+            buttonDeleteItem_MBS = new Button();
+            buttonSaveData_MBS = new Button();
+            buttonLoadData_MBS = new Button();
+            buttonShowStats_MBS = new Button();
+            buttonShowChart_MBS = new Button();
+            menuStripMain_MBS.SuspendLayout();
+            toolStripMain_MBS.SuspendLayout();
+            statusStripMain_MBS.SuspendLayout();
+            panelSearch_MBS.SuspendLayout();
+            tabControlMain_MBS.SuspendLayout();
+            tabPageOwners_MBS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewOwners_MBS).BeginInit();
+            tabPageStores_MBS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewStores_MBS).BeginInit();
+            panelControls_MBS.SuspendLayout();
+            SuspendLayout();
             // 
             // menuStripMain_MBS
             // 
-            this.menuStripMain_MBS.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStripMain_MBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemFile_MBS,
-            this.toolStripMenuItemData_MBS,
-            this.toolStripMenuItemAnalysis_MBS,
-            this.toolStripMenuItemHelp_MBS});
-            this.menuStripMain_MBS.Location = new System.Drawing.Point(0, 0);
-            this.menuStripMain_MBS.Name = "menuStripMain_MBS";
-            this.menuStripMain_MBS.Size = new System.Drawing.Size(1000, 28);
-            this.menuStripMain_MBS.TabIndex = 0;
-            this.menuStripMain_MBS.Text = "menuStrip1";
+            menuStripMain_MBS.ImageScalingSize = new Size(20, 20);
+            menuStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripMenuItemFile_MBS, toolStripMenuItemData_MBS, toolStripMenuItemAnalysis_MBS, toolStripMenuItemHelp_MBS });
+            menuStripMain_MBS.Location = new Point(0, 0);
+            menuStripMain_MBS.Name = "menuStripMain_MBS";
+            menuStripMain_MBS.Padding = new Padding(5, 2, 0, 2);
+            menuStripMain_MBS.Size = new Size(1000, 28);
+            menuStripMain_MBS.TabIndex = 0;
+            menuStripMain_MBS.Text = "menuStripMain_MBS";
             // 
             // toolStripMenuItemFile_MBS
             // 
-            this.toolStripMenuItemFile_MBS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemLoadData_MBS,
-            this.toolStripMenuItemSaveData_MBS,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemExit_MBS});
-            this.toolStripMenuItemFile_MBS.Name = "toolStripMenuItemFile_MBS";
-            this.toolStripMenuItemFile_MBS.Size = new System.Drawing.Size(59, 24);
-            this.toolStripMenuItemFile_MBS.Text = "Файл";
+            toolStripMenuItemFile_MBS.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemLoadData_MBS, toolStripMenuItemSaveData_MBS, toolStripSeparator1, toolStripMenuItemExit_MBS });
+            toolStripMenuItemFile_MBS.Name = "toolStripMenuItemFile_MBS";
+            toolStripMenuItemFile_MBS.Size = new Size(59, 24);
+            toolStripMenuItemFile_MBS.Text = "Файл";
             // 
             // toolStripMenuItemLoadData_MBS
             // 
-            this.toolStripMenuItemLoadData_MBS.Name = "toolStripMenuItemLoadData_MBS";
-            this.toolStripMenuItemLoadData_MBS.Size = new System.Drawing.Size(224, 26);
-            this.toolStripMenuItemLoadData_MBS.Text = "Загрузить данные";
+            toolStripMenuItemLoadData_MBS.Name = "toolStripMenuItemLoadData_MBS";
+            toolStripMenuItemLoadData_MBS.Size = new Size(223, 26);
+            toolStripMenuItemLoadData_MBS.Text = "Загрузить данные";
+            toolStripMenuItemLoadData_MBS.Click += ButtonLoadData_MBS_Click;
             // 
             // toolStripMenuItemSaveData_MBS
             // 
-            this.toolStripMenuItemSaveData_MBS.Name = "toolStripMenuItemSaveData_MBS";
-            this.toolStripMenuItemSaveData_MBS.Size = new System.Drawing.Size(224, 26);
-            this.toolStripMenuItemSaveData_MBS.Text = "Сохранить данные";
+            toolStripMenuItemSaveData_MBS.Name = "toolStripMenuItemSaveData_MBS";
+            toolStripMenuItemSaveData_MBS.Size = new Size(223, 26);
+            toolStripMenuItemSaveData_MBS.Text = "Сохранить данные";
+            toolStripMenuItemSaveData_MBS.Click += ButtonSaveData_MBS_Click;
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(220, 6);
             // 
             // toolStripMenuItemExit_MBS
             // 
-            this.toolStripMenuItemExit_MBS.Name = "toolStripMenuItemExit_MBS";
-            this.toolStripMenuItemExit_MBS.Size = new System.Drawing.Size(224, 26);
-            this.toolStripMenuItemExit_MBS.Text = "Выход";
+            toolStripMenuItemExit_MBS.Name = "toolStripMenuItemExit_MBS";
+            toolStripMenuItemExit_MBS.Size = new Size(223, 26);
+            toolStripMenuItemExit_MBS.Text = "Выход";
+            toolStripMenuItemExit_MBS.Click += ToolStripMenuItemExit_Click;
             // 
             // toolStripMenuItemData_MBS
             // 
-            this.toolStripMenuItemData_MBS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemAddOwner_MBS,
-            this.toolStripMenuItemAddStore_MBS,
-            this.toolStripSeparator2,
-            this.toolStripMenuItemEdit_MBS,
-            this.toolStripMenuItemDelete_MBS});
-            this.toolStripMenuItemData_MBS.Name = "toolStripMenuItemData_MBS";
-            this.toolStripMenuItemData_MBS.Size = new System.Drawing.Size(75, 24);
-            this.toolStripMenuItemData_MBS.Text = "Данные";
+            toolStripMenuItemData_MBS.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemAddOwner_MBS, toolStripMenuItemAddStore_MBS, toolStripSeparator2, toolStripMenuItemEdit_MBS, toolStripMenuItemDelete_MBS });
+            toolStripMenuItemData_MBS.Name = "toolStripMenuItemData_MBS";
+            toolStripMenuItemData_MBS.Size = new Size(78, 24);
+            toolStripMenuItemData_MBS.Text = "Данные";
             // 
             // toolStripMenuItemAddOwner_MBS
             // 
-            this.toolStripMenuItemAddOwner_MBS.Name = "toolStripMenuItemAddOwner_MBS";
-            this.toolStripMenuItemAddOwner_MBS.Size = new System.Drawing.Size(234, 26);
-            this.toolStripMenuItemAddOwner_MBS.Text = "Добавить владельца";
+            toolStripMenuItemAddOwner_MBS.Name = "toolStripMenuItemAddOwner_MBS";
+            toolStripMenuItemAddOwner_MBS.Size = new Size(236, 26);
+            toolStripMenuItemAddOwner_MBS.Text = "Добавить владельца";
+            toolStripMenuItemAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             // 
             // toolStripMenuItemAddStore_MBS
             // 
-            this.toolStripMenuItemAddStore_MBS.Name = "toolStripMenuItemAddStore_MBS";
-            this.toolStripMenuItemAddStore_MBS.Size = new System.Drawing.Size(234, 26);
-            this.toolStripMenuItemAddStore_MBS.Text = "Добавить магазин";
+            toolStripMenuItemAddStore_MBS.Name = "toolStripMenuItemAddStore_MBS";
+            toolStripMenuItemAddStore_MBS.Size = new Size(236, 26);
+            toolStripMenuItemAddStore_MBS.Text = "Добавить магазин";
+            toolStripMenuItemAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(231, 6);
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(233, 6);
             // 
             // toolStripMenuItemEdit_MBS
             // 
-            this.toolStripMenuItemEdit_MBS.Name = "toolStripMenuItemEdit_MBS";
-            this.toolStripMenuItemEdit_MBS.Size = new System.Drawing.Size(234, 26);
-            this.toolStripMenuItemEdit_MBS.Text = "Редактировать";
+            toolStripMenuItemEdit_MBS.Name = "toolStripMenuItemEdit_MBS";
+            toolStripMenuItemEdit_MBS.Size = new Size(236, 26);
+            toolStripMenuItemEdit_MBS.Text = "Редактировать";
+            toolStripMenuItemEdit_MBS.Click += ButtonEditItem_MBS_Click;
             // 
             // toolStripMenuItemDelete_MBS
             // 
-            this.toolStripMenuItemDelete_MBS.Name = "toolStripMenuItemDelete_MBS";
-            this.toolStripMenuItemDelete_MBS.Size = new System.Drawing.Size(234, 26);
-            this.toolStripMenuItemDelete_MBS.Text = "Удалить";
+            toolStripMenuItemDelete_MBS.Name = "toolStripMenuItemDelete_MBS";
+            toolStripMenuItemDelete_MBS.Size = new Size(236, 26);
+            toolStripMenuItemDelete_MBS.Text = "Удалить";
+            toolStripMenuItemDelete_MBS.Click += ButtonDeleteItem_MBS_Click;
             // 
             // toolStripMenuItemAnalysis_MBS
             // 
-            this.toolStripMenuItemAnalysis_MBS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemStats_MBS,
-            this.toolStripMenuItemCharts_MBS});
-            this.toolStripMenuItemAnalysis_MBS.Name = "toolStripMenuItemAnalysis_MBS";
-            this.toolStripMenuItemAnalysis_MBS.Size = new System.Drawing.Size(70, 24);
-            this.toolStripMenuItemAnalysis_MBS.Text = "Анализ";
+            toolStripMenuItemAnalysis_MBS.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemStats_MBS, toolStripMenuItemCharts_MBS });
+            toolStripMenuItemAnalysis_MBS.Name = "toolStripMenuItemAnalysis_MBS";
+            toolStripMenuItemAnalysis_MBS.Size = new Size(74, 24);
+            toolStripMenuItemAnalysis_MBS.Text = "Анализ";
             // 
             // toolStripMenuItemStats_MBS
             // 
-            this.toolStripMenuItemStats_MBS.Name = "toolStripMenuItemStats_MBS";
-            this.toolStripMenuItemStats_MBS.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItemStats_MBS.Text = "Статистика";
+            toolStripMenuItemStats_MBS.Name = "toolStripMenuItemStats_MBS";
+            toolStripMenuItemStats_MBS.Size = new Size(167, 26);
+            toolStripMenuItemStats_MBS.Text = "Статистика";
+            toolStripMenuItemStats_MBS.Click += ButtonShowStats_MBS_Click;
             // 
             // toolStripMenuItemCharts_MBS
             // 
-            this.toolStripMenuItemCharts_MBS.Name = "toolStripMenuItemCharts_MBS";
-            this.toolStripMenuItemCharts_MBS.Size = new System.Drawing.Size(167, 26);
-            this.toolStripMenuItemCharts_MBS.Text = "Графики";
+            toolStripMenuItemCharts_MBS.Name = "toolStripMenuItemCharts_MBS";
+            toolStripMenuItemCharts_MBS.Size = new Size(167, 26);
+            toolStripMenuItemCharts_MBS.Text = "Графики";
+            toolStripMenuItemCharts_MBS.Click += ButtonShowChart_MBS_Click;
             // 
             // toolStripMenuItemHelp_MBS
             // 
-            this.toolStripMenuItemHelp_MBS.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemUserGuide_MBS,
-            this.toolStripMenuItemAbout_MBS});
-            this.toolStripMenuItemHelp_MBS.Name = "toolStripMenuItemHelp_MBS";
-            this.toolStripMenuItemHelp_MBS.Size = new System.Drawing.Size(81, 24);
-            this.toolStripMenuItemHelp_MBS.Text = "Справка";
+            toolStripMenuItemHelp_MBS.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemUserGuide_MBS, toolStripMenuItemAbout_MBS });
+            toolStripMenuItemHelp_MBS.Name = "toolStripMenuItemHelp_MBS";
+            toolStripMenuItemHelp_MBS.Size = new Size(81, 24);
+            toolStripMenuItemHelp_MBS.Text = "Справка";
             // 
             // toolStripMenuItemUserGuide_MBS
             // 
-            this.toolStripMenuItemUserGuide_MBS.Name = "toolStripMenuItemUserGuide_MBS";
-            this.toolStripMenuItemUserGuide_MBS.Size = new System.Drawing.Size(273, 26);
-            this.toolStripMenuItemUserGuide_MBS.Text = "Руководство пользователя";
+            toolStripMenuItemUserGuide_MBS.Name = "toolStripMenuItemUserGuide_MBS";
+            toolStripMenuItemUserGuide_MBS.Size = new Size(278, 26);
+            toolStripMenuItemUserGuide_MBS.Text = "Руководство пользователя";
+            toolStripMenuItemUserGuide_MBS.Click += ToolStripMenuItemUserGuide_MBS_Click;
             // 
             // toolStripMenuItemAbout_MBS
             // 
-            this.toolStripMenuItemAbout_MBS.Name = "toolStripMenuItemAbout_MBS";
-            this.toolStripMenuItemAbout_MBS.Size = new System.Drawing.Size(273, 26);
-            this.toolStripMenuItemAbout_MBS.Text = "О программе";
+            toolStripMenuItemAbout_MBS.Name = "toolStripMenuItemAbout_MBS";
+            toolStripMenuItemAbout_MBS.Size = new Size(278, 26);
+            toolStripMenuItemAbout_MBS.Text = "О программе";
+            toolStripMenuItemAbout_MBS.Click += ToolStripMenuItemAbout_MBS_Click;
             // 
             // toolStripMain_MBS
             // 
-            this.toolStripMain_MBS.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStripMain_MBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonAddOwner_MBS,
-            this.toolStripButtonAddStore_MBS,
-            this.toolStripSeparator3,
-            this.toolStripButtonSave_MBS,
-            this.toolStripButtonLoad_MBS,
-            this.toolStripSeparator4,
-            this.toolStripButtonStats_MBS,
-            this.toolStripButtonChart_MBS});
-            this.toolStripMain_MBS.Location = new System.Drawing.Point(0, 28);
-            this.toolStripMain_MBS.Name = "toolStripMain_MBS";
-            this.toolStripMain_MBS.Size = new System.Drawing.Size(1000, 39);
-            this.toolStripMain_MBS.TabIndex = 1;
-            this.toolStripMain_MBS.Text = "toolStrip1";
+            toolStripMain_MBS.ImageScalingSize = new Size(32, 32);
+            toolStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripButtonAddOwner_MBS, toolStripButtonAddStore_MBS, toolStripSeparator3, toolStripButtonSave_MBS, toolStripButtonLoad_MBS, toolStripSeparator4, toolStripButtonStats_MBS, toolStripButtonChart_MBS });
+            toolStripMain_MBS.Location = new Point(0, 28);
+            toolStripMain_MBS.Name = "toolStripMain_MBS";
+            toolStripMain_MBS.Size = new Size(1000, 25);
+            toolStripMain_MBS.TabIndex = 1;
+            toolStripMain_MBS.Text = "toolStripMain_MBS";
             // 
             // toolStripButtonAddOwner_MBS
             // 
-            this.toolStripButtonAddOwner_MBS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonAddOwner_MBS.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddOwner_MBS.Image")));
-            this.toolStripButtonAddOwner_MBS.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAddOwner_MBS.Name = "toolStripButtonAddOwner_MBS";
-            this.toolStripButtonAddOwner_MBS.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonAddOwner_MBS.Text = "Владелец";
-            this.toolStripButtonAddOwner_MBS.ToolTipText = "Добавить владельца";
+            toolStripButtonAddOwner_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonAddOwner_MBS.ImageTransparentColor = Color.Magenta;
+            toolStripButtonAddOwner_MBS.Name = "toolStripButtonAddOwner_MBS";
+            toolStripButtonAddOwner_MBS.Size = new Size(29, 22);
+            toolStripButtonAddOwner_MBS.Text = "Владелец";
+            toolStripButtonAddOwner_MBS.ToolTipText = "Добавить владельца";
+            toolStripButtonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             // 
             // toolStripButtonAddStore_MBS
             // 
-            this.toolStripButtonAddStore_MBS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonAddStore_MBS.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddStore_MBS.Image")));
-            this.toolStripButtonAddStore_MBS.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAddStore_MBS.Name = "toolStripButtonAddStore_MBS";
-            this.toolStripButtonAddStore_MBS.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonAddStore_MBS.Text = "Магазин";
-            this.toolStripButtonAddStore_MBS.ToolTipText = "Добавить магазин";
+            toolStripButtonAddStore_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonAddStore_MBS.ImageTransparentColor = Color.Magenta;
+            toolStripButtonAddStore_MBS.Name = "toolStripButtonAddStore_MBS";
+            toolStripButtonAddStore_MBS.Size = new Size(29, 22);
+            toolStripButtonAddStore_MBS.Text = "Магазин";
+            toolStripButtonAddStore_MBS.ToolTipText = "Добавить магазин";
+            toolStripButtonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             // 
             // toolStripSeparator3
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 25);
             // 
             // toolStripButtonSave_MBS
             // 
-            this.toolStripButtonSave_MBS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSave_MBS.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSave_MBS.Image")));
-            this.toolStripButtonSave_MBS.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSave_MBS.Name = "toolStripButtonSave_MBS";
-            this.toolStripButtonSave_MBS.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonSave_MBS.Text = "Сохранить";
-            this.toolStripButtonSave_MBS.ToolTipText = "Сохранить данные";
+            toolStripButtonSave_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonSave_MBS.ImageTransparentColor = Color.Magenta;
+            toolStripButtonSave_MBS.Name = "toolStripButtonSave_MBS";
+            toolStripButtonSave_MBS.Size = new Size(29, 22);
+            toolStripButtonSave_MBS.Text = "Сохранить";
+            toolStripButtonSave_MBS.ToolTipText = "Сохранить данные";
+            toolStripButtonSave_MBS.Click += ButtonSaveData_MBS_Click;
             // 
             // toolStripButtonLoad_MBS
             // 
-            this.toolStripButtonLoad_MBS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonLoad_MBS.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoad_MBS.Image")));
-            this.toolStripButtonLoad_MBS.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonLoad_MBS.Name = "toolStripButtonLoad_MBS";
-            this.toolStripButtonLoad_MBS.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonLoad_MBS.Text = "Загрузить";
-            this.toolStripButtonLoad_MBS.ToolTipText = "Загрузить данные";
+            toolStripButtonLoad_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonLoad_MBS.ImageTransparentColor = Color.Magenta;
+            toolStripButtonLoad_MBS.Name = "toolStripButtonLoad_MBS";
+            toolStripButtonLoad_MBS.Size = new Size(29, 22);
+            toolStripButtonLoad_MBS.Text = "Загрузить";
+            toolStripButtonLoad_MBS.ToolTipText = "Загрузить данные";
+            toolStripButtonLoad_MBS.Click += ButtonLoadData_MBS_Click;
             // 
             // toolStripSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 39);
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(6, 25);
             // 
             // toolStripButtonStats_MBS
             // 
-            this.toolStripButtonStats_MBS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonStats_MBS.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonStats_MBS.Image")));
-            this.toolStripButtonStats_MBS.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonStats_MBS.Name = "toolStripButtonStats_MBS";
-            this.toolStripButtonStats_MBS.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonStats_MBS.Text = "Статистика";
-            this.toolStripButtonStats_MBS.ToolTipText = "Показать статистику";
+            toolStripButtonStats_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonStats_MBS.ImageTransparentColor = Color.Magenta;
+            toolStripButtonStats_MBS.Name = "toolStripButtonStats_MBS";
+            toolStripButtonStats_MBS.Size = new Size(29, 22);
+            toolStripButtonStats_MBS.Text = "Статистика";
+            toolStripButtonStats_MBS.ToolTipText = "Показать статистику";
+            toolStripButtonStats_MBS.Click += ButtonShowStats_MBS_Click;
             // 
             // toolStripButtonChart_MBS
             // 
-            this.toolStripButtonChart_MBS.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonChart_MBS.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonChart_MBS.Image")));
-            this.toolStripButtonChart_MBS.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonChart_MBS.Name = "toolStripButtonChart_MBS";
-            this.toolStripButtonChart_MBS.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonChart_MBS.Text = "График";
-            this.toolStripButtonChart_MBS.ToolTipText = "Показать графики";
+            toolStripButtonChart_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonChart_MBS.ImageTransparentColor = Color.Magenta;
+            toolStripButtonChart_MBS.Name = "toolStripButtonChart_MBS";
+            toolStripButtonChart_MBS.Size = new Size(29, 22);
+            toolStripButtonChart_MBS.Text = "График";
+            toolStripButtonChart_MBS.ToolTipText = "Показать графики";
+            toolStripButtonChart_MBS.Click += ButtonShowChart_MBS_Click;
             // 
             // statusStripMain_MBS
             // 
-            this.statusStripMain_MBS.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStripMain_MBS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelInfo_MBS,
-            this.toolStripStatusLabelDate_MBS,
-            this.toolStripStatusLabelTime_MBS});
-            this.statusStripMain_MBS.Location = new System.Drawing.Point(0, 673);
-            this.statusStripMain_MBS.Name = "statusStripMain_MBS";
-            this.statusStripMain_MBS.Size = new System.Drawing.Size(1000, 27);
-            this.statusStripMain_MBS.TabIndex = 2;
-            this.statusStripMain_MBS.Text = "statusStrip1";
+            statusStripMain_MBS.ImageScalingSize = new Size(20, 20);
+            statusStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelInfo_MBS, toolStripStatusLabelDate_MBS, toolStripStatusLabelTime_MBS });
+            statusStripMain_MBS.Location = new Point(0, 674);
+            statusStripMain_MBS.Name = "statusStripMain_MBS";
+            statusStripMain_MBS.Padding = new Padding(1, 0, 12, 0);
+            statusStripMain_MBS.Size = new Size(1000, 26);
+            statusStripMain_MBS.TabIndex = 2;
+            statusStripMain_MBS.Text = "statusStripMain_MBS";
             // 
             // toolStripStatusLabelInfo_MBS
             // 
-            this.toolStripStatusLabelInfo_MBS.Name = "toolStripStatusLabelInfo_MBS";
-            this.toolStripStatusLabelInfo_MBS.Size = new System.Drawing.Size(800, 21);
-            this.toolStripStatusLabelInfo_MBS.Spring = true;
-            this.toolStripStatusLabelInfo_MBS.Text = "Готово";
-            this.toolStripStatusLabelInfo_MBS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripStatusLabelInfo_MBS.Name = "toolStripStatusLabelInfo_MBS";
+            toolStripStatusLabelInfo_MBS.Size = new Size(845, 20);
+            toolStripStatusLabelInfo_MBS.Spring = true;
+            toolStripStatusLabelInfo_MBS.Text = "Готово";
+            toolStripStatusLabelInfo_MBS.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // toolStripStatusLabelDate_MBS
             // 
-            this.toolStripStatusLabelDate_MBS.Name = "toolStripStatusLabelDate_MBS";
-            this.toolStripStatusLabelDate_MBS.Size = new System.Drawing.Size(93, 21);
-            this.toolStripStatusLabelDate_MBS.Text = "01.01.2024";
+            toolStripStatusLabelDate_MBS.Name = "toolStripStatusLabelDate_MBS";
+            toolStripStatusLabelDate_MBS.Size = new Size(79, 20);
+            toolStripStatusLabelDate_MBS.Text = "01.01.2024";
             // 
             // toolStripStatusLabelTime_MBS
             // 
-            this.toolStripStatusLabelTime_MBS.Name = "toolStripStatusLabelTime_MBS";
-            this.toolStripStatusLabelTime_MBS.Size = new System.Drawing.Size(92, 21);
-            this.toolStripStatusLabelTime_MBS.Text = "00:00:00";
+            toolStripStatusLabelTime_MBS.Name = "toolStripStatusLabelTime_MBS";
+            toolStripStatusLabelTime_MBS.Size = new Size(63, 20);
+            toolStripStatusLabelTime_MBS.Text = "00:00:00";
             // 
             // labelTitle_MBS
             // 
-            this.labelTitle_MBS.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.labelTitle_MBS.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelTitle_MBS.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTitle_MBS.ForeColor = System.Drawing.Color.DarkBlue;
-            this.labelTitle_MBS.Location = new System.Drawing.Point(0, 67);
-            this.labelTitle_MBS.Name = "labelTitle_MBS";
-            this.labelTitle_MBS.Size = new System.Drawing.Size(1000, 60);
-            this.labelTitle_MBS.TabIndex = 3;
-            this.labelTitle_MBS.Text = "АСЕТЬ МАГАЗИНОВ";
-            this.labelTitle_MBS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            labelTitle_MBS.BackColor = SystemColors.ActiveCaption;
+            labelTitle_MBS.Dock = DockStyle.Top;
+            labelTitle_MBS.Font = new Font("Microsoft Sans Serif", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelTitle_MBS.ForeColor = Color.DarkBlue;
+            labelTitle_MBS.Location = new Point(0, 53);
+            labelTitle_MBS.Name = "labelTitle_MBS";
+            labelTitle_MBS.Size = new Size(1000, 60);
+            labelTitle_MBS.TabIndex = 3;
+            labelTitle_MBS.Text = "СЕТЬ МАГАЗИНОВ";
+            labelTitle_MBS.TextAlign = ContentAlignment.MiddleCenter;
+            labelTitle_MBS.Click += labelTitle_MBS_Click;
             // 
             // panelSearch_MBS
             // 
-            this.panelSearch_MBS.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panelSearch_MBS.Controls.Add(this.labelSearch_MBS);
-            this.panelSearch_MBS.Controls.Add(this.textBoxSearch_MBS);
-            this.panelSearch_MBS.Controls.Add(this.buttonSearch_MBS);
-            this.panelSearch_MBS.Controls.Add(this.comboBoxFilter_MBS);
-            this.panelSearch_MBS.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSearch_MBS.Location = new System.Drawing.Point(0, 127);
-            this.panelSearch_MBS.Name = "panelSearch_MBS";
-            this.panelSearch_MBS.Size = new System.Drawing.Size(1000, 45);
-            this.panelSearch_MBS.TabIndex = 4;
+            panelSearch_MBS.BackColor = SystemColors.ControlLight;
+            panelSearch_MBS.Controls.Add(labelSearch_MBS);
+            panelSearch_MBS.Controls.Add(textBoxSearch_MBS);
+            panelSearch_MBS.Controls.Add(buttonSearch_MBS);
+            panelSearch_MBS.Controls.Add(comboBoxFilter_MBS);
+            panelSearch_MBS.Dock = DockStyle.Top;
+            panelSearch_MBS.Location = new Point(0, 113);
+            panelSearch_MBS.Name = "panelSearch_MBS";
+            panelSearch_MBS.Size = new Size(1000, 45);
+            panelSearch_MBS.TabIndex = 4;
             // 
             // labelSearch_MBS
             // 
-            this.labelSearch_MBS.AutoSize = true;
-            this.labelSearch_MBS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelSearch_MBS.Location = new System.Drawing.Point(12, 12);
-            this.labelSearch_MBS.Name = "labelSearch_MBS";
-            this.labelSearch_MBS.Size = new System.Drawing.Size(61, 20);
-            this.labelSearch_MBS.TabIndex = 0;
-            this.labelSearch_MBS.Text = "Поиск:";
+            labelSearch_MBS.AutoSize = true;
+            labelSearch_MBS.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelSearch_MBS.Location = new Point(12, 12);
+            labelSearch_MBS.Name = "labelSearch_MBS";
+            labelSearch_MBS.Size = new Size(65, 20);
+            labelSearch_MBS.TabIndex = 0;
+            labelSearch_MBS.Text = "Поиск:";
             // 
             // textBoxSearch_MBS
             // 
-            this.textBoxSearch_MBS.Location = new System.Drawing.Point(79, 10);
-            this.textBoxSearch_MBS.Name = "textBoxSearch_MBS";
-            this.textBoxSearch_MBS.Size = new System.Drawing.Size(250, 22);
-            this.textBoxSearch_MBS.TabIndex = 1;
+            textBoxSearch_MBS.Location = new Point(79, 10);
+            textBoxSearch_MBS.Margin = new Padding(3, 2, 3, 2);
+            textBoxSearch_MBS.Name = "textBoxSearch_MBS";
+            textBoxSearch_MBS.Size = new Size(250, 27);
+            textBoxSearch_MBS.TabIndex = 1;
+            textBoxSearch_MBS.KeyPress += TextBoxSearch_MBS_KeyPress;
             // 
             // buttonSearch_MBS
             // 
-            this.buttonSearch_MBS.Location = new System.Drawing.Point(335, 9);
-            this.buttonSearch_MBS.Name = "buttonSearch_MBS";
-            this.buttonSearch_MBS.Size = new System.Drawing.Size(100, 25);
-            this.buttonSearch_MBS.TabIndex = 2;
-            this.buttonSearch_MBS.Text = "Найти";
-            this.buttonSearch_MBS.UseVisualStyleBackColor = true;
+            buttonSearch_MBS.Location = new Point(335, 9);
+            buttonSearch_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonSearch_MBS.Name = "buttonSearch_MBS";
+            buttonSearch_MBS.Size = new Size(100, 28);
+            buttonSearch_MBS.TabIndex = 2;
+            buttonSearch_MBS.Text = "Найти";
+            buttonSearch_MBS.UseVisualStyleBackColor = true;
+            buttonSearch_MBS.Click += ButtonSearch_MBS_Click;
             // 
             // comboBoxFilter_MBS
             // 
-            this.comboBoxFilter_MBS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxFilter_MBS.FormattingEnabled = true;
-            this.comboBoxFilter_MBS.Items.AddRange(new object[] {
-            "Все",
-            "Владельцы",
-            "Магазины",
-            "Поставщики"});
-            this.comboBoxFilter_MBS.Location = new System.Drawing.Point(450, 10);
-            this.comboBoxFilter_MBS.Name = "comboBoxFilter_MBS";
-            this.comboBoxFilter_MBS.Size = new System.Drawing.Size(180, 24);
-            this.comboBoxFilter_MBS.TabIndex = 3;
+            comboBoxFilter_MBS.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxFilter_MBS.FormattingEnabled = true;
+            comboBoxFilter_MBS.Items.AddRange(new object[] { "Все", "Владельцы", "Магазины", "Поставщики" });
+            comboBoxFilter_MBS.Location = new Point(450, 10);
+            comboBoxFilter_MBS.Margin = new Padding(3, 2, 3, 2);
+            comboBoxFilter_MBS.Name = "comboBoxFilter_MBS";
+            comboBoxFilter_MBS.Size = new Size(180, 28);
+            comboBoxFilter_MBS.TabIndex = 3;
             // 
             // tabControlMain_MBS
             // 
-            this.tabControlMain_MBS.Controls.Add(this.tabPageOwners_MBS);
-            this.tabControlMain_MBS.Controls.Add(this.tabPageStores_MBS);
-            this.tabControlMain_MBS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlMain_MBS.Location = new System.Drawing.Point(0, 172);
-            this.tabControlMain_MBS.Name = "tabControlMain_MBS";
-            this.tabControlMain_MBS.SelectedIndex = 0;
-            this.tabControlMain_MBS.Size = new System.Drawing.Size(1000, 451);
-            this.tabControlMain_MBS.TabIndex = 5;
+            tabControlMain_MBS.Controls.Add(tabPageOwners_MBS);
+            tabControlMain_MBS.Controls.Add(tabPageStores_MBS);
+            tabControlMain_MBS.Dock = DockStyle.Fill;
+            tabControlMain_MBS.Location = new Point(0, 158);
+            tabControlMain_MBS.Margin = new Padding(3, 2, 3, 2);
+            tabControlMain_MBS.Name = "tabControlMain_MBS";
+            tabControlMain_MBS.SelectedIndex = 0;
+            tabControlMain_MBS.Size = new Size(1000, 466);
+            tabControlMain_MBS.TabIndex = 5;
             // 
             // tabPageOwners_MBS
             // 
-            this.tabPageOwners_MBS.Controls.Add(this.dataGridViewOwners_MBS);
-            this.tabPageOwners_MBS.Location = new System.Drawing.Point(4, 25);
-            this.tabPageOwners_MBS.Name = "tabPageOwners_MBS";
-            this.tabPageOwners_MBS.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOwners_MBS.Size = new System.Drawing.Size(992, 422);
-            this.tabPageOwners_MBS.TabIndex = 0;
-            this.tabPageOwners_MBS.Text = "Владельцы магазинов";
-            this.tabPageOwners_MBS.UseVisualStyleBackColor = true;
+            tabPageOwners_MBS.Controls.Add(dataGridViewOwners_MBS);
+            tabPageOwners_MBS.Location = new Point(4, 29);
+            tabPageOwners_MBS.Margin = new Padding(3, 2, 3, 2);
+            tabPageOwners_MBS.Name = "tabPageOwners_MBS";
+            tabPageOwners_MBS.Padding = new Padding(3, 2, 3, 2);
+            tabPageOwners_MBS.Size = new Size(992, 433);
+            tabPageOwners_MBS.TabIndex = 0;
+            tabPageOwners_MBS.Text = "Владельцы магазинов";
+            tabPageOwners_MBS.UseVisualStyleBackColor = true;
             // 
             // dataGridViewOwners_MBS
             // 
-            this.dataGridViewOwners_MBS.AllowUserToAddRows = false;
-            this.dataGridViewOwners_MBS.AllowUserToDeleteRows = false;
-            this.dataGridViewOwners_MBS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewOwners_MBS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewOwners_MBS.Location = new System.Drawing.Point(3, 3);
-            this.dataGridViewOwners_MBS.Name = "dataGridViewOwners_MBS";
-            this.dataGridViewOwners_MBS.ReadOnly = true;
-            this.dataGridViewOwners_MBS.RowHeadersWidth = 51;
-            this.dataGridViewOwners_MBS.RowTemplate.Height = 24;
-            this.dataGridViewOwners_MBS.Size = new System.Drawing.Size(986, 416);
-            this.dataGridViewOwners_MBS.TabIndex = 0;
+            dataGridViewOwners_MBS.AllowUserToAddRows = false;
+            dataGridViewOwners_MBS.AllowUserToDeleteRows = false;
+            dataGridViewOwners_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewOwners_MBS.Dock = DockStyle.Fill;
+            dataGridViewOwners_MBS.Location = new Point(3, 2);
+            dataGridViewOwners_MBS.Margin = new Padding(3, 2, 3, 2);
+            dataGridViewOwners_MBS.Name = "dataGridViewOwners_MBS";
+            dataGridViewOwners_MBS.ReadOnly = true;
+            dataGridViewOwners_MBS.RowHeadersWidth = 51;
+            dataGridViewOwners_MBS.RowTemplate.Height = 24;
+            dataGridViewOwners_MBS.Size = new Size(986, 429);
+            dataGridViewOwners_MBS.TabIndex = 0;
             // 
             // tabPageStores_MBS
             // 
-            this.tabPageStores_MBS.Controls.Add(this.dataGridViewStores_MBS);
-            this.tabPageStores_MBS.Location = new System.Drawing.Point(4, 25);
-            this.tabPageStores_MBS.Name = "tabPageStores_MBS";
-            this.tabPageStores_MBS.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStores_MBS.Size = new System.Drawing.Size(992, 422);
-            this.tabPageStores_MBS.TabIndex = 1;
-            this.tabPageStores_MBS.Text = "Магазины";
-            this.tabPageStores_MBS.UseVisualStyleBackColor = true;
+            tabPageStores_MBS.Controls.Add(dataGridViewStores_MBS);
+            tabPageStores_MBS.Location = new Point(4, 29);
+            tabPageStores_MBS.Margin = new Padding(3, 2, 3, 2);
+            tabPageStores_MBS.Name = "tabPageStores_MBS";
+            tabPageStores_MBS.Padding = new Padding(3, 2, 3, 2);
+            tabPageStores_MBS.Size = new Size(992, 433);
+            tabPageStores_MBS.TabIndex = 1;
+            tabPageStores_MBS.Text = "Магазины";
+            tabPageStores_MBS.UseVisualStyleBackColor = true;
             // 
             // dataGridViewStores_MBS
             // 
-            this.dataGridViewStores_MBS.AllowUserToAddRows = false;
-            this.dataGridViewStores_MBS.AllowUserToDeleteRows = false;
-            this.dataGridViewStores_MBS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewStores_MBS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewStores_MBS.Location = new System.Drawing.Point(3, 3);
-            this.dataGridViewStores_MBS.Name = "dataGridViewStores_MBS";
-            this.dataGridViewStores_MBS.ReadOnly = true;
-            this.dataGridViewStores_MBS.RowHeadersWidth = 51;
-            this.dataGridViewStores_MBS.RowTemplate.Height = 24;
-            this.dataGridViewStores_MBS.Size = new System.Drawing.Size(986, 416);
-            this.dataGridViewStores_MBS.TabIndex = 0;
+            dataGridViewStores_MBS.AllowUserToAddRows = false;
+            dataGridViewStores_MBS.AllowUserToDeleteRows = false;
+            dataGridViewStores_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewStores_MBS.Dock = DockStyle.Fill;
+            dataGridViewStores_MBS.Location = new Point(3, 2);
+            dataGridViewStores_MBS.Margin = new Padding(3, 2, 3, 2);
+            dataGridViewStores_MBS.Name = "dataGridViewStores_MBS";
+            dataGridViewStores_MBS.ReadOnly = true;
+            dataGridViewStores_MBS.RowHeadersWidth = 51;
+            dataGridViewStores_MBS.RowTemplate.Height = 24;
+            dataGridViewStores_MBS.Size = new Size(986, 429);
+            dataGridViewStores_MBS.TabIndex = 0;
             // 
             // panelControls_MBS
             // 
-            this.panelControls_MBS.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.panelControls_MBS.Controls.Add(this.buttonAddOwner_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonAddStore_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonEditItem_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonDeleteItem_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonSaveData_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonLoadData_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonShowStats_MBS);
-            this.panelControls_MBS.Controls.Add(this.buttonShowChart_MBS);
-            this.panelControls_MBS.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelControls_MBS.Location = new System.Drawing.Point(0, 623);
-            this.panelControls_MBS.Name = "panelControls_MBS";
-            this.panelControls_MBS.Size = new System.Drawing.Size(1000, 50);
-            this.panelControls_MBS.TabIndex = 6;
+            panelControls_MBS.BackColor = SystemColors.ControlLightLight;
+            panelControls_MBS.Controls.Add(buttonAddOwner_MBS);
+            panelControls_MBS.Controls.Add(buttonAddStore_MBS);
+            panelControls_MBS.Controls.Add(buttonEditItem_MBS);
+            panelControls_MBS.Controls.Add(buttonDeleteItem_MBS);
+            panelControls_MBS.Controls.Add(buttonSaveData_MBS);
+            panelControls_MBS.Controls.Add(buttonLoadData_MBS);
+            panelControls_MBS.Controls.Add(buttonShowStats_MBS);
+            panelControls_MBS.Controls.Add(buttonShowChart_MBS);
+            panelControls_MBS.Dock = DockStyle.Bottom;
+            panelControls_MBS.Location = new Point(0, 624);
+            panelControls_MBS.Margin = new Padding(3, 2, 3, 2);
+            panelControls_MBS.Name = "panelControls_MBS";
+            panelControls_MBS.Size = new Size(1000, 50);
+            panelControls_MBS.TabIndex = 6;
             // 
             // buttonAddOwner_MBS
             // 
-            this.buttonAddOwner_MBS.Location = new System.Drawing.Point(10, 10);
-            this.buttonAddOwner_MBS.Name = "buttonAddOwner_MBS";
-            this.buttonAddOwner_MBS.Size = new System.Drawing.Size(120, 30);
-            this.buttonAddOwner_MBS.TabIndex = 0;
-            this.buttonAddOwner_MBS.Text = "Добавить владельца";
-            this.buttonAddOwner_MBS.UseVisualStyleBackColor = true;
+            buttonAddOwner_MBS.Location = new Point(10, 10);
+            buttonAddOwner_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonAddOwner_MBS.Name = "buttonAddOwner_MBS";
+            buttonAddOwner_MBS.Size = new Size(120, 30);
+            buttonAddOwner_MBS.TabIndex = 0;
+            buttonAddOwner_MBS.Text = "Добавить владельца";
+            buttonAddOwner_MBS.UseVisualStyleBackColor = true;
+            buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             // 
             // buttonAddStore_MBS
             // 
-            this.buttonAddStore_MBS.Location = new System.Drawing.Point(140, 10);
-            this.buttonAddStore_MBS.Name = "buttonAddStore_MBS";
-            this.buttonAddStore_MBS.Size = new System.Drawing.Size(120, 30);
-            this.buttonAddStore_MBS.TabIndex = 1;
-            this.buttonAddStore_MBS.Text = "Добавить магазин";
-            this.buttonAddStore_MBS.UseVisualStyleBackColor = true;
+            buttonAddStore_MBS.Location = new Point(140, 10);
+            buttonAddStore_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonAddStore_MBS.Name = "buttonAddStore_MBS";
+            buttonAddStore_MBS.Size = new Size(120, 30);
+            buttonAddStore_MBS.TabIndex = 1;
+            buttonAddStore_MBS.Text = "Добавить магазин";
+            buttonAddStore_MBS.UseVisualStyleBackColor = true;
+            buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             // 
             // buttonEditItem_MBS
             // 
-            this.buttonEditItem_MBS.Location = new System.Drawing.Point(270, 10);
-            this.buttonEditItem_MBS.Name = "buttonEditItem_MBS";
-            this.buttonEditItem_MBS.Size = new System.Drawing.Size(120, 30);
-            this.buttonEditItem_MBS.TabIndex = 2;
-            this.buttonEditItem_MBS.Text = "Редактировать";
-            this.buttonEditItem_MBS.UseVisualStyleBackColor = true;
+            buttonEditItem_MBS.Location = new Point(270, 10);
+            buttonEditItem_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonEditItem_MBS.Name = "buttonEditItem_MBS";
+            buttonEditItem_MBS.Size = new Size(120, 30);
+            buttonEditItem_MBS.TabIndex = 2;
+            buttonEditItem_MBS.Text = "Редактировать";
+            buttonEditItem_MBS.UseVisualStyleBackColor = true;
+            buttonEditItem_MBS.Click += ButtonEditItem_MBS_Click;
             // 
             // buttonDeleteItem_MBS
             // 
-            this.buttonDeleteItem_MBS.Location = new System.Drawing.Point(400, 10);
-            this.buttonDeleteItem_MBS.Name = "buttonDeleteItem_MBS";
-            this.buttonDeleteItem_MBS.Size = new System.Drawing.Size(120, 30);
-            this.buttonDeleteItem_MBS.TabIndex = 3;
-            this.buttonDeleteItem_MBS.Text = "Удалить";
-            this.buttonDeleteItem_MBS.UseVisualStyleBackColor = true;
+            buttonDeleteItem_MBS.Location = new Point(400, 10);
+            buttonDeleteItem_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonDeleteItem_MBS.Name = "buttonDeleteItem_MBS";
+            buttonDeleteItem_MBS.Size = new Size(120, 30);
+            buttonDeleteItem_MBS.TabIndex = 3;
+            buttonDeleteItem_MBS.Text = "Удалить";
+            buttonDeleteItem_MBS.UseVisualStyleBackColor = true;
+            buttonDeleteItem_MBS.Click += ButtonDeleteItem_MBS_Click;
             // 
             // buttonSaveData_MBS
             // 
-            this.buttonSaveData_MBS.Location = new System.Drawing.Point(530, 10);
-            this.buttonSaveData_MBS.Name = "buttonSaveData_MBS";
-            this.buttonSaveData_MBS.Size = new System.Drawing.Size(120, 30);
-            this.buttonSaveData_MBS.TabIndex = 4;
-            this.buttonSaveData_MBS.Text = "Сохранить";
-            this.buttonSaveData_MBS.UseVisualStyleBackColor = true;
+            buttonSaveData_MBS.Location = new Point(530, 10);
+            buttonSaveData_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonSaveData_MBS.Name = "buttonSaveData_MBS";
+            buttonSaveData_MBS.Size = new Size(120, 30);
+            buttonSaveData_MBS.TabIndex = 4;
+            buttonSaveData_MBS.Text = "Сохранить";
+            buttonSaveData_MBS.UseVisualStyleBackColor = true;
+            buttonSaveData_MBS.Click += ButtonSaveData_MBS_Click;
             // 
             // buttonLoadData_MBS
             // 
-            this.buttonLoadData_MBS.Location = new System.Drawing.Point(660, 10);
-            this.buttonLoadData_MBS.Name = "buttonLoadData_MBS";
-            this.buttonLoadData_MBS.Size = new System.Drawing.Size(120, 30);
-            this.buttonLoadData_MBS.TabIndex = 5;
-            this.buttonLoadData_MBS.Text = "Загрузить";
-            this.buttonLoadData_MBS.UseVisualStyleBackColor = true;
+            buttonLoadData_MBS.Location = new Point(660, 10);
+            buttonLoadData_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonLoadData_MBS.Name = "buttonLoadData_MBS";
+            buttonLoadData_MBS.Size = new Size(120, 30);
+            buttonLoadData_MBS.TabIndex = 5;
+            buttonLoadData_MBS.Text = "Загрузить";
+            buttonLoadData_MBS.UseVisualStyleBackColor = true;
+            buttonLoadData_MBS.Click += ButtonLoadData_MBS_Click;
             // 
             // buttonShowStats_MBS
             // 
-            this.buttonShowStats_MBS.Location = new System.Drawing.Point(790, 10);
-            this.buttonShowStats_MBS.Name = "buttonShowStats_MBS";
-            this.buttonShowStats_MBS.Size = new System.Drawing.Size(100, 30);
-            this.buttonShowStats_MBS.TabIndex = 6;
-            this.buttonShowStats_MBS.Text = "Статистика";
-            this.buttonShowStats_MBS.UseVisualStyleBackColor = true;
+            buttonShowStats_MBS.Location = new Point(790, 10);
+            buttonShowStats_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonShowStats_MBS.Name = "buttonShowStats_MBS";
+            buttonShowStats_MBS.Size = new Size(100, 30);
+            buttonShowStats_MBS.TabIndex = 6;
+            buttonShowStats_MBS.Text = "Статистика";
+            buttonShowStats_MBS.UseVisualStyleBackColor = true;
+            buttonShowStats_MBS.Click += ButtonShowStats_MBS_Click;
             // 
             // buttonShowChart_MBS
             // 
-            this.buttonShowChart_MBS.Location = new System.Drawing.Point(900, 10);
-            this.buttonShowChart_MBS.Name = "buttonShowChart_MBS";
-            this.buttonShowChart_MBS.Size = new System.Drawing.Size(90, 30);
-            this.buttonShowChart_MBS.TabIndex = 7;
-            this.buttonShowChart_MBS.Text = "График";
-            this.buttonShowChart_MBS.UseVisualStyleBackColor = true;
+            buttonShowChart_MBS.Location = new Point(900, 10);
+            buttonShowChart_MBS.Margin = new Padding(3, 2, 3, 2);
+            buttonShowChart_MBS.Name = "buttonShowChart_MBS";
+            buttonShowChart_MBS.Size = new Size(90, 30);
+            buttonShowChart_MBS.TabIndex = 7;
+            buttonShowChart_MBS.Text = "График";
+            buttonShowChart_MBS.UseVisualStyleBackColor = true;
+            buttonShowChart_MBS.Click += ButtonShowChart_MBS_Click;
             // 
             // FormMain
             // 
-            this.ClientSize = new System.Drawing.Size(1000, 700);
-            this.Controls.Add(this.tabControlMain_MBS);
-            this.Controls.Add(this.panelControls_MBS);
-            this.Controls.Add(this.panelSearch_MBS);
-            this.Controls.Add(this.labelTitle_MBS);
-            this.Controls.Add(this.toolStripMain_MBS);
-            this.Controls.Add(this.statusStripMain_MBS);
-            this.Controls.Add(this.menuStripMain_MBS);
-            this.MainMenuStrip = this.menuStripMain_MBS;
-            this.MinimumSize = new System.Drawing.Size(800, 600);
-            this.Name = "FormMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "сеть магазинов - MBS";
-            this.menuStripMain_MBS.ResumeLayout(false);
-            this.menuStripMain_MBS.PerformLayout();
-            this.toolStripMain_MBS.ResumeLayout(false);
-            this.toolStripMain_MBS.PerformLayout();
-            this.statusStripMain_MBS.ResumeLayout(false);
-            this.statusStripMain_MBS.PerformLayout();
-            this.panelSearch_MBS.ResumeLayout(false);
-            this.panelSearch_MBS.PerformLayout();
-            this.tabControlMain_MBS.ResumeLayout(false);
-            this.tabPageOwners_MBS.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOwners_MBS)).EndInit();
-            this.tabPageStores_MBS.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStores_MBS)).EndInit();
-            this.panelControls_MBS.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1000, 700);
+            Controls.Add(tabControlMain_MBS);
+            Controls.Add(panelControls_MBS);
+            Controls.Add(panelSearch_MBS);
+            Controls.Add(labelTitle_MBS);
+            Controls.Add(toolStripMain_MBS);
+            Controls.Add(statusStripMain_MBS);
+            Controls.Add(menuStripMain_MBS);
+            MainMenuStrip = menuStripMain_MBS;
+            Margin = new Padding(3, 2, 3, 2);
+            MinimumSize = new Size(800, 600);
+            Name = "FormMain";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Сеть магазинов - MBS";
+            menuStripMain_MBS.ResumeLayout(false);
+            menuStripMain_MBS.PerformLayout();
+            toolStripMain_MBS.ResumeLayout(false);
+            toolStripMain_MBS.PerformLayout();
+            statusStripMain_MBS.ResumeLayout(false);
+            statusStripMain_MBS.PerformLayout();
+            panelSearch_MBS.ResumeLayout(false);
+            panelSearch_MBS.PerformLayout();
+            tabControlMain_MBS.ResumeLayout(false);
+            tabPageOwners_MBS.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewOwners_MBS).EndInit();
+            tabPageStores_MBS.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewStores_MBS).EndInit();
+            panelControls_MBS.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
+            this.dataGridViewStores_MBS.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStores_MBS_CellDoubleClick);
         }
 
         #endregion

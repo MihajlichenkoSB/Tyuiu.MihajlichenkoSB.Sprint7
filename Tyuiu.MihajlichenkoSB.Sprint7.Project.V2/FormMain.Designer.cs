@@ -603,6 +603,8 @@
             ResumeLayout(false);
             PerformLayout();
             this.dataGridViewStores_MBS.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStores_MBS_CellDoubleClick);
+            this.dataGridViewStores_MBS.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStores_MBS_CellDoubleClick);
+            this.dataGridViewOwners_MBS.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewOwners_MBS_CellDoubleClick);
         }
 
         #endregion

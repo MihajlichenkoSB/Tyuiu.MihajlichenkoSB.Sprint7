@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
@@ -12,6 +12,12 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         private DataService dataService;
         private ToolTip toolTip;
 
+        // РџР°РЅРµР»СЊ РґР»СЏ РєРЅРѕРїРѕРє РґРѕР±Р°РІР»РµРЅРёСЏ
+        private Panel panelAddButtons;
+        private Button buttonAddOwnerTop;
+        private Button buttonAddStoreTop;
+        private Button buttonAddSupplierTop;
+
         public FormMain()
         {
             InitializeComponent();
@@ -19,6 +25,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataService = new DataService();
             toolTip = new ToolTip();
 
+            CreateTopButtonsPanel(); // РЎРѕР·РґР°РµРј РїР°РЅРµР»СЊ СЃ РєРЅРѕРїРєР°РјРё РЅР°РІРµСЂС…Сѓ
             SetupDataGridViews();
             SetupToolTips();
             LoadSampleData();
@@ -26,9 +33,58 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             SetupEventHandlers();
         }
 
+        private void CreateTopButtonsPanel()
+        {
+            // РЎРѕР·РґР°РµРј РїР°РЅРµР»СЊ РґР»СЏ РєРЅРѕРїРѕРє
+            panelAddButtons = new Panel();
+            panelAddButtons.BackColor = Color.LightSteelBlue;
+            panelAddButtons.Dock = DockStyle.Top;
+            panelAddButtons.Height = 50;
+            panelAddButtons.Padding = new Padding(10, 5, 10, 5);
+
+            // РљРЅРѕРїРєР° "Р”РѕР±Р°РІРёС‚СЊ РІР»Р°РґРµР»СЊС†Р°"
+            buttonAddOwnerTop = new Button();
+            buttonAddOwnerTop.Text = "вћ• Р”РѕР±Р°РІРёС‚СЊ РІР»Р°РґРµР»СЊС†Р°";
+            buttonAddOwnerTop.Size = new Size(180, 35);
+            buttonAddOwnerTop.Location = new Point(10, 7);
+            buttonAddOwnerTop.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular);
+            buttonAddOwnerTop.BackColor = Color.LightBlue;
+            buttonAddOwnerTop.FlatStyle = FlatStyle.Flat;
+            buttonAddOwnerTop.Click += ButtonAddOwner_MBS_Click;
+
+            // РљРЅРѕРїРєР° "Р”РѕР±Р°РІРёС‚СЊ РјР°РіР°Р·РёРЅ"
+            buttonAddStoreTop = new Button();
+            buttonAddStoreTop.Text = "рџЏЄ Р”РѕР±Р°РІРёС‚СЊ РјР°РіР°Р·РёРЅ";
+            buttonAddStoreTop.Size = new Size(180, 35);
+            buttonAddStoreTop.Location = new Point(200, 7);
+            buttonAddStoreTop.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular);
+            buttonAddStoreTop.BackColor = Color.LightGreen;
+            buttonAddStoreTop.FlatStyle = FlatStyle.Flat;
+            buttonAddStoreTop.Click += ButtonAddStore_MBS_Click;
+
+            // РљРЅРѕРїРєР° "Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚Р°РІС‰РёРєР°"
+            buttonAddSupplierTop = new Button();
+            buttonAddSupplierTop.Text = "рџљљ Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚Р°РІС‰РёРєР°";
+            buttonAddSupplierTop.Size = new Size(180, 35);
+            buttonAddSupplierTop.Location = new Point(390, 7);
+            buttonAddSupplierTop.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular);
+            buttonAddSupplierTop.BackColor = Color.LightSalmon;
+            buttonAddSupplierTop.FlatStyle = FlatStyle.Flat;
+            buttonAddSupplierTop.Click += ButtonAddSupplier_MBS_Click;
+
+            // Р”РѕР±Р°РІР»СЏРµРј РєРЅРѕРїРєРё РЅР° РїР°РЅРµР»СЊ
+            panelAddButtons.Controls.Add(buttonAddOwnerTop);
+            panelAddButtons.Controls.Add(buttonAddStoreTop);
+            panelAddButtons.Controls.Add(buttonAddSupplierTop);
+
+            // Р”РѕР±Р°РІР»СЏРµРј РїР°РЅРµР»СЊ РЅР° С„РѕСЂРјСѓ (РїРѕСЃР»Рµ Р·Р°РіРѕР»РѕРІРєР°)
+            this.Controls.Add(panelAddButtons);
+            panelAddButtons.BringToFront();
+        }
+
         private void SetupEventHandlers()
         {
-            // Кнопки
+            // РћСЃРЅРѕРІРЅС‹Рµ РєРЅРѕРїРєРё
             buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             buttonEditItem_MBS.Click += ButtonEditItem_MBS_Click;
@@ -42,89 +98,94 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         private void SetupToolTips()
         {
-            toolTip.SetToolTip(buttonAddOwner_MBS, "Добавить нового владельца магазина");
-            toolTip.SetToolTip(buttonAddStore_MBS, "Добавить новый магазин");
-            toolTip.SetToolTip(buttonEditItem_MBS, "Редактировать выбранный элемент");
-            toolTip.SetToolTip(buttonDeleteItem_MBS, "Удалить выбранный элемент");
-            toolTip.SetToolTip(buttonSaveData_MBS, "Сохранить все данные в CSV файлы");
-            toolTip.SetToolTip(buttonLoadData_MBS, "Загрузить данные из CSV файлов");
-            toolTip.SetToolTip(buttonShowStats_MBS, "Показать статистику по данным");
-            toolTip.SetToolTip(buttonShowChart_MBS, "Показать графики и диаграммы");
+            // РџРѕРґСЃРєР°Р·РєРё РґР»СЏ РІРµСЂС…РЅРёС… РєРЅРѕРїРѕРє
+            toolTip.SetToolTip(buttonAddOwnerTop, "Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІРѕРіРѕ РІР»Р°РґРµР»СЊС†Р° РјР°РіР°Р·РёРЅР°");
+            toolTip.SetToolTip(buttonAddStoreTop, "Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ РјР°РіР°Р·РёРЅ");
+            toolTip.SetToolTip(buttonAddSupplierTop, "Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІРѕРіРѕ РїРѕСЃС‚Р°РІС‰РёРєР°");
+            
+            // РџРѕРґСЃРєР°Р·РєРё РґР»СЏ РѕСЃС‚Р°Р»СЊРЅС‹С… РєРЅРѕРїРѕРє
+            toolTip.SetToolTip(buttonEditItem_MBS, "Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РІС‹Р±СЂР°РЅРЅС‹Р№ СЌР»РµРјРµРЅС‚");
+            toolTip.SetToolTip(buttonDeleteItem_MBS, "РЈРґР°Р»РёС‚СЊ РІС‹Р±СЂР°РЅРЅС‹Р№ СЌР»РµРјРµРЅС‚");
+            toolTip.SetToolTip(buttonSaveData_MBS, "РЎРѕС…СЂР°РЅРёС‚СЊ РІСЃРµ РґР°РЅРЅС‹Рµ РІ CSV С„Р°Р№Р»С‹");
+            toolTip.SetToolTip(buttonLoadData_MBS, "Р—Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· CSV С„Р°Р№Р»РѕРІ");
+            toolTip.SetToolTip(buttonShowStats_MBS, "РџРѕРєР°Р·Р°С‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ РїРѕ РґР°РЅРЅС‹Рј");
+            toolTip.SetToolTip(buttonShowChart_MBS, "РџРѕРєР°Р·Р°С‚СЊ РіСЂР°С„РёРєРё Рё РґРёР°РіСЂР°РјРјС‹");
         }
 
         private void SetupDataGridViews()
         {
-            // Настройка DataGridView для владельцев
+            // РќР°СЃС‚СЂРѕР№РєР° DataGridView РґР»СЏ РІР»Р°РґРµР»СЊС†РµРІ
             dataGridViewOwners_MBS.Columns.Clear();
-
             dataGridViewOwners_MBS.Columns.Add("Id", "ID");
-            dataGridViewOwners_MBS.Columns.Add("FullName", "ФИО");
-            dataGridViewOwners_MBS.Columns.Add("Address", "Адрес");
-            dataGridViewOwners_MBS.Columns.Add("Phone", "Телефон");
-            dataGridViewOwners_MBS.Columns.Add("Capital", "Капитал (руб.)");
-
+            dataGridViewOwners_MBS.Columns.Add("FullName", "Р¤РРћ");
+            dataGridViewOwners_MBS.Columns.Add("Address", "РђРґСЂРµСЃ");
+            dataGridViewOwners_MBS.Columns.Add("Phone", "РўРµР»РµС„РѕРЅ");
+            dataGridViewOwners_MBS.Columns.Add("Capital", "РљР°РїРёС‚Р°Р» (СЂСѓР±.)");
             dataGridViewOwners_MBS.Columns["Capital"].DefaultCellStyle.Format = "N2";
             dataGridViewOwners_MBS.Columns["Capital"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-            // Настройка DataGridView для магазинов
+            // РќР°СЃС‚СЂРѕР№РєР° DataGridView РґР»СЏ РјР°РіР°Р·РёРЅРѕРІ
             dataGridViewStores_MBS.Columns.Clear();
-
             dataGridViewStores_MBS.Columns.Add("Id", "ID");
-            dataGridViewStores_MBS.Columns.Add("Name", "Название");
-            dataGridViewStores_MBS.Columns.Add("Address", "Адрес");
-            dataGridViewStores_MBS.Columns.Add("Phone", "Телефон");
-            dataGridViewStores_MBS.Columns.Add("MonthlyRevenue", "Выручка (руб.)");
-            dataGridViewStores_MBS.Columns.Add("OwnerName", "Владелец");
-
+            dataGridViewStores_MBS.Columns.Add("Name", "РќР°Р·РІР°РЅРёРµ");
+            dataGridViewStores_MBS.Columns.Add("Address", "РђРґСЂРµСЃ");
+            dataGridViewStores_MBS.Columns.Add("Phone", "РўРµР»РµС„РѕРЅ");
+            dataGridViewStores_MBS.Columns.Add("MonthlyRevenue", "Р’С‹СЂСѓС‡РєР° (СЂСѓР±.)");
+            dataGridViewStores_MBS.Columns.Add("OwnerName", "Р’Р»Р°РґРµР»РµС†");
             dataGridViewStores_MBS.Columns["MonthlyRevenue"].DefaultCellStyle.Format = "N2";
             dataGridViewStores_MBS.Columns["MonthlyRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            // РќР°СЃС‚СЂРѕР№РєР° DataGridView РґР»СЏ РїРѕСЃС‚Р°РІС‰РёРєРѕРІ (РЅРѕРІР°СЏ РІРєР»Р°РґРєР°)
+            // Р”РѕР±Р°РІРёРј РїРѕР·Р¶Рµ, РєРѕРіРґР° СЃРѕР·РґР°РґРёРј РІРєР»Р°РґРєСѓ
         }
 
         private void LoadSampleData()
         {
             try
             {
-                // Тестовые владельцы
-                dataService.AddOwner(new Owner { Id = 001, FullName = "Галицкий С.Н.", Address = "Москва", Phone = "+78612980720", Capital = 1500000 });
-                dataService.AddOwner(new Owner { Id = 002, FullName = "Рогачев А.В.", Address = "СПб", Phone = "+79636589534", Capital = 1200000 });
-                dataService.AddOwner(new Owner { Id = 003, FullName = "Леонов О.А.", Address = "Казань", Phone = "+79538648236", Capital = 980000 });
+                // РўРµСЃС‚РѕРІС‹Рµ РІР»Р°РґРµР»СЊС†С‹
+                dataService.AddOwner(new Owner { Id = 1, FullName = "РРІР°РЅРѕРІ Р.Р.", Address = "РњРѕСЃРєРІР°", Phone = "111", Capital = 5000000 });
+                dataService.AddOwner(new Owner { Id = 2, FullName = "РџРµС‚СЂРѕРІР° Рђ.РЎ.", Address = "РЎРџР±", Phone = "222", Capital = 3500000 });
+                dataService.AddOwner(new Owner { Id = 3, FullName = "РЎРёРґРѕСЂРѕРІ Рђ.Рџ.", Address = "РљР°Р·Р°РЅСЊ", Phone = "333", Capital = 2800000 });
 
-                // Тестовые магазины
-                dataService.AddStore(new Store { Id = 001, Name = "Магнит", Address = "Москва", Phone = "8829002", MonthlyRevenue = 183220000000, OwnerId = 1 });
-                dataService.AddStore(new Store { Id = 002, Name = "Пятерочка", Address = "Москва", Phone = "88005005055", MonthlyRevenue = 271200000000, OwnerId = 1 });
-                dataService.AddStore(new Store { Id = 003, Name = "Дикси", Address = "СПб", Phone = "88003330201", MonthlyRevenue = 1200000, OwnerId = 2 });
+                // РўРµСЃС‚РѕРІС‹Рµ РјР°РіР°Р·РёРЅС‹
+                dataService.AddStore(new Store { Id = 1, Name = "РњР°РіРЅРёС‚", Address = "РњРѕСЃРєРІР°", Phone = "444", MonthlyRevenue = 1500000, OwnerId = 1 });
+                dataService.AddStore(new Store { Id = 2, Name = "РџСЏС‚РµСЂРѕС‡РєР°", Address = "РњРѕСЃРєРІР°", Phone = "555", MonthlyRevenue = 1200000, OwnerId = 1 });
+                dataService.AddStore(new Store { Id = 3, Name = "Р”РёРєСЃРё", Address = "РЎРџР±", Phone = "666", MonthlyRevenue = 980000, OwnerId = 2 });
+
+                // РўРµСЃС‚РѕРІС‹Рµ РїРѕСЃС‚Р°РІС‰РёРєРё
+                dataService.AddSupplier(new Supplier { Id = 1, FullName = "РћРћРћ 'РџСЂРѕРґСѓРєС‚С‹+'" });
+                dataService.AddSupplier(new Supplier { Id = 2, FullName = "РРџ 'РЎРЅР°Р±Р¶РµРЅРёРµ'" });
 
                 UpdateDataGridViews();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С…: {ex.Message}", "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void UpdateDataGridViews()
         {
-            // Владельцы
+            // Р’Р»Р°РґРµР»СЊС†С‹
             dataGridViewOwners_MBS.Rows.Clear();
             foreach (var owner in dataService.GetOwners())
             {
                 dataGridViewOwners_MBS.Rows.Add(owner.Id, owner.FullName, owner.Address, owner.Phone, owner.Capital);
             }
 
-            // Магазины
+            // РњР°РіР°Р·РёРЅС‹
             dataGridViewStores_MBS.Rows.Clear();
             foreach (var store in dataService.GetStores())
             {
-                // Получаем имя владельца по ID
-                string ownerName = "Неизвестно";
+                string ownerName = "РќРµРёР·РІРµСЃС‚РЅРѕ";
                 var owner = dataService.GetOwners().FirstOrDefault(o => o.Id == store.OwnerId);
-                if (owner != null)
-                {
-                    ownerName = owner.FullName;
-                }
+                if (owner != null) ownerName = owner.FullName;
 
                 dataGridViewStores_MBS.Rows.Add(store.Id, store.Name, store.Address, store.Phone, store.MonthlyRevenue, ownerName);
             }
+
+            // РџРѕСЃС‚Р°РІС‰РёРєРё (РµСЃР»Рё Р±СѓРґРµС‚ РІРєР»Р°РґРєР°)
         }
 
         private void UpdateInterface()
@@ -137,17 +198,60 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             int ownerCount = dataService.GetOwners().Count;
             int storeCount = dataService.GetStoreCount();
+            int supplierCount = dataService.GetSuppliers().Count;
             decimal totalCapital = dataService.GetTotalCapital();
 
             toolStripStatusLabelInfo_MBS.Text =
-                $"Владельцев: {ownerCount} | Магазинов: {storeCount} | Капитал: {totalCapital:N2} руб.";
+                $"Р’Р»Р°РґРµР»СЊС†РµРІ: {ownerCount} | РњР°РіР°Р·РёРЅРѕРІ: {storeCount} | РџРѕСЃС‚Р°РІС‰РёРєРѕРІ: {supplierCount} | РљР°РїРёС‚Р°Р»: {totalCapital:N2} СЂСѓР±.";
         }
 
-        // ========== ОБРАБОТЧИКИ СОБЫТИЙ ==========
+        // ========== РћР‘Р РђР‘РћРўР§РРљР РЎРћР‘Р«РўРР™ ==========
 
         private void ButtonAddOwner_MBS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Добавление владельца", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AddNewOwner();
+        }
+
+        private void AddNewOwner()
+        {
+            FormAddOwner form = new FormAddOwner();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // РџРѕР»СѓС‡Р°РµРј СЃР»РµРґСѓСЋС‰РёР№ ID
+                    int nextId = 1;
+                    if (dataService.GetOwners().Count > 0)
+                    {
+                        nextId = dataService.GetOwners().Max(o => o.Id) + 1;
+                    }
+
+                    // РЎРѕР·РґР°РµРј РЅРѕРІРѕРіРѕ РІР»Р°РґРµР»СЊС†Р°
+                    Owner newOwner = new Owner
+                    {
+                        Id = nextId,
+                        FullName = form.FullName,
+                        Address = form.Address,
+                        Phone = form.Phone,
+                        Capital = form.Capital
+                    };
+
+                    // Р”РѕР±Р°РІР»СЏРµРј РІ СЃРµСЂРІРёСЃ
+                    dataService.AddOwner(newOwner);
+
+                    // РћР±РЅРѕРІР»СЏРµРј РёРЅС‚РµСЂС„РµР№СЃ
+                    UpdateDataGridViews();
+                    UpdateStatusInfo();
+
+                    MessageBox.Show($"Р’Р»Р°РґРµР»РµС† '{form.FullName}' СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!", "РЈСЃРїРµС…",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІР»Р°РґРµР»СЊС†Р°: {ex.Message}", "РћС€РёР±РєР°",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void ButtonAddStore_MBS_Click(object sender, EventArgs e)
@@ -157,19 +261,26 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         private void AddNewStore()
         {
+            // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РІР»Р°РґРµР»СЊС†С‹
+            if (dataService.GetOwners().Count == 0)
+            {
+                MessageBox.Show("РЎРЅР°С‡Р°Р»Р° РґРѕР±Р°РІСЊС‚Рµ С…РѕС‚СЏ Р±С‹ РѕРґРЅРѕРіРѕ РІР»Р°РґРµР»СЊС†Р°!", "РћС€РёР±РєР°",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             FormAddStore form = new FormAddStore();
-            if (form.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    // Получаем следующий ID
+                    // РџРѕР»СѓС‡Р°РµРј СЃР»РµРґСѓСЋС‰РёР№ ID
                     int nextId = 1;
                     if (dataService.GetStores().Count > 0)
                     {
                         nextId = dataService.GetStores().Max(s => s.Id) + 1;
                     }
 
-                    // Создаем новый магазин
+                    // РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ РјР°РіР°Р·РёРЅ
                     Store newStore = new Store
                     {
                         Id = nextId,
@@ -180,19 +291,65 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                         OwnerId = form.OwnerId
                     };
 
-                    // Добавляем в сервис
+                    // Р”РѕР±Р°РІР»СЏРµРј РІ СЃРµСЂРІРёСЃ
                     dataService.AddStore(newStore);
 
-                    // Обновляем интерфейс
+                    // РћР±РЅРѕРІР»СЏРµРј РёРЅС‚РµСЂС„РµР№СЃ
                     UpdateDataGridViews();
                     UpdateStatusInfo();
 
-                    MessageBox.Show($"Магазин '{form.StoreName}' успешно добавлен!", "Успех",
+                    MessageBox.Show($"РњР°РіР°Р·РёРЅ '{form.StoreName}' СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!", "РЈСЃРїРµС…",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при добавлении магазина: {ex.Message}", "Ошибка",
+                    MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РјР°РіР°Р·РёРЅР°: {ex.Message}", "РћС€РёР±РєР°",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ButtonAddSupplier_MBS_Click(object sender, EventArgs e)
+        {
+            AddNewSupplier();
+        }
+
+        private void AddNewSupplier()
+        {
+            FormAddSupplier form = new FormAddSupplier();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // РџРѕР»СѓС‡Р°РµРј СЃР»РµРґСѓСЋС‰РёР№ ID
+                    int nextId = 1;
+                    if (dataService.GetSuppliers().Count > 0)
+                    {
+                        nextId = dataService.GetSuppliers().Max(s => s.Id) + 1;
+                    }
+
+                    // РЎРѕР·РґР°РµРј РЅРѕРІРѕРіРѕ РїРѕСЃС‚Р°РІС‰РёРєР°
+                    Supplier newSupplier = new Supplier
+                    {
+                        Id = nextId,
+                        FullName = form.FullName,
+                        Address = form.Address,
+                        Phone = form.Phone,
+                        DeliveryCost = form.DeliveryCost
+                    };
+
+                    // Р”РѕР±Р°РІР»СЏРµРј РІ СЃРµСЂРІРёСЃ
+                    dataService.AddSupplier(newSupplier);
+
+                    // РћР±РЅРѕРІР»СЏРµРј РёРЅС‚РµСЂС„РµР№СЃ
+                    UpdateStatusInfo();
+
+                    MessageBox.Show($"РџРѕСЃС‚Р°РІС‰РёРє '{form.FullName}' СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!", "РЈСЃРїРµС…",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РїРѕСЃС‚Р°РІС‰РёРєР°: {ex.Message}", "РћС€РёР±РєР°",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -200,7 +357,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         private void ButtonEditItem_MBS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Редактирование", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ Р±СѓРґРµС‚ СЂРµР°Р»РёР·РѕРІР°РЅРѕ РІ СЃР»РµРґСѓСЋС‰РµР№ РІРµСЂСЃРёРё", "РРЅС„РѕСЂРјР°С†РёСЏ",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ButtonDeleteItem_MBS_Click(object sender, EventArgs e)
@@ -220,8 +378,61 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             }
             else
             {
-                MessageBox.Show("Выберите вкладку с данными для удаления", "Информация",
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РІРєР»Р°РґРєСѓ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ СѓРґР°Р»РµРЅРёСЏ", "РРЅС„РѕСЂРјР°С†РёСЏ",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void DeleteSelectedOwner()
+        {
+            if (dataGridViewOwners_MBS.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РІР»Р°РґРµР»СЊС†Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ", "РРЅС„РѕСЂРјР°С†РёСЏ",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var selectedRow = dataGridViewOwners_MBS.SelectedRows[0];
+            int ownerId = (int)selectedRow.Cells[0].Value;
+            string ownerName = selectedRow.Cells[1].Value.ToString();
+
+            // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё Сѓ РІР»Р°РґРµР»СЊС†Р° РјР°РіР°Р·РёРЅС‹
+            var ownerStores = dataService.GetStores().Where(s => s.OwnerId == ownerId).ToList();
+            if (ownerStores.Count > 0)
+            {
+                MessageBox.Show($"РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ РІР»Р°РґРµР»СЊС†Р° {ownerName}, С‚Р°Рє РєР°Рє Сѓ РЅРµРіРѕ РµСЃС‚СЊ {ownerStores.Count} РјР°РіР°Р·РёРЅ(РѕРІ).\n" +
+                    "РЎРЅР°С‡Р°Р»Р° СѓРґР°Р»РёС‚Рµ РёР»Рё РїРµСЂРµРїСЂРёРІСЏР¶РёС‚Рµ РјР°РіР°Р·РёРЅС‹.", "РћС€РёР±РєР°",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var result = MessageBox.Show($"Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ РІР»Р°РґРµР»СЊС†Р° '{ownerName}'?",
+                "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ СѓРґР°Р»РµРЅРёСЏ",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    // РќР°С…РѕРґРёРј Рё СѓРґР°Р»СЏРµРј РІР»Р°РґРµР»СЊС†Р°
+                    var owners = dataService.GetOwners();
+                    var ownerToRemove = owners.FirstOrDefault(o => o.Id == ownerId);
+
+                    if (ownerToRemove != null)
+                    {
+                        owners.Remove(ownerToRemove);
+                        UpdateDataGridViews();
+                        UpdateStatusInfo();
+
+                        MessageBox.Show($"Р’Р»Р°РґРµР»РµС† '{ownerName}' СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ!", "РЈСЃРїРµС…",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё РІР»Р°РґРµР»СЊС†Р°: {ex.Message}", "РћС€РёР±РєР°",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -229,7 +440,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             if (dataGridViewStores_MBS.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Выберите магазин для удаления", "Информация",
+                MessageBox.Show("Р’С‹Р±РµСЂРёС‚Рµ РјР°РіР°Р·РёРЅ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ", "РРЅС„РѕСЂРјР°С†РёСЏ",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -238,15 +449,15 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             int storeId = (int)selectedRow.Cells[0].Value;
             string storeName = selectedRow.Cells[1].Value.ToString();
 
-            var result = MessageBox.Show($"Вы действительно хотите удалить магазин '{storeName}'?",
-                "Подтверждение удаления",
+            var result = MessageBox.Show($"Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ РјР°РіР°Р·РёРЅ '{storeName}'?",
+                "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ СѓРґР°Р»РµРЅРёСЏ",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 try
                 {
-                    // Находим и удаляем магазин
+                    // РќР°С…РѕРґРёРј Рё СѓРґР°Р»СЏРµРј РјР°РіР°Р·РёРЅ
                     var stores = dataService.GetStores();
                     var storeToRemove = stores.FirstOrDefault(s => s.Id == storeId);
 
@@ -256,21 +467,16 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                         UpdateDataGridViews();
                         UpdateStatusInfo();
 
-                        MessageBox.Show($"Магазин '{storeName}' успешно удален!", "Успех",
+                        MessageBox.Show($"РњР°РіР°Р·РёРЅ '{storeName}' СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ!", "РЈСЃРїРµС…",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при удалении магазина: {ex.Message}", "Ошибка",
+                    MessageBox.Show($"РћС€РёР±РєР° РїСЂРё СѓРґР°Р»РµРЅРёРё РјР°РіР°Р·РёРЅР°: {ex.Message}", "РћС€РёР±РєР°",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-
-        private void DeleteSelectedOwner()
-        {
-            MessageBox.Show("Удаление владельца", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ButtonSaveData_MBS_Click(object sender, EventArgs e)
@@ -281,7 +487,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show($"Сохранено: {dialog.FileName}", "Успех",
+                MessageBox.Show($"РЎРѕС…СЂР°РЅРµРЅРѕ: {dialog.FileName}", "РЈСЃРїРµС…",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -293,7 +499,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show($"Загружено: {dialog.FileName}", "Успех",
+                MessageBox.Show($"Р—Р°РіСЂСѓР¶РµРЅРѕ: {dialog.FileName}", "РЈСЃРїРµС…",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateDataGridViews();
                 UpdateStatusInfo();
@@ -309,6 +515,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             int ownerCount = dataService.GetOwners().Count;
             int storeCount = dataService.GetStoreCount();
+            int supplierCount = dataService.GetSuppliers().Count;
             decimal totalCapital = dataService.GetTotalCapital();
 
             decimal totalRevenue = 0;
@@ -317,19 +524,28 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 totalRevenue = dataService.GetStores().Sum(s => s.MonthlyRevenue);
             }
 
-            string stats = $"Владельцев: {ownerCount}\n" +
-                          $"Магазинов: {storeCount}\n" +
-                          $"Общий капитал: {totalCapital:N2} руб.\n" +
-                          $"Общая месячная выручка: {totalRevenue:N2} руб.\n\n" +
-                          $"Средняя выручка на магазин: {(storeCount > 0 ? totalRevenue / storeCount : 0):N2} руб.";
+            decimal totalDeliveryCost = 0;
+            if (dataService.GetSuppliers().Count > 0)
+            {
+                totalDeliveryCost = dataService.GetSuppliers().Sum(s => s.DeliveryCost);
+            }
 
-            MessageBox.Show(stats, "Статистика сети магазинов",
+            string stats = $"рџ“Љ РЎРўРђРўРРЎРўРРљРђ РЎР•РўР РњРђР“РђР—РРќРћР’ рџ“Љ\n\n" +
+                          $"рџ‘Ґ Р’Р»Р°РґРµР»СЊС†РµРІ: {ownerCount}\n" +
+                          $"рџЏЄ РњР°РіР°Р·РёРЅРѕРІ: {storeCount}\n" +
+                          $"рџљљ РџРѕСЃС‚Р°РІС‰РёРєРѕРІ: {supplierCount}\n\n" +
+                          $"рџ’° РћР±С‰РёР№ РєР°РїРёС‚Р°Р»: {totalCapital:N2} СЂСѓР±.\n" +
+                          $"рџ’µ РћР±С‰Р°СЏ РјРµСЃСЏС‡РЅР°СЏ РІС‹СЂСѓС‡РєР°: {totalRevenue:N2} СЂСѓР±.\n" +
+                          $"рџ“¦ РћР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ РґРѕСЃС‚Р°РІРєРё: {totalDeliveryCost:N2} СЂСѓР±.\n\n" +
+                          $"рџ“€ РЎСЂРµРґРЅСЏСЏ РІС‹СЂСѓС‡РєР° РЅР° РјР°РіР°Р·РёРЅ: {(storeCount > 0 ? totalRevenue / storeCount : 0):N2} СЂСѓР±.";
+
+            MessageBox.Show(stats, "РЎС‚Р°С‚РёСЃС‚РёРєР° СЃРµС‚Рё РјР°РіР°Р·РёРЅРѕРІ",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ButtonShowChart_MBS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Графики будут реализованы в следующей версии", "Информация",
+            MessageBox.Show("Р“СЂР°С„РёРєРё Р±СѓРґСѓС‚ СЂРµР°Р»РёР·РѕРІР°РЅС‹ РІ СЃР»РµРґСѓСЋС‰РµР№ РІРµСЂСЃРёРё", "РРЅС„РѕСЂРјР°С†РёСЏ",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -342,7 +558,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             }
             else
             {
-                UpdateDataGridViews(); // Показать все данные
+                UpdateDataGridViews(); // РџРѕРєР°Р·Р°С‚СЊ РІСЃРµ РґР°РЅРЅС‹Рµ
             }
         }
 
@@ -350,12 +566,12 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             string filterType = comboBoxFilter_MBS.Text;
 
-            // Очищаем таблицы
+            // РћС‡РёС‰Р°РµРј С‚Р°Р±Р»РёС†С‹
             dataGridViewOwners_MBS.Rows.Clear();
             dataGridViewStores_MBS.Rows.Clear();
 
-            // Поиск владельцев
-            if (filterType == "Все" || filterType == "Владельцы")
+            // РџРѕРёСЃРє РІР»Р°РґРµР»СЊС†РµРІ
+            if (filterType == "Р’СЃРµ" || filterType == "Р’Р»Р°РґРµР»СЊС†С‹")
             {
                 var owners = dataService.GetOwners().Where(o =>
                     o.FullName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
@@ -368,8 +584,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 }
             }
 
-            // Поиск магазинов
-            if (filterType == "Все" || filterType == "Магазины")
+            // РџРѕРёСЃРє РјР°РіР°Р·РёРЅРѕРІ
+            if (filterType == "Р’СЃРµ" || filterType == "РњР°РіР°Р·РёРЅС‹")
             {
                 var stores = dataService.GetStores().Where(s =>
                     s.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
@@ -378,76 +594,99 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
                 foreach (var store in stores)
                 {
-                    // Получаем имя владельца
-                    string ownerName = "Неизвестно";
+                    string ownerName = "РќРµРёР·РІРµСЃС‚РЅРѕ";
                     var owner = dataService.GetOwners().FirstOrDefault(o => o.Id == store.OwnerId);
-                    if (owner != null)
-                    {
-                        ownerName = owner.FullName;
-                    }
+                    if (owner != null) ownerName = owner.FullName;
 
                     dataGridViewStores_MBS.Rows.Add(store.Id, store.Name, store.Address, store.Phone, store.MonthlyRevenue, ownerName);
                 }
             }
 
-            toolStripStatusLabelInfo_MBS.Text = $"Найдено по запросу '{searchText}'";
+            toolStripStatusLabelInfo_MBS.Text = $"РќР°Р№РґРµРЅРѕ РїРѕ Р·Р°РїСЂРѕСЃСѓ '{searchText}'";
         }
 
-        // Обработчики меню
+        // РћР±СЂР°Р±РѕС‚С‡РёРєРё РјРµРЅСЋ
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            var result = MessageBox.Show("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ РІС‹Р№С‚Рё?", "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ РІС‹С…РѕРґР°",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
 
         private void ToolStripMenuItemAbout_MBS_Click(object sender, EventArgs e)
         {
-            string about = @"СЕТЬ МАГАЗИНОВ - MBS
-Версия 2.0
+            string about = @"рџЏЄ РЎР•РўР¬ РњРђР“РђР—РРќРћР’ - MBS рџЏЄ
+Р’РµСЂСЃРёСЏ 3.0
 
-Программа для управления сетью магазинов.
-Возможности:
-- Учет владельцев и магазинов
-- Добавление, редактирование, удаление магазинов
-- Анализ капитала и выручки
-- Поиск по всем данным
-- Сохранение и загрузка данных
+РџРѕР»РЅР°СЏ СЃРёСЃС‚РµРјР° СѓРїСЂР°РІР»РµРЅРёСЏ СЃРµС‚СЊСЋ РјР°РіР°Р·РёРЅРѕРІ.
+Р’РѕР·РјРѕР¶РЅРѕСЃС‚Рё:
+рџ‘Ґ РЈРїСЂР°РІР»РµРЅРёРµ РІР»Р°РґРµР»СЊС†Р°РјРё
+рџЏЄ РЈРїСЂР°РІР»РµРЅРёРµ РјР°РіР°Р·РёРЅР°РјРё
+рџљљ РЈРїСЂР°РІР»РµРЅРёРµ РїРѕСЃС‚Р°РІС‰РёРєР°РјРё
+рџ’° РђРЅР°Р»РёР· С„РёРЅР°РЅСЃРѕРІС‹С… РїРѕРєР°Р·Р°С‚РµР»РµР№
+рџ”Ќ РџРѕРёСЃРє РїРѕ РІСЃРµРј РґР°РЅРЅС‹Рј
+рџ’ѕ РЎРѕС…СЂР°РЅРµРЅРёРµ Рё Р·Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…
 
-Разработчик: MihajlichenkoSB";
+Р Р°Р·СЂР°Р±РѕС‚С‡РёРє: MihajlichenkoSB
+Р”Р°С‚Р°: 2024
 
-            MessageBox.Show(about, "О программе",
+рџ’Ў РСЃРїРѕР»СЊР·СѓР№С‚Рµ С†РІРµС‚РЅС‹Рµ РєРЅРѕРїРєРё РІРІРµСЂС…Сѓ РґР»СЏ Р±С‹СЃС‚СЂРѕРіРѕ РґРѕР±Р°РІР»РµРЅРёСЏ!";
+
+            MessageBox.Show(about, "Рћ РїСЂРѕРіСЂР°РјРјРµ",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ToolStripMenuItemUserGuide_MBS_Click(object sender, EventArgs e)
         {
-            string guide = @"РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ
+            string guide = @"рџ“ Р РЈРљРћР’РћР”РЎРўР’Рћ РџРћР›Р¬Р—РћР’РђРўР•Р›РЇ рџ“
 
-1. УПРАВЛЕНИЕ МАГАЗИНАМИ:
-   - Добавление: нажмите 'Добавить магазин'
-   - Удаление: выделите магазин и нажмите 'Удалить'
-   - Просмотр: перейдите на вкладку 'Магазины'
+рџЊ€ Р¦Р’Р•РўРќР«Р• РљРќРћРџРљР Р’Р’Р•Р РҐРЈ:
+рџ”µ РЎРІРµС‚Р»Рѕ-СЃРёРЅСЏСЏ - Р”РѕР±Р°РІРёС‚СЊ РІР»Р°РґРµР»СЊС†Р°
+рџџў РЎРІРµС‚Р»Рѕ-Р·РµР»РµРЅР°СЏ - Р”РѕР±Р°РІРёС‚СЊ РјР°РіР°Р·РёРЅ
+рџ”ґ РЎРІРµС‚Р»Рѕ-РѕСЂР°РЅР¶РµРІР°СЏ - Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚Р°РІС‰РёРєР°
 
-2. ДОБАВЛЕНИЕ МАГАЗИНА:
-   - Введите название магазина
-   - Укажите адрес и телефон
-   - Введите месячную выручку
-   - Выберите владельца из списка
-   - Нажмите 'Добавить'
+1. Р”РћР‘РђР’Р›Р•РќРР• Р’Р›РђР”Р•Р›Р¬Р¦Рђ:
+   - РќР°Р¶РјРёС‚Рµ СЃРёРЅСЋСЋ РєРЅРѕРїРєСѓ 'Р”РѕР±Р°РІРёС‚СЊ РІР»Р°РґРµР»СЊС†Р°'
+   - Р—Р°РїРѕР»РЅРёС‚Рµ Р¤РРћ, Р°РґСЂРµСЃ, С‚РµР»РµС„РѕРЅ, РєР°РїРёС‚Р°Р»
+   - РќР°Р¶РјРёС‚Рµ 'Р”РѕР±Р°РІРёС‚СЊ'
 
-3. ПОИСК ДАННЫХ:
-   - Введите текст в поле поиска
-   - Выберите тип данных в фильтре
-   - Нажмите 'Найти' или Enter
+2. Р”РћР‘РђР’Р›Р•РќРР• РњРђР“РђР—РРќРђ:
+   - РќР°Р¶РјРёС‚Рµ Р·РµР»РµРЅСѓСЋ РєРЅРѕРїРєСѓ 'Р”РѕР±Р°РІРёС‚СЊ РјР°РіР°Р·РёРЅ'
+   - Р—Р°РїРѕР»РЅРёС‚Рµ РґР°РЅРЅС‹Рµ РјР°РіР°Р·РёРЅР°
+   - Р’С‹Р±РµСЂРёС‚Рµ РІР»Р°РґРµР»СЊС†Р° РёР· СЃРїРёСЃРєР°
+   - РќР°Р¶РјРёС‚Рµ 'Р”РѕР±Р°РІРёС‚СЊ'
 
-4. СТАТИСТИКА:
-   - Нажмите 'Статистика' для просмотра
-   - Показывает общие показатели сети";
+3. Р”РћР‘РђР’Р›Р•РќРР• РџРћРЎРўРђР’Р©РРљРђ:
+   - РќР°Р¶РјРёС‚Рµ РѕСЂР°РЅР¶РµРІСѓСЋ РєРЅРѕРїРєСѓ 'Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚Р°РІС‰РёРєР°'
+   - Р—Р°РїРѕР»РЅРёС‚Рµ РґР°РЅРЅС‹Рµ РїРѕСЃС‚Р°РІС‰РёРєР°
+   - РЈРєР°Р¶РёС‚Рµ СЃС‚РѕРёРјРѕСЃС‚СЊ РґРѕСЃС‚Р°РІРєРё
+   - РќР°Р¶РјРёС‚Рµ 'Р”РѕР±Р°РІРёС‚СЊ'
 
-            MessageBox.Show(guide, "Руководство пользователя",
+4. РЈР”РђР›Р•РќРР• Р”РђРќРќР«РҐ:
+   - Р’С‹Р±РµСЂРёС‚Рµ СЃС‚СЂРѕРєСѓ РІ С‚Р°Р±Р»РёС†Рµ
+   - РќР°Р¶РјРёС‚Рµ РєСЂР°СЃРЅСѓСЋ РєРЅРѕРїРєСѓ 'РЈРґР°Р»РёС‚СЊ'
+   - РџРѕРґС‚РІРµСЂРґРёС‚Рµ СѓРґР°Р»РµРЅРёРµ
+
+5. РџРћРРЎРљ Р”РђРќРќР«РҐ:
+   - Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚ РІ РїРѕР»Рµ РїРѕРёСЃРєР°
+   - Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї РґР°РЅРЅС‹С… РІ С„РёР»СЊС‚СЂРµ
+   - РќР°Р¶РјРёС‚Рµ 'РќР°Р№С‚Рё' РёР»Рё Enter
+
+6. РЎРўРђРўРРЎРўРРљРђ:
+   - РќР°Р¶РјРёС‚Рµ 'РЎС‚Р°С‚РёСЃС‚РёРєР°' РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР°
+   - РџРѕРєР°Р·С‹РІР°РµС‚ РѕР±С‰РёРµ РїРѕРєР°Р·Р°С‚РµР»Рё СЃРµС‚Рё
+
+вљ  Р’РќРРњРђРќРР•: РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ РІР»Р°РґРµР»СЊС†Р°, Сѓ РєРѕС‚РѕСЂРѕРіРѕ РµСЃС‚СЊ РјР°РіР°Р·РёРЅС‹!";
+
+            MessageBox.Show(guide, "Р СѓРєРѕРІРѕРґСЃС‚РІРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // Дополнительные обработчики
+        // Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РѕР±СЂР°Р±РѕС‚С‡РёРєРё
         private void TextBoxSearch_MBS_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -459,26 +698,58 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         private void labelTitle_MBS_Click(object sender, EventArgs e)
         {
-            // Простая анимация при клике на заголовок
+            // РџСЂРѕСЃС‚Р°СЏ Р°РЅРёРјР°С†РёСЏ РїСЂРё РєР»РёРєРµ РЅР° Р·Р°РіРѕР»РѕРІРѕРє
             Color currentColor = labelTitle_MBS.ForeColor;
             labelTitle_MBS.ForeColor = currentColor == Color.DarkBlue ? Color.DarkRed : Color.DarkBlue;
+            
+            // РњРµРЅСЏРµРј С†РІРµС‚ РїР°РЅРµР»Рё СЃ РєРЅРѕРїРєР°РјРё
+            if (panelAddButtons.BackColor == Color.LightSteelBlue)
+                panelAddButtons.BackColor = Color.LightGray;
+            else
+                panelAddButtons.BackColor = Color.LightSteelBlue;
         }
 
-        // Обработчик двойного клика по магазину для быстрого просмотра
+        // РћР±СЂР°Р±РѕС‚С‡РёРє РґРІРѕР№РЅРѕРіРѕ РєР»РёРєР° РїРѕ РјР°РіР°Р·РёРЅСѓ
         private void dataGridViewStores_MBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 var row = dataGridViewStores_MBS.Rows[e.RowIndex];
                 string storeName = row.Cells[1].Value.ToString();
+                string address = row.Cells[2].Value.ToString();
                 string revenue = row.Cells[4].Value.ToString();
                 string owner = row.Cells[5].Value.ToString();
 
-                string info = $"Название: {storeName}\n" +
-                             $"Выручка: {revenue} руб.\n" +
-                             $"Владелец: {owner}";
+                string info = $"рџЏЄ РњР°РіР°Р·РёРЅ: {storeName}\n" +
+                             $"рџ“Ќ РђРґСЂРµСЃ: {address}\n" +
+                             $"рџ’° Р’С‹СЂСѓС‡РєР°: {revenue} СЂСѓР±.\n" +
+                             $"рџ‘¤ Р’Р»Р°РґРµР»РµС†: {owner}";
 
-                MessageBox.Show(info, "Информация о магазине",
+                MessageBox.Show(info, "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјР°РіР°Р·РёРЅРµ",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        // РћР±СЂР°Р±РѕС‚С‡РёРє РґРІРѕР№РЅРѕРіРѕ РєР»РёРєР° РїРѕ РІР»Р°РґРµР»СЊС†Сѓ
+        private void dataGridViewOwners_MBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var row = dataGridViewOwners_MBS.Rows[e.RowIndex];
+                string ownerName = row.Cells[1].Value.ToString();
+                string address = row.Cells[2].Value.ToString();
+                string capital = row.Cells[4].Value.ToString();
+
+                // РЎС‡РёС‚Р°РµРј РјР°РіР°Р·РёРЅС‹ РІР»Р°РґРµР»СЊС†Р°
+                int ownerId = (int)row.Cells[0].Value;
+                int storeCount = dataService.GetStores().Count(s => s.OwnerId == ownerId);
+
+                string info = $"рџ‘¤ Р’Р»Р°РґРµР»РµС†: {ownerName}\n" +
+                             $"рџ“Ќ РђРґСЂРµСЃ: {address}\n" +
+                             $"рџ’° РљР°РїРёС‚Р°Р»: {capital} СЂСѓР±.\n" +
+                             $"рџЏЄ РњР°РіР°Р·РёРЅРѕРІ: {storeCount}";
+
+                MessageBox.Show(info, "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІР»Р°РґРµР»СЊС†Рµ",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

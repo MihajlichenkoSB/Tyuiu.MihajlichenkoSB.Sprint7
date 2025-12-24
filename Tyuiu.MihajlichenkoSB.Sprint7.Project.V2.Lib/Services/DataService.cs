@@ -1,6 +1,4 @@
 ﻿using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
-
-using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +9,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
     {
         private List<Owner> owners = new List<Owner>();
         private List<Store> stores = new List<Store>();
+        private List<Supplier> suppliers = new List<Supplier>();
 
         // Методы для работы с владельцами
         public void AddOwner(Owner owner)
@@ -44,6 +43,22 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
             return stores.FirstOrDefault(s => s.Id == id);
         }
 
+        // Методы для поставщиков
+        public void AddSupplier(Supplier supplier)
+        {
+            suppliers.Add(supplier);
+        }
+
+        public List<Supplier> GetSuppliers()
+        {
+            return suppliers;
+        }
+
+        public Supplier GetSupplierById(int id)
+        {
+            return suppliers.FirstOrDefault(s => s.Id == id);
+        }
+
         // Статистика
         public int GetStoreCount()
         {
@@ -63,6 +78,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
         public int GetTotalOwners()
         {
             return owners.Count;
+        }
+
+        public int GetTotalSuppliers()
+        {
+            return suppliers.Count;
         }
 
         // Класс для статистики магазинов
@@ -123,13 +143,35 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services
                 s.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        // Метод для удаления магазина по ID
+        // Методы для удаления
         public bool RemoveStore(int id)
         {
             var store = stores.FirstOrDefault(s => s.Id == id);
             if (store != null)
             {
                 stores.Remove(store);
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveOwner(int id)
+        {
+            var owner = owners.FirstOrDefault(o => o.Id == id);
+            if (owner != null)
+            {
+                owners.Remove(owner);
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveSupplier(int id)
+        {
+            var supplier = suppliers.FirstOrDefault(s => s.Id == id);
+            if (supplier != null)
+            {
+                suppliers.Remove(supplier);
                 return true;
             }
             return false;

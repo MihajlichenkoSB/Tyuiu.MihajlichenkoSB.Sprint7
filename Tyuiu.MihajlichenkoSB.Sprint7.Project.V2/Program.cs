@@ -1,10 +1,10 @@
+using System;
+using System.Windows.Forms;
+
 namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 {
-    internal static class Program
+    static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {

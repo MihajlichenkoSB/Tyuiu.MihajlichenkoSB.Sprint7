@@ -107,15 +107,15 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             labelSubtitle_MBS = new Label();
             pictureBoxLogo_MBS = new PictureBox();
             panelSearch_MBS = new Panel();
-            buttonAddSupplier_MBS = new Button();
-            buttonAddStore_MBS = new Button();
-            buttonAddOwner_MBS = new Button();
             buttonClearSearch_MBS = new Button();
             buttonSearch_MBS = new Button();
             textBoxSearch_MBS = new TextBox();
             labelSearch_MBS = new Label();
             comboBoxFilter_MBS = new ComboBox();
             labelFilter_MBS = new Label();
+            buttonAddSupplier_MBS = new Button();
+            buttonAddStore_MBS = new Button();
+            buttonAddOwner_MBS = new Button();
             tabControlMain_MBS = new TabControl();
             tabPageOwners_MBS = new TabPage();
             dataGridViewOwners_MBS = new DataGridView();
@@ -174,7 +174,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             menuStripMain_MBS.Location = new Point(0, 0);
             menuStripMain_MBS.Name = "menuStripMain_MBS";
             menuStripMain_MBS.Padding = new Padding(7, 2, 0, 2);
-            menuStripMain_MBS.Size = new Size(1200, 31);
+            menuStripMain_MBS.Size = new Size(1210, 31);
             menuStripMain_MBS.TabIndex = 0;
             menuStripMain_MBS.Text = "menuStripMain_MBS";
             // 
@@ -446,7 +446,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripButtonNew_MBS, toolStripButtonAddOwner_MBS, toolStripButtonAddStore_MBS, toolStripButtonAddSupplier_MBS, toolStripSeparator9, toolStripButtonEdit_MBS, toolStripButtonDelete_MBS, toolStripSeparator10, toolStripButtonSave_MBS, toolStripButtonLoad_MBS, toolStripButtonPrint_MBS, toolStripSeparator11, toolStripButtonStats_MBS, toolStripButtonChart_MBS, toolStripButtonReport_MBS, toolStripSeparator12, toolStripButtonHelp_MBS });
             toolStripMain_MBS.Location = new Point(0, 31);
             toolStripMain_MBS.Name = "toolStripMain_MBS";
-            toolStripMain_MBS.Size = new Size(1200, 25);
+            toolStripMain_MBS.Size = new Size(1210, 25);
             toolStripMain_MBS.TabIndex = 1;
             toolStripMain_MBS.Text = "toolStripMain_MBS";
             // 
@@ -593,10 +593,10 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             statusStripMain_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             statusStripMain_MBS.ImageScalingSize = new Size(20, 20);
             statusStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelInfo_MBS, toolStripProgressBar_MBS, toolStripStatusLabelCount_MBS, toolStripStatusLabelDate_MBS, toolStripStatusLabelTime_MBS });
-            statusStripMain_MBS.Location = new Point(0, 671);
+            statusStripMain_MBS.Location = new Point(0, 852);
             statusStripMain_MBS.Name = "statusStripMain_MBS";
             statusStripMain_MBS.Padding = new Padding(1, 0, 16, 0);
-            statusStripMain_MBS.Size = new Size(1200, 29);
+            statusStripMain_MBS.Size = new Size(1210, 29);
             statusStripMain_MBS.SizingGrip = false;
             statusStripMain_MBS.TabIndex = 2;
             statusStripMain_MBS.Text = "statusStripMain_MBS";
@@ -606,7 +606,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolStripStatusLabelInfo_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             toolStripStatusLabelInfo_MBS.ForeColor = Color.White;
             toolStripStatusLabelInfo_MBS.Name = "toolStripStatusLabelInfo_MBS";
-            toolStripStatusLabelInfo_MBS.Size = new Size(837, 23);
+            toolStripStatusLabelInfo_MBS.Size = new Size(847, 23);
             toolStripStatusLabelInfo_MBS.Spring = true;
             toolStripStatusLabelInfo_MBS.Text = "Готово к работе";
             toolStripStatusLabelInfo_MBS.TextAlign = ContentAlignment.MiddleLeft;
@@ -650,7 +650,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             panelHeader_MBS.Dock = DockStyle.Top;
             panelHeader_MBS.Location = new Point(0, 56);
             panelHeader_MBS.Name = "panelHeader_MBS";
-            panelHeader_MBS.Size = new Size(1200, 100);
+            panelHeader_MBS.Size = new Size(1210, 100);
             panelHeader_MBS.TabIndex = 3;
             // 
             // labelTitle_MBS
@@ -697,47 +697,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             panelSearch_MBS.Dock = DockStyle.Top;
             panelSearch_MBS.Location = new Point(0, 156);
             panelSearch_MBS.Name = "panelSearch_MBS";
-            panelSearch_MBS.Size = new Size(1200, 60);
+            panelSearch_MBS.Size = new Size(1210, 60);
             panelSearch_MBS.TabIndex = 4;
-            // 
-            // buttonAddSupplier_MBS
-            // 
-            buttonAddSupplier_MBS.BackColor = Color.FromArgb(155, 89, 182);
-            buttonAddSupplier_MBS.FlatStyle = FlatStyle.Flat;
-            buttonAddSupplier_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonAddSupplier_MBS.ForeColor = Color.White;
-            buttonAddSupplier_MBS.Location = new Point(1040, 15);
-            buttonAddSupplier_MBS.Name = "buttonAddSupplier_MBS";
-            buttonAddSupplier_MBS.Size = new Size(130, 30);
-            buttonAddSupplier_MBS.TabIndex = 8;
-            buttonAddSupplier_MBS.Text = "➕ Поставщик";
-            buttonAddSupplier_MBS.UseVisualStyleBackColor = false;
-            // 
-            // buttonAddStore_MBS
-            // 
-            buttonAddStore_MBS.BackColor = Color.FromArgb(52, 152, 219);
-            buttonAddStore_MBS.FlatStyle = FlatStyle.Flat;
-            buttonAddStore_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonAddStore_MBS.ForeColor = Color.White;
-            buttonAddStore_MBS.Location = new Point(900, 15);
-            buttonAddStore_MBS.Name = "buttonAddStore_MBS";
-            buttonAddStore_MBS.Size = new Size(130, 30);
-            buttonAddStore_MBS.TabIndex = 7;
-            buttonAddStore_MBS.Text = "➕ Магазин";
-            buttonAddStore_MBS.UseVisualStyleBackColor = false;
-            // 
-            // buttonAddOwner_MBS
-            // 
-            buttonAddOwner_MBS.BackColor = Color.FromArgb(46, 204, 113);
-            buttonAddOwner_MBS.FlatStyle = FlatStyle.Flat;
-            buttonAddOwner_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonAddOwner_MBS.ForeColor = Color.White;
-            buttonAddOwner_MBS.Location = new Point(760, 15);
-            buttonAddOwner_MBS.Name = "buttonAddOwner_MBS";
-            buttonAddOwner_MBS.Size = new Size(130, 30);
-            buttonAddOwner_MBS.TabIndex = 6;
-            buttonAddOwner_MBS.Text = "➕ Владелец";
-            buttonAddOwner_MBS.UseVisualStyleBackColor = false;
             // 
             // buttonClearSearch_MBS
             // 
@@ -803,6 +764,45 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             labelFilter_MBS.TabIndex = 2;
             labelFilter_MBS.Text = "Фильтр:";
             // 
+            // buttonAddSupplier_MBS
+            // 
+            buttonAddSupplier_MBS.BackColor = Color.FromArgb(155, 89, 182);
+            buttonAddSupplier_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddSupplier_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddSupplier_MBS.ForeColor = Color.White;
+            buttonAddSupplier_MBS.Location = new Point(20, 118);
+            buttonAddSupplier_MBS.Name = "buttonAddSupplier_MBS";
+            buttonAddSupplier_MBS.Size = new Size(230, 38);
+            buttonAddSupplier_MBS.TabIndex = 2;
+            buttonAddSupplier_MBS.Text = "🚚 Поставщик";
+            buttonAddSupplier_MBS.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddStore_MBS
+            // 
+            buttonAddStore_MBS.BackColor = Color.FromArgb(52, 152, 219);
+            buttonAddStore_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddStore_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddStore_MBS.ForeColor = Color.White;
+            buttonAddStore_MBS.Location = new Point(20, 74);
+            buttonAddStore_MBS.Name = "buttonAddStore_MBS";
+            buttonAddStore_MBS.Size = new Size(230, 38);
+            buttonAddStore_MBS.TabIndex = 1;
+            buttonAddStore_MBS.Text = "🏪 Магазин";
+            buttonAddStore_MBS.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddOwner_MBS
+            // 
+            buttonAddOwner_MBS.BackColor = Color.FromArgb(46, 204, 113);
+            buttonAddOwner_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddOwner_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddOwner_MBS.ForeColor = Color.White;
+            buttonAddOwner_MBS.Location = new Point(20, 30);
+            buttonAddOwner_MBS.Name = "buttonAddOwner_MBS";
+            buttonAddOwner_MBS.Size = new Size(230, 38);
+            buttonAddOwner_MBS.TabIndex = 0;
+            buttonAddOwner_MBS.Text = "👤 Владелец";
+            buttonAddOwner_MBS.UseVisualStyleBackColor = false;
+            // 
             // tabControlMain_MBS
             // 
             tabControlMain_MBS.Controls.Add(tabPageOwners_MBS);
@@ -813,7 +813,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             tabControlMain_MBS.Location = new Point(300, 216);
             tabControlMain_MBS.Name = "tabControlMain_MBS";
             tabControlMain_MBS.SelectedIndex = 0;
-            tabControlMain_MBS.Size = new Size(900, 455);
+            tabControlMain_MBS.Size = new Size(910, 636);
             tabControlMain_MBS.TabIndex = 5;
             // 
             // tabPageOwners_MBS
@@ -823,7 +823,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             tabPageOwners_MBS.Location = new Point(4, 32);
             tabPageOwners_MBS.Name = "tabPageOwners_MBS";
             tabPageOwners_MBS.Padding = new Padding(3);
-            tabPageOwners_MBS.Size = new Size(892, 419);
+            tabPageOwners_MBS.Size = new Size(902, 600);
             tabPageOwners_MBS.TabIndex = 0;
             tabPageOwners_MBS.Text = "👤  Владельцы";
             // 
@@ -870,7 +870,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataGridViewOwners_MBS.RowTemplate.DefaultCellStyle.Padding = new Padding(5);
             dataGridViewOwners_MBS.RowTemplate.Height = 35;
             dataGridViewOwners_MBS.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewOwners_MBS.Size = new Size(886, 413);
+            dataGridViewOwners_MBS.Size = new Size(896, 594);
             dataGridViewOwners_MBS.TabIndex = 0;
             // 
             // tabPageStores_MBS
@@ -880,7 +880,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             tabPageStores_MBS.Location = new Point(4, 32);
             tabPageStores_MBS.Name = "tabPageStores_MBS";
             tabPageStores_MBS.Padding = new Padding(3);
-            tabPageStores_MBS.Size = new Size(892, 419);
+            tabPageStores_MBS.Size = new Size(902, 600);
             tabPageStores_MBS.TabIndex = 1;
             tabPageStores_MBS.Text = "🏪  Магазины";
             // 
@@ -927,7 +927,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataGridViewStores_MBS.RowTemplate.DefaultCellStyle.Padding = new Padding(5);
             dataGridViewStores_MBS.RowTemplate.Height = 35;
             dataGridViewStores_MBS.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewStores_MBS.Size = new Size(886, 413);
+            dataGridViewStores_MBS.Size = new Size(896, 594);
             dataGridViewStores_MBS.TabIndex = 1;
             // 
             // tabPageSuppliers_MBS
@@ -937,7 +937,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             tabPageSuppliers_MBS.Location = new Point(4, 32);
             tabPageSuppliers_MBS.Name = "tabPageSuppliers_MBS";
             tabPageSuppliers_MBS.Padding = new Padding(3);
-            tabPageSuppliers_MBS.Size = new Size(892, 419);
+            tabPageSuppliers_MBS.Size = new Size(902, 600);
             tabPageSuppliers_MBS.TabIndex = 2;
             tabPageSuppliers_MBS.Text = "🚚  Поставщики";
             // 
@@ -984,7 +984,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataGridViewSuppliers_MBS.RowTemplate.DefaultCellStyle.Padding = new Padding(5);
             dataGridViewSuppliers_MBS.RowTemplate.Height = 35;
             dataGridViewSuppliers_MBS.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewSuppliers_MBS.Size = new Size(886, 413);
+            dataGridViewSuppliers_MBS.Size = new Size(896, 594);
             dataGridViewSuppliers_MBS.TabIndex = 1;
             // 
             // panelSidebar_MBS
@@ -997,7 +997,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             panelSidebar_MBS.Dock = DockStyle.Left;
             panelSidebar_MBS.Location = new Point(0, 216);
             panelSidebar_MBS.Name = "panelSidebar_MBS";
-            panelSidebar_MBS.Size = new Size(300, 455);
+            panelSidebar_MBS.Size = new Size(300, 636);
             panelSidebar_MBS.TabIndex = 6;
             // 
             // groupBoxAddActions_MBS
@@ -1008,7 +1008,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             groupBoxAddActions_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
             groupBoxAddActions_MBS.Location = new Point(15, 442);
             groupBoxAddActions_MBS.Name = "groupBoxAddActions_MBS";
-            groupBoxAddActions_MBS.Size = new Size(270, 120);
+            groupBoxAddActions_MBS.Size = new Size(270, 176);
             groupBoxAddActions_MBS.TabIndex = 3;
             groupBoxAddActions_MBS.TabStop = false;
             groupBoxAddActions_MBS.Text = "Быстрое добавление";
@@ -1253,7 +1253,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1200, 700);
+            ClientSize = new Size(1210, 881);
             Controls.Add(tabControlMain_MBS);
             Controls.Add(panelSidebar_MBS);
             Controls.Add(panelSearch_MBS);

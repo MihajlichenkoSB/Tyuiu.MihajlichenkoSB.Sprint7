@@ -9,19 +9,19 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         public string FullName { get; private set; }
         public string Address { get; private set; }
         public string Phone { get; private set; }
-        public decimal DeliveryCost { get; private set; }
+        public string Product { get; private set; }
 
         private TextBox textBoxFullName;
         private TextBox textBoxAddress;
         private TextBox textBoxPhone;
-        private TextBox textBoxDeliveryCost;
+        private TextBox textBoxProduct;
         private Button buttonOK;
         private Button buttonCancel;
         private Label labelTitle;
         private Label labelName;
         private Label labelAddress;
         private Label labelPhone;
-        private Label labelDeliveryCost;
+        private Label labelProduct;
 
         public FormAddSupplier()
         {
@@ -33,21 +33,21 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.textBoxFullName = new TextBox();
             this.textBoxAddress = new TextBox();
             this.textBoxPhone = new TextBox();
-            this.textBoxDeliveryCost = new TextBox();
+            this.textBoxProduct = new TextBox();
             this.buttonOK = new Button();
             this.buttonCancel = new Button();
             this.labelTitle = new Label();
             this.labelName = new Label();
             this.labelAddress = new Label();
             this.labelPhone = new Label();
-            this.labelDeliveryCost = new Label();
+            this.labelProduct = new Label();
 
             // labelTitle
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            this.labelTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
             this.labelTitle.Location = new Point(120, 20);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new Size(180, 25);
+            this.labelTitle.Size = new Size(180, 28);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Добавить поставщика";
 
@@ -93,37 +93,41 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.textBoxPhone.Size = new Size(200, 27);
             this.textBoxPhone.TabIndex = 2;
 
-            // labelDeliveryCost
-            this.labelDeliveryCost.AutoSize = true;
-            this.labelDeliveryCost.Location = new Point(30, 190);
-            this.labelDeliveryCost.Name = "labelDeliveryCost";
-            this.labelDeliveryCost.Size = new Size(134, 20);
-            this.labelDeliveryCost.TabIndex = 1;
-            this.labelDeliveryCost.Text = "Стоимость доставки:";
+            // labelProduct
+            this.labelProduct.AutoSize = true;
+            this.labelProduct.Location = new Point(30, 190);
+            this.labelProduct.Name = "labelProduct";
+            this.labelProduct.Size = new Size(62, 20);
+            this.labelProduct.TabIndex = 1;
+            this.labelProduct.Text = "Товар:";
 
-            // textBoxDeliveryCost
-            this.textBoxDeliveryCost.Location = new Point(170, 187);
-            this.textBoxDeliveryCost.Name = "textBoxDeliveryCost";
-            this.textBoxDeliveryCost.Size = new Size(200, 27);
-            this.textBoxDeliveryCost.TabIndex = 3;
-            this.textBoxDeliveryCost.Text = "0";
+            // textBoxProduct
+            this.textBoxProduct.Location = new Point(170, 187);
+            this.textBoxProduct.Name = "textBoxProduct";
+            this.textBoxProduct.Size = new Size(200, 27);
+            this.textBoxProduct.TabIndex = 3;
 
             // buttonOK
+            this.buttonOK.BackColor = Color.FromArgb(0, 122, 204);
+            this.buttonOK.FlatStyle = FlatStyle.Flat;
+            this.buttonOK.ForeColor = Color.White;
             this.buttonOK.Location = new Point(100, 240);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(100, 35);
             this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "Добавить";
-            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.UseVisualStyleBackColor = false;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
 
             // buttonCancel
+            this.buttonCancel.BackColor = Color.FromArgb(240, 240, 240);
+            this.buttonCancel.FlatStyle = FlatStyle.Flat;
             this.buttonCancel.Location = new Point(210, 240);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(100, 35);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Отмена";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new EventHandler(this.buttonCancel_Click);
 
             // FormAddSupplier
@@ -132,11 +136,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.ClientSize = new Size(400, 300);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.textBoxDeliveryCost);
+            this.Controls.Add(this.textBoxProduct);
             this.Controls.Add(this.textBoxPhone);
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.textBoxFullName);
-            this.Controls.Add(this.labelDeliveryCost);
+            this.Controls.Add(this.labelProduct);
             this.Controls.Add(this.labelPhone);
             this.Controls.Add(this.labelAddress);
             this.Controls.Add(this.labelName);
@@ -158,7 +162,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 FullName = textBoxFullName.Text;
                 Address = textBoxAddress.Text;
                 Phone = textBoxPhone.Text;
-                DeliveryCost = decimal.Parse(textBoxDeliveryCost.Text);
+                Product = textBoxProduct.Text;
+
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -174,29 +179,33 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             if (string.IsNullOrWhiteSpace(textBoxFullName.Text))
             {
-                MessageBox.Show("Введите ФИО поставщика", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите ФИО поставщика", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxFullName.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(textBoxAddress.Text))
             {
-                MessageBox.Show("Введите адрес поставщика", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите адрес поставщика", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxAddress.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(textBoxPhone.Text))
             {
-                MessageBox.Show("Введите телефон поставщика", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите телефон поставщика", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxPhone.Focus();
                 return false;
             }
 
-            if (!decimal.TryParse(textBoxDeliveryCost.Text, out decimal cost) || cost < 0)
+            if (string.IsNullOrWhiteSpace(textBoxProduct.Text))
             {
-                MessageBox.Show("Введите корректную стоимость доставки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBoxDeliveryCost.Focus();
+                MessageBox.Show("Введите название товара", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxProduct.Focus();
                 return false;
             }
 

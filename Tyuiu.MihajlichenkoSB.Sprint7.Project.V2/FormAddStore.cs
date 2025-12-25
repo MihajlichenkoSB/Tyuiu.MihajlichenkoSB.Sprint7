@@ -1,7 +1,7 @@
 ﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
 
 namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 {
@@ -10,44 +10,23 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         public string StoreName { get; private set; }
         public string Address { get; private set; }
         public string Phone { get; private set; }
-        public decimal MonthlyRevenue { get; private set; }
-        public int OwnerId { get; private set; }
+        public decimal Area { get; private set; }
 
         private TextBox textBoxName;
         private TextBox textBoxAddress;
         private TextBox textBoxPhone;
-        private TextBox textBoxRevenue;
-        private ComboBox comboBoxOwner;
+        private TextBox textBoxArea;
         private Button buttonOK;
         private Button buttonCancel;
         private Label labelTitle;
         private Label labelName;
         private Label labelAddress;
         private Label labelPhone;
-        private Label labelRevenue;
-        private Label labelOwner;
+        private Label labelArea;
 
-        // Добавим список владельцев
-        private System.Collections.Generic.List<Owner> ownersList;
-
-        public FormAddStore(System.Collections.Generic.List<Owner> owners)
+        public FormAddStore()
         {
-            ownersList = owners;
             InitializeComponent();
-            LoadOwnersToComboBox();
-        }
-
-        private void LoadOwnersToComboBox()
-        {
-            comboBoxOwner.Items.Clear();
-            foreach (var owner in ownersList)
-            {
-                comboBoxOwner.Items.Add(owner.FullName);
-            }
-            if (comboBoxOwner.Items.Count > 0)
-            {
-                comboBoxOwner.SelectedIndex = 0;
-            }
         }
 
         private void InitializeComponent()
@@ -55,23 +34,21 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.textBoxName = new TextBox();
             this.textBoxAddress = new TextBox();
             this.textBoxPhone = new TextBox();
-            this.textBoxRevenue = new TextBox();
-            this.comboBoxOwner = new ComboBox();
+            this.textBoxArea = new TextBox();
             this.buttonOK = new Button();
             this.buttonCancel = new Button();
             this.labelTitle = new Label();
             this.labelName = new Label();
             this.labelAddress = new Label();
             this.labelPhone = new Label();
-            this.labelRevenue = new Label();
-            this.labelOwner = new Label();
+            this.labelArea = new Label();
 
             // labelTitle
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            this.labelTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
             this.labelTitle.Location = new Point(120, 20);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new Size(160, 25);
+            this.labelTitle.Size = new Size(160, 28);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Добавить магазин";
 
@@ -117,68 +94,55 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.textBoxPhone.Size = new Size(200, 27);
             this.textBoxPhone.TabIndex = 2;
 
-            // labelRevenue
-            this.labelRevenue.AutoSize = true;
-            this.labelRevenue.Location = new Point(30, 190);
-            this.labelRevenue.Name = "labelRevenue";
-            this.labelRevenue.Size = new Size(134, 20);
-            this.labelRevenue.TabIndex = 1;
-            this.labelRevenue.Text = "Месячная выручка:";
+            // labelArea
+            this.labelArea.AutoSize = true;
+            this.labelArea.Location = new Point(30, 190);
+            this.labelArea.Name = "labelArea";
+            this.labelArea.Size = new Size(134, 20);
+            this.labelArea.TabIndex = 1;
+            this.labelArea.Text = "Площадь (м²):";
 
-            // textBoxRevenue
-            this.textBoxRevenue.Location = new Point(170, 187);
-            this.textBoxRevenue.Name = "textBoxRevenue";
-            this.textBoxRevenue.Size = new Size(200, 27);
-            this.textBoxRevenue.TabIndex = 3;
-            this.textBoxRevenue.Text = "0";
-
-            // labelOwner
-            this.labelOwner.AutoSize = true;
-            this.labelOwner.Location = new Point(30, 230);
-            this.labelOwner.Name = "labelOwner";
-            this.labelOwner.Size = new Size(78, 20);
-            this.labelOwner.TabIndex = 1;
-            this.labelOwner.Text = "Владелец:";
-
-            // comboBoxOwner
-            this.comboBoxOwner.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.comboBoxOwner.FormattingEnabled = true;
-            this.comboBoxOwner.Location = new Point(170, 227);
-            this.comboBoxOwner.Name = "comboBoxOwner";
-            this.comboBoxOwner.Size = new Size(200, 28);
-            this.comboBoxOwner.TabIndex = 4;
+            // textBoxArea
+            this.textBoxArea.Location = new Point(170, 187);
+            this.textBoxArea.Name = "textBoxArea";
+            this.textBoxArea.Size = new Size(200, 27);
+            this.textBoxArea.TabIndex = 3;
+            this.textBoxArea.Text = "0";
 
             // buttonOK
-            this.buttonOK.Location = new Point(100, 280);
+            this.buttonOK.BackColor = Color.FromArgb(0, 122, 204);
+            this.buttonOK.FlatStyle = FlatStyle.Flat;
+            this.buttonOK.ForeColor = Color.White;
+            this.buttonOK.Location = new Point(100, 240);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(100, 35);
-            this.buttonOK.TabIndex = 5;
+            this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "Добавить";
-            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.UseVisualStyleBackColor = false;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
 
             // buttonCancel
-            this.buttonCancel.Location = new Point(210, 280);
+            this.buttonCancel.BackColor = Color.FromArgb(240, 240, 240);
+            this.buttonCancel.FlatStyle = FlatStyle.Flat;
+            this.buttonCancel.Location = new Point(210, 240);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(100, 35);
-            this.buttonCancel.TabIndex = 6;
+            this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Отмена";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new EventHandler(this.buttonCancel_Click);
 
             // FormAddStore
             this.AcceptButton = this.buttonOK;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new Size(400, 340);
+            this.ClientSize = new Size(400, 300);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.comboBoxOwner);
-            this.Controls.Add(this.textBoxRevenue);
+            this.Controls.Add(this.textBoxArea);
             this.Controls.Add(this.textBoxPhone);
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.textBoxName);
-            this.Controls.Add(this.labelOwner);
-            this.Controls.Add(this.labelRevenue);
+            this.Controls.Add(this.labelArea);
             this.Controls.Add(this.labelPhone);
             this.Controls.Add(this.labelAddress);
             this.Controls.Add(this.labelName);
@@ -200,8 +164,16 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 StoreName = textBoxName.Text;
                 Address = textBoxAddress.Text;
                 Phone = textBoxPhone.Text;
-                MonthlyRevenue = decimal.Parse(textBoxRevenue.Text);
-                OwnerId = comboBoxOwner.SelectedIndex + 1; // ID начинаются с 1
+
+                if (decimal.TryParse(textBoxArea.Text, out decimal area))
+                {
+                    Area = area;
+                }
+                else
+                {
+                    Area = 0;
+                }
+
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -217,36 +189,33 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             if (string.IsNullOrWhiteSpace(textBoxName.Text))
             {
-                MessageBox.Show("Введите название магазина", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите название магазина", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxName.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(textBoxAddress.Text))
             {
-                MessageBox.Show("Введите адрес магазина", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите адрес магазина", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxAddress.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(textBoxPhone.Text))
             {
-                MessageBox.Show("Введите телефон магазина", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите телефон магазина", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxPhone.Focus();
                 return false;
             }
 
-            if (!decimal.TryParse(textBoxRevenue.Text, out decimal revenue) || revenue < 0)
+            if (!decimal.TryParse(textBoxArea.Text, out decimal area) || area < 0)
             {
-                MessageBox.Show("Введите корректную сумму выручки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBoxRevenue.Focus();
-                return false;
-            }
-
-            if (comboBoxOwner.SelectedIndex < 0)
-            {
-                MessageBox.Show("Выберите владельца магазина", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                comboBoxOwner.Focus();
+                MessageBox.Show("Введите корректную площадь", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxArea.Focus();
                 return false;
             }
 

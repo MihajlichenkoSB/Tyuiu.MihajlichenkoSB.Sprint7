@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle37 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle38 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle39 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
             menuStripMain_MBS = new MenuStrip();
             toolStripMenuItemFile_MBS = new ToolStripMenuItem();
             toolStripMenuItemNew_MBS = new ToolStripMenuItem();
@@ -727,7 +727,7 @@
             comboBoxFilter_MBS.Font = new Font("Segoe UI", 10F);
             comboBoxFilter_MBS.FormattingEnabled = true;
             comboBoxFilter_MBS.Items.AddRange(new object[] { "Все категории", "Владельцы", "Магазины", "Поставщики", "Активные", "Неактивные" });
-            comboBoxFilter_MBS.Location = new Point(420, 15);
+            comboBoxFilter_MBS.Location = new Point(434, 15);
             comboBoxFilter_MBS.Name = "comboBoxFilter_MBS";
             comboBoxFilter_MBS.Size = new Size(120, 31);
             comboBoxFilter_MBS.TabIndex = 3;
@@ -776,26 +776,26 @@
             dataGridViewOwners_MBS.BorderStyle = BorderStyle.None;
             dataGridViewOwners_MBS.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewOwners_MBS.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle19.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            dataGridViewCellStyle19.ForeColor = Color.White;
-            dataGridViewCellStyle19.Padding = new Padding(5);
-            dataGridViewCellStyle19.SelectionBackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle19.SelectionForeColor = Color.White;
-            dataGridViewCellStyle19.WrapMode = DataGridViewTriState.True;
-            dataGridViewOwners_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle37.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle37.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle37.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle37.ForeColor = Color.White;
+            dataGridViewCellStyle37.Padding = new Padding(5);
+            dataGridViewCellStyle37.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle37.SelectionForeColor = Color.White;
+            dataGridViewCellStyle37.WrapMode = DataGridViewTriState.True;
+            dataGridViewOwners_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
             dataGridViewOwners_MBS.ColumnHeadersHeight = 40;
             dataGridViewOwners_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = Color.White;
-            dataGridViewCellStyle20.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle20.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle20.Padding = new Padding(5);
-            dataGridViewCellStyle20.SelectionBackColor = Color.FromArgb(229, 243, 255);
-            dataGridViewCellStyle20.SelectionForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle20.WrapMode = DataGridViewTriState.False;
-            dataGridViewOwners_MBS.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle38.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle38.BackColor = Color.White;
+            dataGridViewCellStyle38.Font = new Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle38.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle38.Padding = new Padding(5);
+            dataGridViewCellStyle38.SelectionBackColor = Color.FromArgb(229, 243, 255);
+            dataGridViewCellStyle38.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle38.WrapMode = DataGridViewTriState.False;
+            dataGridViewOwners_MBS.DefaultCellStyle = dataGridViewCellStyle38;
             dataGridViewOwners_MBS.Dock = DockStyle.Fill;
             dataGridViewOwners_MBS.EnableHeadersVisualStyles = false;
             dataGridViewOwners_MBS.GridColor = Color.FromArgb(240, 240, 240);
@@ -833,26 +833,26 @@
             dataGridViewStores_MBS.BorderStyle = BorderStyle.None;
             dataGridViewStores_MBS.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewStores_MBS.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle21.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            dataGridViewCellStyle21.ForeColor = Color.White;
-            dataGridViewCellStyle21.Padding = new Padding(5);
-            dataGridViewCellStyle21.SelectionBackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle21.SelectionForeColor = Color.White;
-            dataGridViewCellStyle21.WrapMode = DataGridViewTriState.True;
-            dataGridViewStores_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle39.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle39.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle39.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle39.ForeColor = Color.White;
+            dataGridViewCellStyle39.Padding = new Padding(5);
+            dataGridViewCellStyle39.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle39.SelectionForeColor = Color.White;
+            dataGridViewCellStyle39.WrapMode = DataGridViewTriState.True;
+            dataGridViewStores_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
             dataGridViewStores_MBS.ColumnHeadersHeight = 40;
             dataGridViewStores_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = Color.White;
-            dataGridViewCellStyle22.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle22.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle22.Padding = new Padding(5);
-            dataGridViewCellStyle22.SelectionBackColor = Color.FromArgb(229, 243, 255);
-            dataGridViewCellStyle22.SelectionForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle22.WrapMode = DataGridViewTriState.False;
-            dataGridViewStores_MBS.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle40.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle40.BackColor = Color.White;
+            dataGridViewCellStyle40.Font = new Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle40.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle40.Padding = new Padding(5);
+            dataGridViewCellStyle40.SelectionBackColor = Color.FromArgb(229, 243, 255);
+            dataGridViewCellStyle40.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle40.WrapMode = DataGridViewTriState.False;
+            dataGridViewStores_MBS.DefaultCellStyle = dataGridViewCellStyle40;
             dataGridViewStores_MBS.Dock = DockStyle.Fill;
             dataGridViewStores_MBS.EnableHeadersVisualStyles = false;
             dataGridViewStores_MBS.GridColor = Color.FromArgb(240, 240, 240);
@@ -890,26 +890,26 @@
             dataGridViewSuppliers_MBS.BorderStyle = BorderStyle.None;
             dataGridViewSuppliers_MBS.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewSuppliers_MBS.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle23.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            dataGridViewCellStyle23.ForeColor = Color.White;
-            dataGridViewCellStyle23.Padding = new Padding(5);
-            dataGridViewCellStyle23.SelectionBackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle23.SelectionForeColor = Color.White;
-            dataGridViewCellStyle23.WrapMode = DataGridViewTriState.True;
-            dataGridViewSuppliers_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle41.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle41.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle41.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle41.ForeColor = Color.White;
+            dataGridViewCellStyle41.Padding = new Padding(5);
+            dataGridViewCellStyle41.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle41.SelectionForeColor = Color.White;
+            dataGridViewCellStyle41.WrapMode = DataGridViewTriState.True;
+            dataGridViewSuppliers_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle41;
             dataGridViewSuppliers_MBS.ColumnHeadersHeight = 40;
             dataGridViewSuppliers_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = Color.White;
-            dataGridViewCellStyle24.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle24.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle24.Padding = new Padding(5);
-            dataGridViewCellStyle24.SelectionBackColor = Color.FromArgb(229, 243, 255);
-            dataGridViewCellStyle24.SelectionForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle24.WrapMode = DataGridViewTriState.False;
-            dataGridViewSuppliers_MBS.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle42.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle42.BackColor = Color.White;
+            dataGridViewCellStyle42.Font = new Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle42.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle42.Padding = new Padding(5);
+            dataGridViewCellStyle42.SelectionBackColor = Color.FromArgb(229, 243, 255);
+            dataGridViewCellStyle42.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle42.WrapMode = DataGridViewTriState.False;
+            dataGridViewSuppliers_MBS.DefaultCellStyle = dataGridViewCellStyle42;
             dataGridViewSuppliers_MBS.Dock = DockStyle.Fill;
             dataGridViewSuppliers_MBS.EnableHeadersVisualStyles = false;
             dataGridViewSuppliers_MBS.GridColor = Color.FromArgb(240, 240, 240);
@@ -989,6 +989,7 @@
             buttonQuickReport_MBS.TabIndex = 2;
             buttonQuickReport_MBS.Text = "📋  Отчет";
             buttonQuickReport_MBS.UseVisualStyleBackColor = false;
+            buttonQuickReport_MBS.Click += buttonQuickReport_MBS_Click_1;
             // 
             // groupBoxFilters_MBS
             // 
@@ -1080,6 +1081,7 @@
             buttonApplyFilter_MBS.TabIndex = 6;
             buttonApplyFilter_MBS.Text = "Применить";
             buttonApplyFilter_MBS.UseVisualStyleBackColor = false;
+            buttonApplyFilter_MBS.Click += buttonApplyFilter_MBS_Click_1;
             // 
             // buttonResetFilter_MBS
             // 
@@ -1216,7 +1218,7 @@
             groupBoxSummary_MBS.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
-
+        
         }
 
         #endregion

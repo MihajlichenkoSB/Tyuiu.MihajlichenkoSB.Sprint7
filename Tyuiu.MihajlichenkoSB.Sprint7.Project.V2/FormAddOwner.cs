@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -44,10 +45,10 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
             // labelTitle
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            this.labelTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
             this.labelTitle.Location = new Point(120, 20);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new Size(180, 25);
+            this.labelTitle.Size = new Size(180, 28);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Добавить владельца";
 
@@ -109,21 +110,26 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.textBoxCapital.Text = "0";
 
             // buttonOK
+            this.buttonOK.BackColor = Color.FromArgb(0, 122, 204);
+            this.buttonOK.FlatStyle = FlatStyle.Flat;
+            this.buttonOK.ForeColor = Color.White;
             this.buttonOK.Location = new Point(100, 240);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new Size(100, 35);
             this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "Добавить";
-            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.UseVisualStyleBackColor = false;
             this.buttonOK.Click += new EventHandler(this.buttonOK_Click);
 
             // buttonCancel
+            this.buttonCancel.BackColor = Color.FromArgb(240, 240, 240);
+            this.buttonCancel.FlatStyle = FlatStyle.Flat;
             this.buttonCancel.Location = new Point(210, 240);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new Size(100, 35);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Отмена";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new EventHandler(this.buttonCancel_Click);
 
             // FormAddOwner
@@ -158,7 +164,16 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 FullName = textBoxFullName.Text;
                 Address = textBoxAddress.Text;
                 Phone = textBoxPhone.Text;
-                Capital = decimal.Parse(textBoxCapital.Text);
+
+                if (decimal.TryParse(textBoxCapital.Text, out decimal capital))
+                {
+                    Capital = capital;
+                }
+                else
+                {
+                    Capital = 0;
+                }
+
                 DialogResult = DialogResult.OK;
                 Close();
             }
@@ -174,28 +189,32 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             if (string.IsNullOrWhiteSpace(textBoxFullName.Text))
             {
-                MessageBox.Show("Введите ФИО владельца", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите ФИО владельца", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxFullName.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(textBoxAddress.Text))
             {
-                MessageBox.Show("Введите адрес владельца", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите адрес владельца", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxAddress.Focus();
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(textBoxPhone.Text))
             {
-                MessageBox.Show("Введите телефон владельца", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите телефон владельца", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxPhone.Focus();
                 return false;
             }
 
             if (!decimal.TryParse(textBoxCapital.Text, out decimal capital) || capital < 0)
             {
-                MessageBox.Show("Введите корректную сумму капитала", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите корректную сумму капитала", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxCapital.Focus();
                 return false;
             }

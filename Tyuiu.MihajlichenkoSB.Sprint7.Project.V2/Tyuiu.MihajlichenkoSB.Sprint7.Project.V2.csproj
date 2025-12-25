@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="FormMain.resx.backup" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib\Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.csproj" />
   </ItemGroup>
 

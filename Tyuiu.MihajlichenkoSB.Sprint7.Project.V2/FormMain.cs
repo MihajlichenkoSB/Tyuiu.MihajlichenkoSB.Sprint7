@@ -22,7 +22,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             timerDateTime.Tick += TimerDateTime_Tick;
             timerDateTime.Start();
 
-            // Обработчики для основных кнопок (они уже есть в Designer)
+            // Обработчики для основных кнопок
             buttonSearch_MBS.Click += ButtonSearch_MBS_Click;
             buttonClearSearch_MBS.Click += ButtonClearSearch_MBS_Click;
             buttonApplyFilter_MBS.Click += ButtonApplyFilter_MBS_Click;
@@ -31,7 +31,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             buttonQuickChart_MBS.Click += ButtonQuickChart_MBS_Click;
             buttonQuickReport_MBS.Click += ButtonQuickReport_MBS_Click;
 
-            // Обработчики для кнопок добавления (они уже есть в Designer)
+            // Обработчики для кнопок добавления
             buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             buttonAddSupplier_MBS.Click += ButtonAddSupplier_MBS_Click;
@@ -48,7 +48,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolStripButtonStats_MBS.Click += ToolStripMenuItemStats_MBS_Click;
             toolStripButtonChart_MBS.Click += ToolStripMenuItemCharts_MBS_Click;
             toolStripButtonReport_MBS.Click += ToolStripMenuItemReport_MBS_Click;
-            toolStripButtonHelp_MBS.Click += ToolStripMenuItemUserGuide_MBS_Click;
+            toolStripButtonHelp_MBS.Click += ToolStripButtonHelp_MBS_Click;
 
             // Меню
             toolStripMenuItemExit_MBS.Click += ToolStripMenuItemExit_MBS_Click;
@@ -70,9 +70,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolStripMenuItemStats_MBS.Click += ToolStripMenuItemStats_MBS_Click;
             toolStripMenuItemCharts_MBS.Click += ToolStripMenuItemCharts_MBS_Click;
             toolStripMenuItemReport_MBS.Click += ToolStripMenuItemReport_MBS_Click;
-            toolStripMenuItemExport_MBS.Click += ToolStripMenuItemExport_MBS_Click;
-            toolStripMenuItemEdit_MBS.Click += ToolStripMenuItemEdit_MBS_Click;
-            toolStripMenuItemDelete_MBS.Click += ToolStripMenuItemDelete_MBS_Click;
 
             // Обработчики для меню вида
             toolStripMenuItemToolbar_MBS.CheckedChanged += ToolStripMenuItemToolbar_MBS_CheckedChanged;
@@ -115,12 +112,14 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         private void InitializeDataTables()
         {
-            // Таблица владельцев
+            // Таблица владельцев (исправленная структура)
             dataTableOwners = new DataTable("Owners");
             dataTableOwners.Columns.Add("ID", typeof(int));
             dataTableOwners.Columns.Add("ФИО", typeof(string));
+            dataTableOwners.Columns.Add("Адрес", typeof(string));
             dataTableOwners.Columns.Add("Телефон", typeof(string));
             dataTableOwners.Columns.Add("Email", typeof(string));
+            dataTableOwners.Columns.Add("Капитал", typeof(decimal));
             dataTableOwners.Columns.Add("Дата регистрации", typeof(DateTime));
             dataTableOwners.Columns.Add("Статус", typeof(string));
 
@@ -131,17 +130,21 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataTableStores.Columns.Add("Адрес", typeof(string));
             dataTableStores.Columns.Add("Владелец", typeof(string));
             dataTableStores.Columns.Add("Телефон", typeof(string));
+            dataTableStores.Columns.Add("Email", typeof(string));
             dataTableStores.Columns.Add("Площадь (м²)", typeof(decimal));
+            dataTableStores.Columns.Add("Дата открытия", typeof(DateTime));
             dataTableStores.Columns.Add("Статус", typeof(string));
 
             // Таблица поставщиков
             dataTableSuppliers = new DataTable("Suppliers");
             dataTableSuppliers.Columns.Add("ID", typeof(int));
-            dataTableSuppliers.Columns.Add("Компания", typeof(string));
+            dataTableSuppliers.Columns.Add("Название компании", typeof(string));
             dataTableSuppliers.Columns.Add("Контактное лицо", typeof(string));
+            dataTableSuppliers.Columns.Add("Адрес", typeof(string));
             dataTableSuppliers.Columns.Add("Телефон", typeof(string));
             dataTableSuppliers.Columns.Add("Email", typeof(string));
             dataTableSuppliers.Columns.Add("Товар", typeof(string));
+            dataTableSuppliers.Columns.Add("Дата сотрудничества", typeof(DateTime));
             dataTableSuppliers.Columns.Add("Статус", typeof(string));
 
             // Привязка таблиц к DataGridView
@@ -213,6 +216,102 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         #endregion
 
+        #region Методы добавления новых записей
+
+        private void AddNewOwner()
+        {
+            try
+            {
+                FormAddOwner form = new FormAddOwner();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    dataTableOwners.Rows.Add(
+                        dataTableOwners.Rows.Count + 1,
+                        form.FullName,                     // ФИО
+                        form.Address,                      // Адрес
+                        form.Phone,                        // Телефон
+                        form.Email,                        // Email
+                        form.Capital,                      // Капитал
+                        DateTime.Now,                      // Дата регистрации
+                        "Активный"                         // Статус
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Владелец успешно добавлен";
+                    MessageBox.Show($"Владелец {form.FullName} успешно добавлен в базу данных.",
+                        "Добавление владельца", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении владельца", ex.Message);
+            }
+        }
+
+        private void AddNewStore()
+        {
+            try
+            {
+                FormAddStore form = new FormAddStore();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    dataTableStores.Rows.Add(
+                        dataTableStores.Rows.Count + 1,
+                        form.StoreName,                    // Название магазина
+                        form.Address,                      // Адрес
+                        "Не указан",                       // Владелец
+                        form.Phone,                        // Телефон
+                        form.Email,                        // Email
+                        form.Area,                         // Площадь
+                        DateTime.Now,                      // Дата открытия
+                        "Активный"                         // Статус
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Магазин успешно добавлен";
+                    MessageBox.Show($"Магазин {form.StoreName} успешно добавлен в базу данных.",
+                        "Добавление магазина", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении магазина", ex.Message);
+            }
+        }
+
+        private void AddNewSupplier()
+        {
+            try
+            {
+                FormAddSupplier form = new FormAddSupplier();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    dataTableSuppliers.Rows.Add(
+                        dataTableSuppliers.Rows.Count + 1,
+                        form.CompanyName,                  // Название компании
+                        form.ContactPerson,                // Контактное лицо
+                        form.Address,                      // Адрес
+                        form.Phone,                        // Телефон
+                        form.Email,                        // Email
+                        form.Product,                      // Товар
+                        DateTime.Now,                      // Дата сотрудничества
+                        "Активный"                         // Статус
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Поставщик успешно добавлен";
+                    MessageBox.Show($"Поставщик {form.CompanyName} успешно добавлен в базу данных.",
+                        "Добавление поставщика", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении поставщика", ex.Message);
+            }
+        }
+
+        #endregion
+
         #region Обработчики событий меню
 
         private void ToolStripMenuItemExit_MBS_Click(object sender, EventArgs e)
@@ -265,7 +364,16 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 "5. БОКОВАЯ ПАНЕЛЬ:\n" +
                 "   • Быстрые действия\n" +
                 "   • Расширенные фильтры\n" +
-                "   • Сводная информация",
+                "   • Сводная информация\n\n" +
+                "6. ДОБАВЛЕНИЕ ДАННЫХ:\n" +
+                "   • Нажмите кнопку '+Владелец' для добавления владельца\n" +
+                "   • Нажмите кнопку '+Магазин' для добавления магазина\n" +
+                "   • Нажмите кнопку '+Поставщик' для добавления поставщика\n" +
+                "   • Заполните все поля в форме и нажмите 'Добавить'\n\n" +
+                "7. ПРОСМОТР ДАННЫХ:\n" +
+                "   • Переключайтесь между вкладками: Владельцы, Магазины, Поставщики\n" +
+                "   • Используйте поиск для быстрого нахождения записей\n" +
+                "   • Применяйте фильтры для отбора данных",
                 "Руководство пользователя",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
@@ -276,7 +384,12 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             MessageBox.Show(
                 "Видео-руководство доступно на нашем сайте.\n" +
-                "Ссылка: https://www.example.com/video-guide",
+                "Ссылка: https://www.example.com/video-guide\n\n" +
+                "Также вы можете посмотреть обучающие ролики на YouTube:\n" +
+                "• Основы работы с программой\n" +
+                "• Добавление и редактирование данных\n" +
+                "• Работа с фильтрами и поиском\n" +
+                "• Генерация отчетов и статистики",
                 "Видео-руководство",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
@@ -286,11 +399,24 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         private void ToolStripMenuItemCheckUpdates_MBS_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Проверка обновлений...\nУ вас установлена последняя версия.",
+                "Проверка обновлений...\n" +
+                "У вас установлена последняя версия 2.0.\n\n" +
+                "Последние изменения в версии 2.0:\n" +
+                "✓ Добавлены формы для ввода данных\n" +
+                "✓ Улучшен интерфейс пользователя\n" +
+                "✓ Добавлена боковая панель с быстрыми действиями\n" +
+                "✓ Реализован поиск и фильтрация данных\n" +
+                "✓ Добавлена статистика и сводные отчеты\n\n" +
+                "Следующее обновление запланировано на январь 2025 года.",
                 "Обновления",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
+        }
+
+        private void ToolStripButtonHelp_MBS_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemUserGuide_MBS_Click(sender, e);
         }
 
         private void ToolStripMenuItemAddOwner_MBS_Click(object sender, EventArgs e)
@@ -323,13 +449,12 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                         toolStripProgressBar_MBS.Style = ProgressBarStyle.Marquee;
                         toolStripStatusLabelInfo_MBS.Text = "Загрузка данных...";
 
-                        // Загрузка тестовых данных
                         LoadSampleData();
 
                         toolStripProgressBar_MBS.Visible = false;
                         toolStripStatusLabelInfo_MBS.Text = "Данные успешно загружены";
-                        MessageBox.Show("Загрузка данных", "Данные успешно загружены из файла.",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Данные успешно загружены из файла.",
+                            "Загрузка данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -361,8 +486,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
                         toolStripProgressBar_MBS.Visible = false;
                         toolStripStatusLabelInfo_MBS.Text = $"Данные сохранены в: {saveFileDialog.FileName}";
-                        MessageBox.Show("Сохранение данных", "Данные успешно сохранены в файл.",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Данные успешно сохранены в файл.",
+                            "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -420,118 +545,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         private void ToolStripMenuItemReport_MBS_Click(object sender, EventArgs e)
         {
             ButtonQuickReport_MBS_Click(sender, e);
-        }
-
-        private void ToolStripMenuItemExport_MBS_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Функция экспорта в разработке", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void ToolStripMenuItemEdit_MBS_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Функция редактирования в разработке", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void ToolStripMenuItemDelete_MBS_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Удалить выбранную запись?", "Удаление",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                // Здесь будет логика удаления выбранной записи
-                toolStripStatusLabelInfo_MBS.Text = "Запись удалена";
-            }
-        }
-
-        #endregion
-
-        #region Методы добавления новых записей
-
-        private void AddNewOwner()
-        {
-            try
-            {
-                FormAddOwner form = new FormAddOwner();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    dataTableOwners.Rows.Add(
-                        dataTableOwners.Rows.Count + 1,
-                        form.FullName,
-                        form.Phone,
-                        "example@mail.ru",
-                        DateTime.Now,
-                        "Активный"
-                    );
-
-                    UpdateSummaryCounts();
-                    toolStripStatusLabelInfo_MBS.Text = "Владелец успешно добавлен";
-                    MessageBox.Show("Владелец добавлен", "Новый владелец успешно добавлен в базу данных.",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка при добавлении владельца", ex.Message);
-            }
-        }
-
-        private void AddNewStore()
-        {
-            try
-            {
-                FormAddStore form = new FormAddStore();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    dataTableStores.Rows.Add(
-                        dataTableStores.Rows.Count + 1,
-                        form.StoreName,
-                        form.Address,
-                        "Иванов И.И.",
-                        form.Phone,
-                        form.Area,
-                        "Активный"
-                    );
-
-                    UpdateSummaryCounts();
-                    toolStripStatusLabelInfo_MBS.Text = "Магазин успешно добавлен";
-                    MessageBox.Show("Магазин добавлен", "Новый магазин успешно добавлен в базу данных.",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка при добавлении магазина", ex.Message);
-            }
-        }
-
-        private void AddNewSupplier()
-        {
-            try
-            {
-                FormAddSupplier form = new FormAddSupplier();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    dataTableSuppliers.Rows.Add(
-                        dataTableSuppliers.Rows.Count + 1,
-                        "Название компании",
-                        form.FullName,
-                        form.Phone,
-                        "email@example.com",
-                        form.Product,
-                        "Активный"
-                    );
-
-                    UpdateSummaryCounts();
-                    toolStripStatusLabelInfo_MBS.Text = "Поставщик успешно добавлен";
-                    MessageBox.Show("Поставщик добавлен", "Новый поставщик успешно добавлен в базу данных.",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка при добавлении поставщика", ex.Message);
-            }
         }
 
         #endregion
@@ -619,31 +632,26 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         private void ButtonQuickChart_MBS_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MessageBox.Show("Функция графиков в разработке", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка отображения графиков", ex.Message);
-            }
+            MessageBox.Show("Данная функция находится в разработке",
+                "Информация",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void ButtonQuickReport_MBS_Click(object sender, EventArgs e)
         {
             try
             {
-                toolStripStatusLabelInfo_MBS.Text = "Генерация отчета...";
+                MessageBox.Show("Данная функция находится в разработке",
+                    "Информация",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
-                string report = GenerateReport();
-
-                MessageBox.Show(report, "Сводный отчет", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                toolStripStatusLabelInfo_MBS.Text = "Отчет сгенерирован";
+                toolStripStatusLabelInfo_MBS.Text = "Функция отчета в разработке";
             }
             catch (Exception ex)
             {
-                ShowError("Ошибка генерации отчета", ex.Message);
+                ShowError("Ошибка", ex.Message);
             }
         }
 
@@ -762,7 +770,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                     }
                 }
 
-                MessageBox.Show($"Поиск", $"Найдено записей по запросу: {searchText}",
+                MessageBox.Show($"Найдено записей по запросу: {searchText}", "Результаты поиска",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -805,19 +813,19 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataTableSuppliers.Clear();
 
             // Добавление тестовых данных владельцев
-            dataTableOwners.Rows.Add(1, "Иванов Иван Иванович", "+7 (999) 123-45-67", "ivanov@mail.ru", new DateTime(2020, 1, 15), "Активный");
-            dataTableOwners.Rows.Add(2, "Петрова Анна Сергеевна", "+7 (999) 234-56-78", "petrova@mail.ru", new DateTime(2021, 3, 20), "Активный");
-            dataTableOwners.Rows.Add(3, "Сидоров Алексей Петрович", "+7 (999) 345-67-89", "sidorov@mail.ru", new DateTime(2022, 5, 10), "Неактивный");
+            dataTableOwners.Rows.Add(1, "Иванов Иван Иванович", "ул. Ленина, д. 10, кв. 5", "+7 (999) 123-45-67", "ivanov@mail.ru", 1500000m, new DateTime(2020, 1, 15), "Активный");
+            dataTableOwners.Rows.Add(2, "Петрова Анна Сергеевна", "ул. Мира, д. 25, кв. 12", "+7 (999) 234-56-78", "petrova@mail.ru", 800000m, new DateTime(2021, 3, 20), "Активный");
+            dataTableOwners.Rows.Add(3, "Сидоров Алексей Петрович", "пр. Победы, д. 100, кв. 34", "+7 (999) 345-67-89", "sidorov@mail.ru", 2000000m, new DateTime(2022, 5, 10), "Неактивный");
 
             // Добавление тестовых данных магазинов
-            dataTableStores.Rows.Add(1, "Супермаркет 'Продукты'", "ул. Ленина, д. 10", "Иванов И.И.", "+7 (999) 111-22-33", 500.5m, "Активный");
-            dataTableStores.Rows.Add(2, "Магазин 'Одежда'", "ул. Мира, д. 25", "Петрова А.С.", "+7 (999) 222-33-44", 300.0m, "Активный");
-            dataTableStores.Rows.Add(3, "Торговый центр 'Мега'", "пр. Победы, д. 100", "Иванов И.И.", "+7 (999) 333-44-55", 1500.0m, "Активный");
+            dataTableStores.Rows.Add(1, "Супермаркет 'Продукты'", "ул. Ленина, д. 10", "Иванов И.И.", "+7 (999) 111-22-33", "info@produkty.ru", 500.5m, new DateTime(2020, 2, 1), "Активный");
+            dataTableStores.Rows.Add(2, "Магазин 'Одежда'", "ул. Мира, д. 25", "Петрова А.С.", "+7 (999) 222-33-44", "clothes@store.ru", 300.0m, new DateTime(2021, 4, 15), "Активный");
+            dataTableStores.Rows.Add(3, "Торговый центр 'Мега'", "пр. Победы, д. 100", "Иванов И.И.", "+7 (999) 333-44-55", "mega@tc.ru", 1500.0m, new DateTime(2022, 6, 1), "Активный");
 
             // Добавление тестовых данных поставщиков
-            dataTableSuppliers.Rows.Add(1, "ООО 'ПродуктСнаб'", "Смирнов А.А.", "+7 (999) 444-55-66", "smirnov@product.ru", "Продукты питания", "Активный");
-            dataTableSuppliers.Rows.Add(2, "ИП 'ТекстильТорг'", "Козлова М.И.", "+7 (999) 555-66-77", "kozlov@textile.ru", "Одежда и ткани", "Активный");
-            dataTableSuppliers.Rows.Add(3, "ЗАО 'ТехноСнаб'", "Волков П.С.", "+7 (999) 666-77-88", "volkov@techno.ru", "Электроника", "Активный");
+            dataTableSuppliers.Rows.Add(1, "ООО 'ПродуктСнаб'", "Смирнов А.А.", "ул. Заводская, д. 15", "+7 (999) 444-55-66", "smirnov@product.ru", "Продукты питания", new DateTime(2020, 1, 20), "Активный");
+            dataTableSuppliers.Rows.Add(2, "ИП 'ТекстильТорг'", "Козлова М.И.", "ул. Ткацкая, д. 8", "+7 (999) 555-66-77", "kozlov@textile.ru", "Одежда и ткани", new DateTime(2021, 3, 25), "Активный");
+            dataTableSuppliers.Rows.Add(3, "ЗАО 'ТехноСнаб'", "Волков П.С.", "пр. Технический, д. 45", "+7 (999) 666-77-88", "volkov@techno.ru", "Электроника", new DateTime(2022, 5, 15), "Активный");
 
             UpdateSummaryCounts();
         }

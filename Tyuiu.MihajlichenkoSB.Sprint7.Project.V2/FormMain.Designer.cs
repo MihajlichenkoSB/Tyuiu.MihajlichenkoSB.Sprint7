@@ -1,4 +1,8 @@
-﻿namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
+﻿using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 {
     partial class FormMain
     {
@@ -28,12 +32,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle37 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle38 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle39 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             menuStripMain_MBS = new MenuStrip();
             toolStripMenuItemFile_MBS = new ToolStripMenuItem();
             toolStripMenuItemNew_MBS = new ToolStripMenuItem();
@@ -103,6 +107,9 @@
             labelSubtitle_MBS = new Label();
             pictureBoxLogo_MBS = new PictureBox();
             panelSearch_MBS = new Panel();
+            buttonAddSupplier_MBS = new Button();
+            buttonAddStore_MBS = new Button();
+            buttonAddOwner_MBS = new Button();
             buttonClearSearch_MBS = new Button();
             buttonSearch_MBS = new Button();
             textBoxSearch_MBS = new TextBox();
@@ -117,6 +124,7 @@
             tabPageSuppliers_MBS = new TabPage();
             dataGridViewSuppliers_MBS = new DataGridView();
             panelSidebar_MBS = new Panel();
+            groupBoxAddActions_MBS = new GroupBox();
             groupBoxQuickActions_MBS = new GroupBox();
             buttonQuickStats_MBS = new Button();
             buttonQuickChart_MBS = new Button();
@@ -151,6 +159,7 @@
             tabPageSuppliers_MBS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSuppliers_MBS).BeginInit();
             panelSidebar_MBS.SuspendLayout();
+            groupBoxAddActions_MBS.SuspendLayout();
             groupBoxQuickActions_MBS.SuspendLayout();
             groupBoxFilters_MBS.SuspendLayout();
             groupBoxSummary_MBS.SuspendLayout();
@@ -159,7 +168,7 @@
             // menuStripMain_MBS
             // 
             menuStripMain_MBS.BackColor = Color.FromArgb(51, 51, 76);
-            menuStripMain_MBS.Font = new Font("Segoe UI", 10F);
+            menuStripMain_MBS.Font = new System.Drawing.Font("Segoe UI", 10F);
             menuStripMain_MBS.ImageScalingSize = new Size(20, 20);
             menuStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripMenuItemFile_MBS, toolStripMenuItemData_MBS, toolStripMenuItemAnalysis_MBS, toolStripMenuItemView_MBS, toolStripMenuItemHelp_MBS });
             menuStripMain_MBS.Location = new Point(0, 0);
@@ -432,7 +441,7 @@
             // toolStripMain_MBS
             // 
             toolStripMain_MBS.BackColor = Color.FromArgb(64, 64, 64);
-            toolStripMain_MBS.Font = new Font("Segoe UI", 9F);
+            toolStripMain_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             toolStripMain_MBS.ImageScalingSize = new Size(20, 20);
             toolStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripButtonNew_MBS, toolStripButtonAddOwner_MBS, toolStripButtonAddStore_MBS, toolStripButtonAddSupplier_MBS, toolStripSeparator9, toolStripButtonEdit_MBS, toolStripButtonDelete_MBS, toolStripSeparator10, toolStripButtonSave_MBS, toolStripButtonLoad_MBS, toolStripButtonPrint_MBS, toolStripSeparator11, toolStripButtonStats_MBS, toolStripButtonChart_MBS, toolStripButtonReport_MBS, toolStripSeparator12, toolStripButtonHelp_MBS });
             toolStripMain_MBS.Location = new Point(0, 31);
@@ -444,6 +453,7 @@
             // toolStripButtonNew_MBS
             // 
             toolStripButtonNew_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonNew_MBS.ForeColor = Color.White;
             toolStripButtonNew_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonNew_MBS.Name = "toolStripButtonNew_MBS";
             toolStripButtonNew_MBS.Size = new Size(29, 22);
@@ -452,6 +462,7 @@
             // toolStripButtonAddOwner_MBS
             // 
             toolStripButtonAddOwner_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonAddOwner_MBS.ForeColor = Color.White;
             toolStripButtonAddOwner_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonAddOwner_MBS.Name = "toolStripButtonAddOwner_MBS";
             toolStripButtonAddOwner_MBS.Size = new Size(29, 22);
@@ -460,6 +471,7 @@
             // toolStripButtonAddStore_MBS
             // 
             toolStripButtonAddStore_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonAddStore_MBS.ForeColor = Color.White;
             toolStripButtonAddStore_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonAddStore_MBS.Name = "toolStripButtonAddStore_MBS";
             toolStripButtonAddStore_MBS.Size = new Size(29, 22);
@@ -468,6 +480,7 @@
             // toolStripButtonAddSupplier_MBS
             // 
             toolStripButtonAddSupplier_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonAddSupplier_MBS.ForeColor = Color.White;
             toolStripButtonAddSupplier_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonAddSupplier_MBS.Name = "toolStripButtonAddSupplier_MBS";
             toolStripButtonAddSupplier_MBS.Size = new Size(29, 22);
@@ -481,6 +494,7 @@
             // toolStripButtonEdit_MBS
             // 
             toolStripButtonEdit_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonEdit_MBS.ForeColor = Color.White;
             toolStripButtonEdit_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonEdit_MBS.Name = "toolStripButtonEdit_MBS";
             toolStripButtonEdit_MBS.Size = new Size(29, 22);
@@ -489,6 +503,7 @@
             // toolStripButtonDelete_MBS
             // 
             toolStripButtonDelete_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonDelete_MBS.ForeColor = Color.White;
             toolStripButtonDelete_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonDelete_MBS.Name = "toolStripButtonDelete_MBS";
             toolStripButtonDelete_MBS.Size = new Size(29, 22);
@@ -502,6 +517,7 @@
             // toolStripButtonSave_MBS
             // 
             toolStripButtonSave_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonSave_MBS.ForeColor = Color.White;
             toolStripButtonSave_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonSave_MBS.Name = "toolStripButtonSave_MBS";
             toolStripButtonSave_MBS.Size = new Size(29, 22);
@@ -510,6 +526,7 @@
             // toolStripButtonLoad_MBS
             // 
             toolStripButtonLoad_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonLoad_MBS.ForeColor = Color.White;
             toolStripButtonLoad_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonLoad_MBS.Name = "toolStripButtonLoad_MBS";
             toolStripButtonLoad_MBS.Size = new Size(29, 22);
@@ -518,6 +535,7 @@
             // toolStripButtonPrint_MBS
             // 
             toolStripButtonPrint_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonPrint_MBS.ForeColor = Color.White;
             toolStripButtonPrint_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonPrint_MBS.Name = "toolStripButtonPrint_MBS";
             toolStripButtonPrint_MBS.Size = new Size(29, 22);
@@ -531,6 +549,7 @@
             // toolStripButtonStats_MBS
             // 
             toolStripButtonStats_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonStats_MBS.ForeColor = Color.White;
             toolStripButtonStats_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonStats_MBS.Name = "toolStripButtonStats_MBS";
             toolStripButtonStats_MBS.Size = new Size(29, 22);
@@ -539,6 +558,7 @@
             // toolStripButtonChart_MBS
             // 
             toolStripButtonChart_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonChart_MBS.ForeColor = Color.White;
             toolStripButtonChart_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonChart_MBS.Name = "toolStripButtonChart_MBS";
             toolStripButtonChart_MBS.Size = new Size(29, 22);
@@ -547,6 +567,7 @@
             // toolStripButtonReport_MBS
             // 
             toolStripButtonReport_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonReport_MBS.ForeColor = Color.White;
             toolStripButtonReport_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonReport_MBS.Name = "toolStripButtonReport_MBS";
             toolStripButtonReport_MBS.Size = new Size(29, 22);
@@ -560,6 +581,7 @@
             // toolStripButtonHelp_MBS
             // 
             toolStripButtonHelp_MBS.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonHelp_MBS.ForeColor = Color.White;
             toolStripButtonHelp_MBS.ImageTransparentColor = Color.Magenta;
             toolStripButtonHelp_MBS.Name = "toolStripButtonHelp_MBS";
             toolStripButtonHelp_MBS.Size = new Size(29, 22);
@@ -568,7 +590,7 @@
             // statusStripMain_MBS
             // 
             statusStripMain_MBS.BackColor = Color.FromArgb(51, 51, 76);
-            statusStripMain_MBS.Font = new Font("Segoe UI", 9F);
+            statusStripMain_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             statusStripMain_MBS.ImageScalingSize = new Size(20, 20);
             statusStripMain_MBS.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelInfo_MBS, toolStripProgressBar_MBS, toolStripStatusLabelCount_MBS, toolStripStatusLabelDate_MBS, toolStripStatusLabelTime_MBS });
             statusStripMain_MBS.Location = new Point(0, 671);
@@ -581,7 +603,7 @@
             // 
             // toolStripStatusLabelInfo_MBS
             // 
-            toolStripStatusLabelInfo_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            toolStripStatusLabelInfo_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             toolStripStatusLabelInfo_MBS.ForeColor = Color.White;
             toolStripStatusLabelInfo_MBS.Name = "toolStripStatusLabelInfo_MBS";
             toolStripStatusLabelInfo_MBS.Size = new Size(837, 23);
@@ -597,7 +619,7 @@
             // 
             // toolStripStatusLabelCount_MBS
             // 
-            toolStripStatusLabelCount_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            toolStripStatusLabelCount_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             toolStripStatusLabelCount_MBS.ForeColor = Color.White;
             toolStripStatusLabelCount_MBS.Name = "toolStripStatusLabelCount_MBS";
             toolStripStatusLabelCount_MBS.Size = new Size(84, 23);
@@ -605,7 +627,7 @@
             // 
             // toolStripStatusLabelDate_MBS
             // 
-            toolStripStatusLabelDate_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            toolStripStatusLabelDate_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             toolStripStatusLabelDate_MBS.ForeColor = Color.White;
             toolStripStatusLabelDate_MBS.Name = "toolStripStatusLabelDate_MBS";
             toolStripStatusLabelDate_MBS.Size = new Size(89, 23);
@@ -613,7 +635,7 @@
             // 
             // toolStripStatusLabelTime_MBS
             // 
-            toolStripStatusLabelTime_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            toolStripStatusLabelTime_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             toolStripStatusLabelTime_MBS.ForeColor = Color.White;
             toolStripStatusLabelTime_MBS.Name = "toolStripStatusLabelTime_MBS";
             toolStripStatusLabelTime_MBS.Size = new Size(71, 23);
@@ -634,7 +656,7 @@
             // labelTitle_MBS
             // 
             labelTitle_MBS.AutoSize = true;
-            labelTitle_MBS.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelTitle_MBS.Font = new System.Drawing.Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 204);
             labelTitle_MBS.ForeColor = Color.White;
             labelTitle_MBS.Location = new Point(120, 20);
             labelTitle_MBS.Name = "labelTitle_MBS";
@@ -645,7 +667,7 @@
             // labelSubtitle_MBS
             // 
             labelSubtitle_MBS.AutoSize = true;
-            labelSubtitle_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Italic);
+            labelSubtitle_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Italic);
             labelSubtitle_MBS.ForeColor = Color.White;
             labelSubtitle_MBS.Location = new Point(125, 70);
             labelSubtitle_MBS.Name = "labelSubtitle_MBS";
@@ -678,12 +700,51 @@
             panelSearch_MBS.Size = new Size(1200, 60);
             panelSearch_MBS.TabIndex = 4;
             // 
+            // buttonAddSupplier_MBS
+            // 
+            buttonAddSupplier_MBS.BackColor = Color.FromArgb(155, 89, 182);
+            buttonAddSupplier_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddSupplier_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddSupplier_MBS.ForeColor = Color.White;
+            buttonAddSupplier_MBS.Location = new Point(1040, 15);
+            buttonAddSupplier_MBS.Name = "buttonAddSupplier_MBS";
+            buttonAddSupplier_MBS.Size = new Size(130, 30);
+            buttonAddSupplier_MBS.TabIndex = 8;
+            buttonAddSupplier_MBS.Text = "➕ Поставщик";
+            buttonAddSupplier_MBS.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddStore_MBS
+            // 
+            buttonAddStore_MBS.BackColor = Color.FromArgb(52, 152, 219);
+            buttonAddStore_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddStore_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddStore_MBS.ForeColor = Color.White;
+            buttonAddStore_MBS.Location = new Point(900, 15);
+            buttonAddStore_MBS.Name = "buttonAddStore_MBS";
+            buttonAddStore_MBS.Size = new Size(130, 30);
+            buttonAddStore_MBS.TabIndex = 7;
+            buttonAddStore_MBS.Text = "➕ Магазин";
+            buttonAddStore_MBS.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddOwner_MBS
+            // 
+            buttonAddOwner_MBS.BackColor = Color.FromArgb(46, 204, 113);
+            buttonAddOwner_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddOwner_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddOwner_MBS.ForeColor = Color.White;
+            buttonAddOwner_MBS.Location = new Point(760, 15);
+            buttonAddOwner_MBS.Name = "buttonAddOwner_MBS";
+            buttonAddOwner_MBS.Size = new Size(130, 30);
+            buttonAddOwner_MBS.TabIndex = 6;
+            buttonAddOwner_MBS.Text = "➕ Владелец";
+            buttonAddOwner_MBS.UseVisualStyleBackColor = false;
+            // 
             // buttonClearSearch_MBS
             // 
             buttonClearSearch_MBS.BackColor = Color.FromArgb(240, 240, 240);
             buttonClearSearch_MBS.FlatStyle = FlatStyle.Flat;
-            buttonClearSearch_MBS.Font = new Font("Segoe UI", 9F);
-            buttonClearSearch_MBS.Location = new Point(680, 15);
+            buttonClearSearch_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
+            buttonClearSearch_MBS.Location = new Point(630, 15);
             buttonClearSearch_MBS.Name = "buttonClearSearch_MBS";
             buttonClearSearch_MBS.Size = new Size(100, 30);
             buttonClearSearch_MBS.TabIndex = 5;
@@ -694,9 +755,9 @@
             // 
             buttonSearch_MBS.BackColor = Color.FromArgb(0, 122, 204);
             buttonSearch_MBS.FlatStyle = FlatStyle.Flat;
-            buttonSearch_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonSearch_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             buttonSearch_MBS.ForeColor = Color.White;
-            buttonSearch_MBS.Location = new Point(560, 15);
+            buttonSearch_MBS.Location = new Point(520, 15);
             buttonSearch_MBS.Name = "buttonSearch_MBS";
             buttonSearch_MBS.Size = new Size(100, 30);
             buttonSearch_MBS.TabIndex = 4;
@@ -705,7 +766,7 @@
             // 
             // textBoxSearch_MBS
             // 
-            textBoxSearch_MBS.Font = new Font("Segoe UI", 10F);
+            textBoxSearch_MBS.Font = new System.Drawing.Font("Segoe UI", 10F);
             textBoxSearch_MBS.Location = new Point(90, 15);
             textBoxSearch_MBS.Name = "textBoxSearch_MBS";
             textBoxSearch_MBS.Size = new Size(250, 30);
@@ -714,7 +775,7 @@
             // labelSearch_MBS
             // 
             labelSearch_MBS.AutoSize = true;
-            labelSearch_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelSearch_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
             labelSearch_MBS.Location = new Point(20, 18);
             labelSearch_MBS.Name = "labelSearch_MBS";
             labelSearch_MBS.Size = new Size(68, 23);
@@ -724,18 +785,18 @@
             // comboBoxFilter_MBS
             // 
             comboBoxFilter_MBS.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxFilter_MBS.Font = new Font("Segoe UI", 10F);
+            comboBoxFilter_MBS.Font = new System.Drawing.Font("Segoe UI", 10F);
             comboBoxFilter_MBS.FormattingEnabled = true;
             comboBoxFilter_MBS.Items.AddRange(new object[] { "Все категории", "Владельцы", "Магазины", "Поставщики", "Активные", "Неактивные" });
             comboBoxFilter_MBS.Location = new Point(434, 15);
             comboBoxFilter_MBS.Name = "comboBoxFilter_MBS";
-            comboBoxFilter_MBS.Size = new Size(120, 31);
+            comboBoxFilter_MBS.Size = new Size(80, 31);
             comboBoxFilter_MBS.TabIndex = 3;
             // 
             // labelFilter_MBS
             // 
             labelFilter_MBS.AutoSize = true;
-            labelFilter_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelFilter_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
             labelFilter_MBS.Location = new Point(350, 18);
             labelFilter_MBS.Name = "labelFilter_MBS";
             labelFilter_MBS.Size = new Size(78, 23);
@@ -748,7 +809,7 @@
             tabControlMain_MBS.Controls.Add(tabPageStores_MBS);
             tabControlMain_MBS.Controls.Add(tabPageSuppliers_MBS);
             tabControlMain_MBS.Dock = DockStyle.Fill;
-            tabControlMain_MBS.Font = new Font("Segoe UI", 10F);
+            tabControlMain_MBS.Font = new System.Drawing.Font("Segoe UI", 10F);
             tabControlMain_MBS.Location = new Point(300, 216);
             tabControlMain_MBS.Name = "tabControlMain_MBS";
             tabControlMain_MBS.SelectedIndex = 0;
@@ -776,26 +837,26 @@
             dataGridViewOwners_MBS.BorderStyle = BorderStyle.None;
             dataGridViewOwners_MBS.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewOwners_MBS.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle37.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle37.BackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle37.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            dataGridViewCellStyle37.ForeColor = Color.White;
-            dataGridViewCellStyle37.Padding = new Padding(5);
-            dataGridViewCellStyle37.SelectionBackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle37.SelectionForeColor = Color.White;
-            dataGridViewCellStyle37.WrapMode = DataGridViewTriState.True;
-            dataGridViewOwners_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.Padding = new Padding(5);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridViewOwners_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewOwners_MBS.ColumnHeadersHeight = 40;
             dataGridViewOwners_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle38.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle38.BackColor = Color.White;
-            dataGridViewCellStyle38.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle38.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle38.Padding = new Padding(5);
-            dataGridViewCellStyle38.SelectionBackColor = Color.FromArgb(229, 243, 255);
-            dataGridViewCellStyle38.SelectionForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle38.WrapMode = DataGridViewTriState.False;
-            dataGridViewOwners_MBS.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle2.Padding = new Padding(5);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(229, 243, 255);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridViewOwners_MBS.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewOwners_MBS.Dock = DockStyle.Fill;
             dataGridViewOwners_MBS.EnableHeadersVisualStyles = false;
             dataGridViewOwners_MBS.GridColor = Color.FromArgb(240, 240, 240);
@@ -833,26 +894,26 @@
             dataGridViewStores_MBS.BorderStyle = BorderStyle.None;
             dataGridViewStores_MBS.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewStores_MBS.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle39.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle39.BackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle39.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            dataGridViewCellStyle39.ForeColor = Color.White;
-            dataGridViewCellStyle39.Padding = new Padding(5);
-            dataGridViewCellStyle39.SelectionBackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle39.SelectionForeColor = Color.White;
-            dataGridViewCellStyle39.WrapMode = DataGridViewTriState.True;
-            dataGridViewStores_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridViewStores_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewStores_MBS.ColumnHeadersHeight = 40;
             dataGridViewStores_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle40.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle40.BackColor = Color.White;
-            dataGridViewCellStyle40.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle40.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle40.Padding = new Padding(5);
-            dataGridViewCellStyle40.SelectionBackColor = Color.FromArgb(229, 243, 255);
-            dataGridViewCellStyle40.SelectionForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle40.WrapMode = DataGridViewTriState.False;
-            dataGridViewStores_MBS.DefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle4.Padding = new Padding(5);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(229, 243, 255);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridViewStores_MBS.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewStores_MBS.Dock = DockStyle.Fill;
             dataGridViewStores_MBS.EnableHeadersVisualStyles = false;
             dataGridViewStores_MBS.GridColor = Color.FromArgb(240, 240, 240);
@@ -890,26 +951,26 @@
             dataGridViewSuppliers_MBS.BorderStyle = BorderStyle.None;
             dataGridViewSuppliers_MBS.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewSuppliers_MBS.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle41.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle41.BackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle41.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            dataGridViewCellStyle41.ForeColor = Color.White;
-            dataGridViewCellStyle41.Padding = new Padding(5);
-            dataGridViewCellStyle41.SelectionBackColor = Color.FromArgb(0, 122, 204);
-            dataGridViewCellStyle41.SelectionForeColor = Color.White;
-            dataGridViewCellStyle41.WrapMode = DataGridViewTriState.True;
-            dataGridViewSuppliers_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.Padding = new Padding(5);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            dataGridViewCellStyle5.SelectionForeColor = Color.White;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridViewSuppliers_MBS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridViewSuppliers_MBS.ColumnHeadersHeight = 40;
             dataGridViewSuppliers_MBS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle42.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle42.BackColor = Color.White;
-            dataGridViewCellStyle42.Font = new Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle42.ForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle42.Padding = new Padding(5);
-            dataGridViewCellStyle42.SelectionBackColor = Color.FromArgb(229, 243, 255);
-            dataGridViewCellStyle42.SelectionForeColor = Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle42.WrapMode = DataGridViewTriState.False;
-            dataGridViewSuppliers_MBS.DefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle6.Padding = new Padding(5);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(229, 243, 255);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dataGridViewSuppliers_MBS.DefaultCellStyle = dataGridViewCellStyle6;
             dataGridViewSuppliers_MBS.Dock = DockStyle.Fill;
             dataGridViewSuppliers_MBS.EnableHeadersVisualStyles = false;
             dataGridViewSuppliers_MBS.GridColor = Color.FromArgb(240, 240, 240);
@@ -929,6 +990,7 @@
             // panelSidebar_MBS
             // 
             panelSidebar_MBS.BackColor = Color.FromArgb(240, 240, 245);
+            panelSidebar_MBS.Controls.Add(groupBoxAddActions_MBS);
             panelSidebar_MBS.Controls.Add(groupBoxQuickActions_MBS);
             panelSidebar_MBS.Controls.Add(groupBoxFilters_MBS);
             panelSidebar_MBS.Controls.Add(groupBoxSummary_MBS);
@@ -938,12 +1000,25 @@
             panelSidebar_MBS.Size = new Size(300, 455);
             panelSidebar_MBS.TabIndex = 6;
             // 
+            // groupBoxAddActions_MBS
+            // 
+            groupBoxAddActions_MBS.Controls.Add(buttonAddOwner_MBS);
+            groupBoxAddActions_MBS.Controls.Add(buttonAddStore_MBS);
+            groupBoxAddActions_MBS.Controls.Add(buttonAddSupplier_MBS);
+            groupBoxAddActions_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
+            groupBoxAddActions_MBS.Location = new Point(15, 442);
+            groupBoxAddActions_MBS.Name = "groupBoxAddActions_MBS";
+            groupBoxAddActions_MBS.Size = new Size(270, 120);
+            groupBoxAddActions_MBS.TabIndex = 3;
+            groupBoxAddActions_MBS.TabStop = false;
+            groupBoxAddActions_MBS.Text = "Быстрое добавление";
+            // 
             // groupBoxQuickActions_MBS
             // 
             groupBoxQuickActions_MBS.Controls.Add(buttonQuickStats_MBS);
             groupBoxQuickActions_MBS.Controls.Add(buttonQuickChart_MBS);
             groupBoxQuickActions_MBS.Controls.Add(buttonQuickReport_MBS);
-            groupBoxQuickActions_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            groupBoxQuickActions_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
             groupBoxQuickActions_MBS.Location = new Point(15, 15);
             groupBoxQuickActions_MBS.Name = "groupBoxQuickActions_MBS";
             groupBoxQuickActions_MBS.Size = new Size(270, 140);
@@ -955,7 +1030,7 @@
             // 
             buttonQuickStats_MBS.BackColor = Color.FromArgb(52, 152, 219);
             buttonQuickStats_MBS.FlatStyle = FlatStyle.Flat;
-            buttonQuickStats_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonQuickStats_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             buttonQuickStats_MBS.ForeColor = Color.White;
             buttonQuickStats_MBS.Location = new Point(20, 35);
             buttonQuickStats_MBS.Name = "buttonQuickStats_MBS";
@@ -968,7 +1043,7 @@
             // 
             buttonQuickChart_MBS.BackColor = Color.FromArgb(46, 204, 113);
             buttonQuickChart_MBS.FlatStyle = FlatStyle.Flat;
-            buttonQuickChart_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonQuickChart_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             buttonQuickChart_MBS.ForeColor = Color.White;
             buttonQuickChart_MBS.Location = new Point(20, 70);
             buttonQuickChart_MBS.Name = "buttonQuickChart_MBS";
@@ -981,7 +1056,7 @@
             // 
             buttonQuickReport_MBS.BackColor = Color.FromArgb(155, 89, 182);
             buttonQuickReport_MBS.FlatStyle = FlatStyle.Flat;
-            buttonQuickReport_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonQuickReport_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             buttonQuickReport_MBS.ForeColor = Color.White;
             buttonQuickReport_MBS.Location = new Point(20, 105);
             buttonQuickReport_MBS.Name = "buttonQuickReport_MBS";
@@ -1001,7 +1076,7 @@
             groupBoxFilters_MBS.Controls.Add(dateTimePickerTo_MBS);
             groupBoxFilters_MBS.Controls.Add(buttonApplyFilter_MBS);
             groupBoxFilters_MBS.Controls.Add(buttonResetFilter_MBS);
-            groupBoxFilters_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            groupBoxFilters_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
             groupBoxFilters_MBS.Location = new Point(15, 170);
             groupBoxFilters_MBS.Name = "groupBoxFilters_MBS";
             groupBoxFilters_MBS.Size = new Size(270, 190);
@@ -1012,7 +1087,7 @@
             // checkBoxActiveOnly_MBS
             // 
             checkBoxActiveOnly_MBS.AutoSize = true;
-            checkBoxActiveOnly_MBS.Font = new Font("Segoe UI", 9F);
+            checkBoxActiveOnly_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             checkBoxActiveOnly_MBS.Location = new Point(20, 35);
             checkBoxActiveOnly_MBS.Name = "checkBoxActiveOnly_MBS";
             checkBoxActiveOnly_MBS.Size = new Size(150, 24);
@@ -1023,7 +1098,7 @@
             // checkBoxHighPriority_MBS
             // 
             checkBoxHighPriority_MBS.AutoSize = true;
-            checkBoxHighPriority_MBS.Font = new Font("Segoe UI", 9F);
+            checkBoxHighPriority_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             checkBoxHighPriority_MBS.Location = new Point(20, 60);
             checkBoxHighPriority_MBS.Name = "checkBoxHighPriority_MBS";
             checkBoxHighPriority_MBS.Size = new Size(170, 24);
@@ -1033,7 +1108,7 @@
             // 
             // dateTimePickerFrom_MBS
             // 
-            dateTimePickerFrom_MBS.Font = new Font("Segoe UI", 8F);
+            dateTimePickerFrom_MBS.Font = new System.Drawing.Font("Segoe UI", 8F);
             dateTimePickerFrom_MBS.Format = DateTimePickerFormat.Short;
             dateTimePickerFrom_MBS.Location = new Point(70, 90);
             dateTimePickerFrom_MBS.Name = "dateTimePickerFrom_MBS";
@@ -1043,7 +1118,7 @@
             // labelFrom_MBS
             // 
             labelFrom_MBS.AutoSize = true;
-            labelFrom_MBS.Font = new Font("Segoe UI", 9F);
+            labelFrom_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             labelFrom_MBS.Location = new Point(20, 93);
             labelFrom_MBS.Name = "labelFrom_MBS";
             labelFrom_MBS.Size = new Size(29, 20);
@@ -1053,7 +1128,7 @@
             // labelTo_MBS
             // 
             labelTo_MBS.AutoSize = true;
-            labelTo_MBS.Font = new Font("Segoe UI", 9F);
+            labelTo_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             labelTo_MBS.Location = new Point(20, 123);
             labelTo_MBS.Name = "labelTo_MBS";
             labelTo_MBS.Size = new Size(31, 20);
@@ -1062,7 +1137,7 @@
             // 
             // dateTimePickerTo_MBS
             // 
-            dateTimePickerTo_MBS.Font = new Font("Segoe UI", 8F);
+            dateTimePickerTo_MBS.Font = new System.Drawing.Font("Segoe UI", 8F);
             dateTimePickerTo_MBS.Format = DateTimePickerFormat.Short;
             dateTimePickerTo_MBS.Location = new Point(70, 120);
             dateTimePickerTo_MBS.Name = "dateTimePickerTo_MBS";
@@ -1073,7 +1148,7 @@
             // 
             buttonApplyFilter_MBS.BackColor = Color.FromArgb(0, 122, 204);
             buttonApplyFilter_MBS.FlatStyle = FlatStyle.Flat;
-            buttonApplyFilter_MBS.Font = new Font("Segoe UI", 9F);
+            buttonApplyFilter_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             buttonApplyFilter_MBS.ForeColor = Color.White;
             buttonApplyFilter_MBS.Location = new Point(20, 150);
             buttonApplyFilter_MBS.Name = "buttonApplyFilter_MBS";
@@ -1087,7 +1162,7 @@
             // 
             buttonResetFilter_MBS.BackColor = Color.FromArgb(240, 240, 240);
             buttonResetFilter_MBS.FlatStyle = FlatStyle.Flat;
-            buttonResetFilter_MBS.Font = new Font("Segoe UI", 9F);
+            buttonResetFilter_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             buttonResetFilter_MBS.Location = new Point(140, 150);
             buttonResetFilter_MBS.Name = "buttonResetFilter_MBS";
             buttonResetFilter_MBS.Size = new Size(110, 30);
@@ -1103,7 +1178,7 @@
             groupBoxSummary_MBS.Controls.Add(labelStoresCount_MBS);
             groupBoxSummary_MBS.Controls.Add(labelOwnersCount_MBS);
             groupBoxSummary_MBS.Controls.Add(labelSuppliersCount_MBS);
-            groupBoxSummary_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            groupBoxSummary_MBS.Font = new System.Drawing.Font("Segoe UI", 10F, FontStyle.Bold);
             groupBoxSummary_MBS.Location = new Point(15, 366);
             groupBoxSummary_MBS.Name = "groupBoxSummary_MBS";
             groupBoxSummary_MBS.Size = new Size(270, 70);
@@ -1115,7 +1190,7 @@
             // labelTotalStores_MBS
             // 
             labelTotalStores_MBS.AutoSize = true;
-            labelTotalStores_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalStores_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             labelTotalStores_MBS.Location = new Point(200, 47);
             labelTotalStores_MBS.Name = "labelTotalStores_MBS";
             labelTotalStores_MBS.Size = new Size(18, 20);
@@ -1125,7 +1200,7 @@
             // labelTotalOwners_MBS
             // 
             labelTotalOwners_MBS.AutoSize = true;
-            labelTotalOwners_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalOwners_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             labelTotalOwners_MBS.Location = new Point(200, 20);
             labelTotalOwners_MBS.Name = "labelTotalOwners_MBS";
             labelTotalOwners_MBS.Size = new Size(18, 20);
@@ -1135,7 +1210,7 @@
             // labelTotalSuppliers_MBS
             // 
             labelTotalSuppliers_MBS.AutoSize = true;
-            labelTotalSuppliers_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalSuppliers_MBS.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
             labelTotalSuppliers_MBS.Location = new Point(200, 65);
             labelTotalSuppliers_MBS.Name = "labelTotalSuppliers_MBS";
             labelTotalSuppliers_MBS.Size = new Size(18, 20);
@@ -1145,7 +1220,7 @@
             // labelStoresCount_MBS
             // 
             labelStoresCount_MBS.AutoSize = true;
-            labelStoresCount_MBS.Font = new Font("Segoe UI", 9F);
+            labelStoresCount_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             labelStoresCount_MBS.Location = new Point(20, 47);
             labelStoresCount_MBS.Name = "labelStoresCount_MBS";
             labelStoresCount_MBS.Size = new Size(83, 20);
@@ -1155,7 +1230,7 @@
             // labelOwnersCount_MBS
             // 
             labelOwnersCount_MBS.AutoSize = true;
-            labelOwnersCount_MBS.Font = new Font("Segoe UI", 9F);
+            labelOwnersCount_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             labelOwnersCount_MBS.Location = new Point(20, 20);
             labelOwnersCount_MBS.Name = "labelOwnersCount_MBS";
             labelOwnersCount_MBS.Size = new Size(89, 20);
@@ -1166,7 +1241,7 @@
             // labelSuppliersCount_MBS
             // 
             labelSuppliersCount_MBS.AutoSize = true;
-            labelSuppliersCount_MBS.Font = new Font("Segoe UI", 9F);
+            labelSuppliersCount_MBS.Font = new System.Drawing.Font("Segoe UI", 9F);
             labelSuppliersCount_MBS.Location = new Point(20, 65);
             labelSuppliersCount_MBS.Name = "labelSuppliersCount_MBS";
             labelSuppliersCount_MBS.Size = new Size(98, 20);
@@ -1186,7 +1261,7 @@
             Controls.Add(toolStripMain_MBS);
             Controls.Add(statusStripMain_MBS);
             Controls.Add(menuStripMain_MBS);
-            Font = new Font("Segoe UI", 9F);
+            Font = new System.Drawing.Font("Segoe UI", 9F);
             MainMenuStrip = menuStripMain_MBS;
             MinimumSize = new Size(1000, 600);
             Name = "FormMain";
@@ -1211,6 +1286,7 @@
             tabPageSuppliers_MBS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewSuppliers_MBS).EndInit();
             panelSidebar_MBS.ResumeLayout(false);
+            groupBoxAddActions_MBS.ResumeLayout(false);
             groupBoxQuickActions_MBS.ResumeLayout(false);
             groupBoxFilters_MBS.ResumeLayout(false);
             groupBoxFilters_MBS.PerformLayout();
@@ -1218,7 +1294,7 @@
             groupBoxSummary_MBS.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
-        
+
         }
 
         #endregion
@@ -1326,5 +1402,9 @@
         private System.Windows.Forms.Label labelStoresCount_MBS;
         private System.Windows.Forms.Label labelOwnersCount_MBS;
         private System.Windows.Forms.Label labelSuppliersCount_MBS;
+        private System.Windows.Forms.Button buttonAddOwner_MBS;
+        private System.Windows.Forms.Button buttonAddStore_MBS;
+        private System.Windows.Forms.Button buttonAddSupplier_MBS;
+        private System.Windows.Forms.GroupBox groupBoxAddActions_MBS;
     }
 }

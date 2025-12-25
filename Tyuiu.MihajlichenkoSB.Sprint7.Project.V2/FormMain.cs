@@ -1,18 +1,28 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 {
     public partial class FormMain : Form
     {
-        private Timer timerDateTime;
         private DataTable dataTableOwners;
         private DataTable dataTableStores;
         private DataTable dataTableSuppliers;
+        private Timer timerDateTime;
 
         public FormMain()
         {
             InitializeComponent();
 
+            // Инициализация таймера для обновления времени
+            timerDateTime = new Timer();
+            timerDateTime.Interval = 1000; // 1 секунда
+            timerDateTime.Tick += TimerDateTime_Tick;
+            timerDateTime.Start();
+
+            // Обработчики для основных кнопок
             buttonSearch_MBS.Click += ButtonSearch_MBS_Click;
             buttonClearSearch_MBS.Click += ButtonClearSearch_MBS_Click;
             buttonApplyFilter_MBS.Click += ButtonApplyFilter_MBS_Click;
@@ -21,22 +31,66 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             buttonQuickChart_MBS.Click += ButtonQuickChart_MBS_Click;
             buttonQuickReport_MBS.Click += ButtonQuickReport_MBS_Click;
 
-            // Меню
+            // Обработчики для новых кнопок добавления
+            buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
+            buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
+            buttonAddSupplier_MBS.Click += ButtonAddSupplier_MBS_Click;
+
+            // Обработчики для кнопок панели инструментов
+            toolStripButtonAddOwner_MBS.Click += ToolStripMenuItemAddOwner_MBS_Click;
+            toolStripButtonAddStore_MBS.Click += ToolStripMenuItemAddStore_MBS_Click;
+            toolStripButtonAddSupplier_MBS.Click += ToolStripMenuItemAddSupplier_MBS_Click;
+            toolStripButtonNew_MBS.Click += ToolStripMenuItemNew_MBS_Click;
+            toolStripButtonSave_MBS.Click += ToolStripMenuItemSaveData_MBS_Click;
+            toolStripButtonLoad_MBS.Click += ToolStripMenuItemLoadData_MBS_Click;
+            toolStripButtonPrint_MBS.Click += ToolStripMenuItemPrint_MBS_Click;
+            toolStripButtonRefresh_MBS.Click += ToolStripMenuItemRefresh_MBS_Click;
+            toolStripButtonStats_MBS.Click += ToolStripMenuItemStats_MBS_Click;
+            toolStripButtonChart_MBS.Click += ToolStripMenuItemCharts_MBS_Click;
+            toolStripButtonReport_MBS.Click += ToolStripMenuItemReport_MBS_Click;
+            toolStripButtonHelp_MBS.Click += ToolStripMenuItemUserGuide_MBS_Click;
+
+            // Обработчики для меню
             toolStripMenuItemExit_MBS.Click += ToolStripMenuItemExit_MBS_Click;
             toolStripMenuItemAbout_MBS.Click += ToolStripMenuItemAbout_MBS_Click;
             toolStripMenuItemUserGuide_MBS.Click += ToolStripMenuItemUserGuide_MBS_Click;
+            toolStripMenuItemVideoGuide_MBS.Click += ToolStripMenuItemVideoGuide_MBS_Click;
+            toolStripMenuItemCheckUpdates_MBS.Click += ToolStripMenuItemCheckUpdates_MBS_Click;
+
+            // Обработчики для меню добавления
+            toolStripMenuItemAddOwner_MBS.Click += ToolStripMenuItemAddOwner_MBS_Click;
+            toolStripMenuItemAddStore_MBS.Click += ToolStripMenuItemAddStore_MBS_Click;
+            toolStripMenuItemAddSupplier_MBS.Click += ToolStripMenuItemAddSupplier_MBS_Click;
+            toolStripMenuItemNew_MBS.Click += ToolStripMenuItemNew_MBS_Click;
+            toolStripMenuItemLoadData_MBS.Click += ToolStripMenuItemLoadData_MBS_Click;
+            toolStripMenuItemSaveData_MBS.Click += ToolStripMenuItemSaveData_MBS_Click;
+            toolStripMenuItemSaveAs_MBS.Click += ToolStripMenuItemSaveAs_MBS_Click;
+            toolStripMenuItemPrint_MBS.Click += ToolStripMenuItemPrint_MBS_Click;
+            toolStripMenuItemRefresh_MBS.Click += ToolStripMenuItemRefresh_MBS_Click;
+            toolStripMenuItemStats_MBS.Click += ToolStripMenuItemStats_MBS_Click;
+            toolStripMenuItemCharts_MBS.Click += ToolStripMenuItemCharts_MBS_Click;
+            toolStripMenuItemReport_MBS.Click += ToolStripMenuItemReport_MBS_Click;
+            toolStripMenuItemExport_MBS.Click += ToolStripMenuItemExport_MBS_Click;
+            toolStripMenuItemEdit_MBS.Click += ToolStripMenuItemEdit_MBS_Click;
+            toolStripMenuItemDelete_MBS.Click += ToolStripMenuItemDelete_MBS_Click;
+
+            // Обработчики для меню вида
+            toolStripMenuItemToolbar_MBS.CheckedChanged += ToolStripMenuItemToolbar_MBS_CheckedChanged;
+            toolStripMenuItemStatusbar_MBS.CheckedChanged += ToolStripMenuItemStatusbar_MBS_CheckedChanged;
+            toolStripMenuItemLight_MBS.Click += ToolStripMenuItemLight_MBS_Click;
+            toolStripMenuItemDark_MBS.Click += ToolStripMenuItemDark_MBS_Click;
+            toolStripMenuItemBlue_MBS.Click += ToolStripMenuItemBlue_MBS_Click;
+
+            // Обработчики для других событий
+            textBoxSearch_MBS.KeyPress += TextBoxSearch_MBS_KeyPress;
+            tabControlMain_MBS.SelectedIndexChanged += TabControlMain_MBS_SelectedIndexChanged;
+            this.Load += FormMain_Load;
 
             InitializeApplication();
         }
 
         private void InitializeApplication()
         {
-            // Настройка таймера для обновления времени
-            timerDateTime = new Timer();
-            timerDateTime.Interval = 1000;
-            timerDateTime.Tick += TimerDateTime_Tick;
-            timerDateTime.Start();
-
             // Инициализация таблиц данных
             InitializeDataTables();
 
@@ -117,6 +171,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             }
         }
 
+        #region Обработчики событий таймера и обновлений
+
         private void TimerDateTime_Tick(object sender, EventArgs e)
         {
             UpdateDateTime();
@@ -135,6 +191,27 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             labelTotalSuppliers_MBS.Text = dataTableSuppliers.Rows.Count.ToString();
             toolStripStatusLabelCount_MBS.Text = $"Записей: {dataTableOwners.Rows.Count + dataTableStores.Rows.Count + dataTableSuppliers.Rows.Count}";
         }
+
+        #endregion
+
+        #region Обработчики событий новых кнопок добавления
+
+        private void ButtonAddOwner_MBS_Click(object sender, EventArgs e)
+        {
+            AddNewOwner();
+        }
+
+        private void ButtonAddStore_MBS_Click(object sender, EventArgs e)
+        {
+            AddNewStore();
+        }
+
+        private void ButtonAddSupplier_MBS_Click(object sender, EventArgs e)
+        {
+            AddNewSupplier();
+        }
+
+        #endregion
 
         #region Обработчики событий меню
 
@@ -195,90 +272,40 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             );
         }
 
+        private void ToolStripMenuItemVideoGuide_MBS_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Видео-руководство доступно на нашем сайте.\n" +
+                "Ссылка: https://www.example.com/video-guide",
+                "Видео-руководство",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
+        private void ToolStripMenuItemCheckUpdates_MBS_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Проверка обновлений...\nУ вас установлена последняя версия.",
+                "Обновления",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
         private void ToolStripMenuItemAddOwner_MBS_Click(object sender, EventArgs e)
         {
-            try
-            {
-                FormAddOwner form = new FormAddOwner();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    dataTableOwners.Rows.Add(
-                        dataTableOwners.Rows.Count + 1,
-                        form.FullName,
-                        form.Phone,
-                        "example@mail.ru",
-                        DateTime.Now,
-                        "Активный"
-                    );
-
-                    UpdateSummaryCounts();
-                    toolStripStatusLabelInfo_MBS.Text = "Владелец успешно добавлен";
-                    MessageBox.Show("Владелец добавлен", "Новый владелец успешно добавлен в базу данных.",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка при добавлении владельца", ex.Message);
-            }
+            AddNewOwner();
         }
 
         private void ToolStripMenuItemAddStore_MBS_Click(object sender, EventArgs e)
         {
-            try
-            {
-                FormAddStore form = new FormAddStore();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    dataTableStores.Rows.Add(
-                        dataTableStores.Rows.Count + 1,
-                        form.StoreName,
-                        form.Address,
-                        "Иванов И.И.",
-                        form.Phone,
-                        form.Area,
-                        "Активный"
-                    );
-
-                    UpdateSummaryCounts();
-                    toolStripStatusLabelInfo_MBS.Text = "Магазин успешно добавлен";
-                    MessageBox.Show("Магазин добавлен", "Новый магазин успешно добавлен в базу данных.",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка при добавлении магазина", ex.Message);
-            }
+            AddNewStore();
         }
 
         private void ToolStripMenuItemAddSupplier_MBS_Click(object sender, EventArgs e)
         {
-            try
-            {
-                FormAddSupplier form = new FormAddSupplier();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    dataTableSuppliers.Rows.Add(
-                        dataTableSuppliers.Rows.Count + 1,
-                        "Название компании",
-                        form.FullName,
-                        form.Phone,
-                        "email@example.com",
-                        form.Product,
-                        "Активный"
-                    );
-
-                    UpdateSummaryCounts();
-                    toolStripStatusLabelInfo_MBS.Text = "Поставщик успешно добавлен";
-                    MessageBox.Show("Поставщик добавлен", "Новый поставщик успешно добавлен в базу данных.",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Ошибка при добавлении поставщика", ex.Message);
-            }
+            AddNewSupplier();
         }
 
         private void ToolStripMenuItemLoadData_MBS_Click(object sender, EventArgs e)
@@ -295,11 +322,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                         toolStripProgressBar_MBS.Visible = true;
                         toolStripProgressBar_MBS.Style = ProgressBarStyle.Marquee;
                         toolStripStatusLabelInfo_MBS.Text = "Загрузка данных...";
-
-                        // Имитация загрузки данных
-                        timerDateTime.Stop();
-                        System.Threading.Thread.Sleep(2000);
-                        timerDateTime.Start();
 
                         // Загрузка тестовых данных
                         LoadSampleData();
@@ -337,11 +359,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                         toolStripProgressBar_MBS.Style = ProgressBarStyle.Marquee;
                         toolStripStatusLabelInfo_MBS.Text = "Сохранение данных...";
 
-                        // Имитация сохранения данных
-                        timerDateTime.Stop();
-                        System.Threading.Thread.Sleep(1500);
-                        timerDateTime.Start();
-
                         toolStripProgressBar_MBS.Visible = false;
                         toolStripStatusLabelInfo_MBS.Text = $"Данные сохранены в: {saveFileDialog.FileName}";
                         MessageBox.Show("Сохранение данных", "Данные успешно сохранены в файл.",
@@ -357,6 +374,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             {
                 toolStripProgressBar_MBS.Visible = false;
             }
+        }
+
+        private void ToolStripMenuItemSaveAs_MBS_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemSaveData_MBS_Click(sender, e);
         }
 
         private void ToolStripMenuItemPrint_MBS_Click(object sender, EventArgs e)
@@ -385,21 +407,136 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolStripStatusLabelInfo_MBS.Text = "Данные обновлены";
         }
 
+        private void ToolStripMenuItemStats_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonQuickStats_MBS_Click(sender, e);
+        }
+
+        private void ToolStripMenuItemCharts_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonQuickChart_MBS_Click(sender, e);
+        }
+
+        private void ToolStripMenuItemReport_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonQuickReport_MBS_Click(sender, e);
+        }
+
         private void ToolStripMenuItemExport_MBS_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Функция экспорта в разработке", "Информация",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void ToolStripMenuItemCheckUpdates_MBS_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemEdit_MBS_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Проверка обновлений...\nУ вас установлена последняя версия.", "Обновления",
+            MessageBox.Show("Функция редактирования в разработке", "Информация",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripMenuItemDelete_MBS_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удалить выбранную запись?", "Удаление",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                // Здесь будет логика удаления выбранной записи
+                toolStripStatusLabelInfo_MBS.Text = "Запись удалена";
+            }
         }
 
         #endregion
 
-        #region Обработчики событий кнопок
+        #region Методы добавления новых записей
+
+        private void AddNewOwner()
+        {
+            try
+            {
+                FormAddOwner form = new FormAddOwner();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    dataTableOwners.Rows.Add(
+                        dataTableOwners.Rows.Count + 1,
+                        form.FullName,
+                        form.Phone,
+                        "example@mail.ru",
+                        DateTime.Now,
+                        "Активный"
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Владелец успешно добавлен";
+                    MessageBox.Show("Владелец добавлен", "Новый владелец успешно добавлен в базу данных.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении владельца", ex.Message);
+            }
+        }
+
+        private void AddNewStore()
+        {
+            try
+            {
+                FormAddStore form = new FormAddStore();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    dataTableStores.Rows.Add(
+                        dataTableStores.Rows.Count + 1,
+                        form.StoreName,
+                        form.Address,
+                        "Иванов И.И.",
+                        form.Phone,
+                        form.Area,
+                        "Активный"
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Магазин успешно добавлен";
+                    MessageBox.Show("Магазин добавлен", "Новый магазин успешно добавлен в базу данных.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении магазина", ex.Message);
+            }
+        }
+
+        private void AddNewSupplier()
+        {
+            try
+            {
+                FormAddSupplier form = new FormAddSupplier();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    dataTableSuppliers.Rows.Add(
+                        dataTableSuppliers.Rows.Count + 1,
+                        "Название компании",
+                        form.FullName,
+                        form.Phone,
+                        "email@example.com",
+                        form.Product,
+                        "Активный"
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Поставщик успешно добавлен";
+                    MessageBox.Show("Поставщик добавлен", "Новый поставщик успешно добавлен в базу данных.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении поставщика", ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Обработчики событий кнопок поиска и фильтров
 
         private void ButtonSearch_MBS_Click(object sender, EventArgs e)
         {
@@ -432,7 +569,12 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 DateTime toDate = dateTimePickerTo_MBS.Value;
 
                 toolStripStatusLabelInfo_MBS.Text = "Фильтры применены";
-                MessageBox.Show("Фильтры", "Расширенные фильтры успешно применены",
+                MessageBox.Show($"Фильтры применены:\n" +
+                    $"Только активные: {activeOnly}\n" +
+                    $"Высокий приоритет: {highPriority}\n" +
+                    $"Дата от: {fromDate:dd.MM.yyyy}\n" +
+                    $"Дата до: {toDate:dd.MM.yyyy}",
+                    "Фильтры применены",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -494,11 +636,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             {
                 toolStripStatusLabelInfo_MBS.Text = "Генерация отчета...";
 
-                // Имитация генерации отчета
-                timerDateTime.Stop();
-                System.Threading.Thread.Sleep(1000);
-                timerDateTime.Start();
-
                 string report = GenerateReport();
 
                 MessageBox.Show(report, "Сводный отчет", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -512,26 +649,62 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         #endregion
 
-        #region Обработчики событий панели инструментов
+        #region Обработчики событий меню вида
 
-        private void ToolStripButtonNew_MBS_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemToolbar_MBS_CheckedChanged(object sender, EventArgs e)
         {
-            ToolStripMenuItemNew_MBS_Click(sender, e);
+            toolStripMain_MBS.Visible = toolStripMenuItemToolbar_MBS.Checked;
         }
 
-        private void ToolStripButtonPrint_MBS_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemStatusbar_MBS_CheckedChanged(object sender, EventArgs e)
         {
-            ToolStripMenuItemPrint_MBS_Click(sender, e);
+            statusStripMain_MBS.Visible = toolStripMenuItemStatusbar_MBS.Checked;
         }
 
-        private void ToolStripButtonRefresh_MBS_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemLight_MBS_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItemRefresh_MBS_Click(sender, e);
+            ApplyTheme("Светлая");
         }
 
-        private void ToolStripButtonExport_MBS_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemDark_MBS_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItemExport_MBS_Click(sender, e);
+            ApplyTheme("Темная");
+        }
+
+        private void ToolStripMenuItemBlue_MBS_Click(object sender, EventArgs e)
+        {
+            ApplyTheme("Синяя");
+        }
+
+        private void ApplyTheme(string themeName)
+        {
+            toolStripMenuItemLight_MBS.Checked = false;
+            toolStripMenuItemDark_MBS.Checked = false;
+            toolStripMenuItemBlue_MBS.Checked = false;
+
+            switch (themeName)
+            {
+                case "Светлая":
+                    toolStripMenuItemLight_MBS.Checked = true;
+                    this.BackColor = Color.White;
+                    this.ForeColor = Color.Black;
+                    panelSidebar_MBS.BackColor = Color.FromArgb(240, 240, 245);
+                    break;
+                case "Темная":
+                    toolStripMenuItemDark_MBS.Checked = true;
+                    this.BackColor = Color.FromArgb(45, 45, 48);
+                    this.ForeColor = Color.White;
+                    panelSidebar_MBS.BackColor = Color.FromArgb(60, 60, 65);
+                    break;
+                case "Синяя":
+                    toolStripMenuItemBlue_MBS.Checked = true;
+                    this.BackColor = Color.FromArgb(240, 240, 245);
+                    this.ForeColor = Color.FromArgb(0, 122, 204);
+                    panelSidebar_MBS.BackColor = Color.FromArgb(230, 230, 235);
+                    break;
+            }
+
+            toolStripStatusLabelInfo_MBS.Text = $"Тема изменена на: {themeName}";
         }
 
         #endregion
@@ -555,44 +728,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             {
                 toolStripStatusLabelInfo_MBS.Text = $"Активная вкладка: {tabNames[tabControlMain_MBS.SelectedIndex]}";
             }
-        }
-
-        private void ToolStripMenuItemTheme_MBS_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            string theme = e.ClickedItem.Text;
-            toolStripStatusLabelInfo_MBS.Text = $"Тема изменена на: {theme}";
-
-            Color backgroundColor = Color.White;
-            Color textColor = Color.Black;
-
-            switch (theme)
-            {
-                case "Светлая":
-                    backgroundColor = Color.White;
-                    textColor = Color.Black;
-                    break;
-                case "Темная":
-                    backgroundColor = Color.FromArgb(45, 45, 48);
-                    textColor = Color.White;
-                    break;
-                case "Синяя":
-                    backgroundColor = Color.FromArgb(240, 240, 245);
-                    textColor = Color.FromArgb(0, 122, 204);
-                    break;
-            }
-
-            this.BackColor = backgroundColor;
-            this.ForeColor = textColor;
-        }
-
-        private void ToolStripMenuItemToolbar_MBS_Click(object sender, EventArgs e)
-        {
-            toolStripMain_MBS.Visible = toolStripMenuItemToolbar_MBS.Checked;
-        }
-
-        private void ToolStripMenuItemStatusbar_MBS_Click(object sender, EventArgs e)
-        {
-            statusStripMain_MBS.Visible = toolStripMenuItemStatusbar_MBS.Checked;
         }
 
         private void FormMain_Load(object sender, EventArgs e)

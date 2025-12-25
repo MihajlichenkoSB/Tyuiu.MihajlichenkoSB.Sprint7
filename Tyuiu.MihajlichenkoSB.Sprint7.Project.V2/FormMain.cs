@@ -18,6 +18,10 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         private Button buttonAddStoreTop;
         private Button buttonAddSupplierTop;
 
+        // Для вкладки поставщиков
+        private TabPage tabPageSuppliers_MBS;
+        private DataGridView dataGridViewSuppliers_MBS;
+
         public FormMain()
         {
             InitializeComponent();
@@ -25,12 +29,36 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataService = new DataService();
             toolTip = new ToolTip();
 
+            CreateSupplierTab(); // Создаем вкладку для поставщиков
             CreateTopButtonsPanel(); // Создаем панель с кнопками наверху
             SetupDataGridViews();
             SetupToolTips();
             LoadSampleData();
             UpdateInterface();
             SetupEventHandlers();
+        }
+
+        private void CreateSupplierTab()
+        {
+            // Создаем вкладку для поставщиков
+            tabPageSuppliers_MBS = new TabPage();
+            tabPageSuppliers_MBS.Text = "Поставщики";
+            tabPageSuppliers_MBS.BackColor = SystemColors.Control;
+
+            // Создаем DataGridView для поставщиков
+            dataGridViewSuppliers_MBS = new DataGridView();
+            dataGridViewSuppliers_MBS.Dock = DockStyle.Fill;
+            dataGridViewSuppliers_MBS.AllowUserToAddRows = false;
+            dataGridViewSuppliers_MBS.AllowUserToDeleteRows = false;
+            dataGridViewSuppliers_MBS.ReadOnly = true;
+            dataGridViewSuppliers_MBS.RowHeadersWidth = 51;
+            dataGridViewSuppliers_MBS.RowTemplate.Height = 24;
+
+            // Добавляем DataGridView на вкладку
+            tabPageSuppliers_MBS.Controls.Add(dataGridViewSuppliers_MBS);
+
+            // Добавляем вкладку в TabControl
+            tabControlMain_MBS.Controls.Add(tabPageSuppliers_MBS);
         }
 
         private void CreateTopButtonsPanel()
@@ -77,8 +105,18 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             panelAddButtons.Controls.Add(buttonAddStoreTop);
             panelAddButtons.Controls.Add(buttonAddSupplierTop);
 
-            // Добавляем панель на форму (после заголовка)
+            // Перемещаем TabControl ниже
+            // Для этого нужно изменить порядок контролов
+            // Сначала удаляем TabControl из формы
+            this.Controls.Remove(tabControlMain_MBS);
+
+            // Добавляем панель с кнопками
             this.Controls.Add(panelAddButtons);
+
+            // Затем снова добавляем TabControl
+            this.Controls.Add(tabControlMain_MBS);
+
+            // Устанавливаем правильный порядок
             panelAddButtons.BringToFront();
         }
 
@@ -102,7 +140,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolTip.SetToolTip(buttonAddOwnerTop, "Добавить нового владельца магазина");
             toolTip.SetToolTip(buttonAddStoreTop, "Добавить новый магазин");
             toolTip.SetToolTip(buttonAddSupplierTop, "Добавить нового поставщика");
-            
+
             // Подсказки для остальных кнопок
             toolTip.SetToolTip(buttonEditItem_MBS, "Редактировать выбранный элемент");
             toolTip.SetToolTip(buttonDeleteItem_MBS, "Удалить выбранный элемент");
@@ -135,8 +173,15 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataGridViewStores_MBS.Columns["MonthlyRevenue"].DefaultCellStyle.Format = "N2";
             dataGridViewStores_MBS.Columns["MonthlyRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-            // Настройка DataGridView для поставщиков (новая вкладка)
-            // Добавим позже, когда создадим вкладку
+            // Настройка DataGridView для поставщиков
+            dataGridViewSuppliers_MBS.Columns.Clear();
+            dataGridViewSuppliers_MBS.Columns.Add("Id", "ID");
+            dataGridViewSuppliers_MBS.Columns.Add("FullName", "ФИО/Название");
+            dataGridViewSuppliers_MBS.Columns.Add("Address", "Адрес");
+            dataGridViewSuppliers_MBS.Columns.Add("Phone", "Телефон");
+            dataGridViewSuppliers_MBS.Columns.Add("DeliveryCost", "Стоимость доставки (руб.)");
+            dataGridViewSuppliers_MBS.Columns["DeliveryCost"].DefaultCellStyle.Format = "N2";
+            dataGridViewSuppliers_MBS.Columns["DeliveryCost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
         private void LoadSampleData()
@@ -154,8 +199,9 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 dataService.AddStore(new Store { Id = 3, Name = "Дикси", Address = "СПб", Phone = "666", MonthlyRevenue = 980000, OwnerId = 2 });
 
                 // Тестовые поставщики
-                dataService.AddSupplier(new Supplier { Id = 1, FullName = "ООО 'Продукты+'" });
-                dataService.AddSupplier(new Supplier { Id = 2, FullName = "ИП 'Снабжение'" });
+                dataService.AddSupplier(new Supplier { Id = 1, FullName = "ООО 'Продукты+'", Address = "Москва", Phone = "777", DeliveryCost = 50000 });
+                dataService.AddSupplier(new Supplier { Id = 2, FullName = "ИП 'Снабжение'", Address = "СПб", Phone = "888", DeliveryCost = 35000 });
+                dataService.AddSupplier(new Supplier { Id = 3, FullName = "ЗАО 'Оптовик'", Address = "Казань", Phone = "999", DeliveryCost = 42000 });
 
                 UpdateDataGridViews();
             }
@@ -185,7 +231,12 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 dataGridViewStores_MBS.Rows.Add(store.Id, store.Name, store.Address, store.Phone, store.MonthlyRevenue, ownerName);
             }
 
-            // Поставщики (если будет вкладка)
+            // Поставщики
+            dataGridViewSuppliers_MBS.Rows.Clear();
+            foreach (var supplier in dataService.GetSuppliers())
+            {
+                dataGridViewSuppliers_MBS.Rows.Add(supplier.Id, supplier.FullName, supplier.Address, supplier.Phone, supplier.DeliveryCost);
+            }
         }
 
         private void UpdateInterface()
@@ -269,7 +320,10 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 return;
             }
 
-            FormAddStore form = new FormAddStore();
+            // Передаем список владельцев в форму
+            FormAddStore form = new FormAddStore(dataService.GetOwners());
+
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
@@ -342,6 +396,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                     dataService.AddSupplier(newSupplier);
 
                     // Обновляем интерфейс
+                    UpdateDataGridViews();
                     UpdateStatusInfo();
 
                     MessageBox.Show($"Поставщик '{form.FullName}' успешно добавлен!", "Успех",
@@ -375,6 +430,10 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             else if (tabControlMain_MBS.SelectedTab == tabPageStores_MBS)
             {
                 DeleteSelectedStore();
+            }
+            else if (tabControlMain_MBS.SelectedTab == tabPageSuppliers_MBS)
+            {
+                DeleteSelectedSupplier();
             }
             else
             {
@@ -414,20 +473,15 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             {
                 try
                 {
-                    // Находим и удаляем владельца
-                    var owners = dataService.GetOwners();
-                    var ownerToRemove = owners.FirstOrDefault(o => o.Id == ownerId);
+                    // Удаляем владельца
+                    dataService.RemoveOwner(ownerId);
+                    UpdateDataGridViews();
+                    UpdateStatusInfo();
 
-                    if (ownerToRemove != null)
-                    {
-                        owners.Remove(ownerToRemove);
-                        UpdateDataGridViews();
-                        UpdateStatusInfo();
-
-                        MessageBox.Show($"Владелец '{ownerName}' успешно удален!", "Успех",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    MessageBox.Show($"Владелец '{ownerName}' успешно удален!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка при удалении владельца: {ex.Message}", "Ошибка",
@@ -457,23 +511,55 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             {
                 try
                 {
-                    // Находим и удаляем магазин
-                    var stores = dataService.GetStores();
-                    var storeToRemove = stores.FirstOrDefault(s => s.Id == storeId);
+                    // Удаляем магазин
+                    dataService.RemoveStore(storeId);
+                    UpdateDataGridViews();
+                    UpdateStatusInfo();
 
-                    if (storeToRemove != null)
-                    {
-                        stores.Remove(storeToRemove);
-                        UpdateDataGridViews();
-                        UpdateStatusInfo();
-
-                        MessageBox.Show($"Магазин '{storeName}' успешно удален!", "Успех",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    MessageBox.Show($"Магазин '{storeName}' успешно удален!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка при удалении магазина: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void DeleteSelectedSupplier()
+        {
+            if (dataGridViewSuppliers_MBS.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите поставщика для удаления", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var selectedRow = dataGridViewSuppliers_MBS.SelectedRows[0];
+            int supplierId = (int)selectedRow.Cells[0].Value;
+            string supplierName = selectedRow.Cells[1].Value.ToString();
+
+            var result = MessageBox.Show($"Вы действительно хотите удалить поставщика '{supplierName}'?",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    // Удаляем поставщика
+                    dataService.RemoveSupplier(supplierId);
+                    UpdateDataGridViews();
+                    UpdateStatusInfo();
+
+                    MessageBox.Show($"Поставщик '{supplierName}' успешно удален!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении поставщика: {ex.Message}", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -566,9 +652,16 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             string filterType = comboBoxFilter_MBS.Text;
 
+            // Обновляем comboBoxFilter чтобы включал поставщиков
+            if (!comboBoxFilter_MBS.Items.Contains("Поставщики"))
+            {
+                comboBoxFilter_MBS.Items.Add("Поставщики");
+            }
+
             // Очищаем таблицы
             dataGridViewOwners_MBS.Rows.Clear();
             dataGridViewStores_MBS.Rows.Clear();
+            dataGridViewSuppliers_MBS.Rows.Clear();
 
             // Поиск владельцев
             if (filterType == "Все" || filterType == "Владельцы")
@@ -602,6 +695,20 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 }
             }
 
+            // Поиск поставщиков
+            if (filterType == "Все" || filterType == "Поставщики")
+            {
+                var suppliers = dataService.GetSuppliers().Where(s =>
+                    s.FullName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                    s.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                    s.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+
+                foreach (var supplier in suppliers)
+                {
+                    dataGridViewSuppliers_MBS.Rows.Add(supplier.Id, supplier.FullName, supplier.Address, supplier.Phone, supplier.DeliveryCost);
+                }
+            }
+
             toolStripStatusLabelInfo_MBS.Text = $"Найдено по запросу '{searchText}'";
         }
 
@@ -610,7 +717,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         {
             var result = MessageBox.Show("Вы действительно хотите выйти?", "Подтверждение выхода",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            
+
             if (result == DialogResult.Yes)
             {
                 this.Close();
@@ -648,6 +755,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 🔵 Светло-синяя - Добавить владельца
 🟢 Светло-зеленая - Добавить магазин
 🔴 Светло-оранжевая - Добавить поставщика
+
+📋 ТРИ ВКЛАДКИ ДЛЯ ПРОСМОТРА:
+1. Владельцы магазинов
+2. Магазины  
+3. Поставщики
 
 1. ДОБАВЛЕНИЕ ВЛАДЕЛЬЦА:
    - Нажмите синюю кнопку 'Добавить владельца'
@@ -701,7 +813,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             // Простая анимация при клике на заголовок
             Color currentColor = labelTitle_MBS.ForeColor;
             labelTitle_MBS.ForeColor = currentColor == Color.DarkBlue ? Color.DarkRed : Color.DarkBlue;
-            
+
             // Меняем цвет панели с кнопками
             if (panelAddButtons.BackColor == Color.LightSteelBlue)
                 panelAddButtons.BackColor = Color.LightGray;
@@ -752,6 +864,30 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
                 MessageBox.Show(info, "Информация о владельце",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        // Обработчик двойного клика по поставщику
+        private void dataGridViewSuppliers_MBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var row = dataGridViewSuppliers_MBS.Rows[e.RowIndex];
+                string supplierName = row.Cells[1].Value.ToString();
+                string address = row.Cells[2].Value.ToString();
+                string deliveryCost = row.Cells[4].Value.ToString();
+
+                string info = $"🚚 Поставщик: {supplierName}\n" +
+                             $"📍 Адрес: {address}\n" +
+                             $"📦 Стоимость доставки: {deliveryCost} руб.";
+
+                MessageBox.Show(info, "Информация о поставщике",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void dataGridViewOwners_MBS_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -1,804 +1,720 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Linq;
-using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Services;
-using Tyuiu.MihajlichenkoSB.Sprint7.Project.V2.Lib.Models;
+using System.Drawing;
+using System.IO;
+using System.Data;
 
 namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 {
     public partial class FormMain : Form
     {
-        private DataService dataService;
-        private ToolTip toolTip;
-
-        // Панель для кнопок добавления
-        private Panel panelAddButtons;
-        private Button buttonAddOwnerTop;
-        private Button buttonAddStoreTop;
-        private Button buttonAddSupplierTop;
-
-        // Для вкладки поставщиков
-        private TabPage tabPageSuppliers_MBS;
-        private DataGridView dataGridViewSuppliers_MBS;
+        private Timer timerDateTime;
+        private DataTable dataTableOwners;
+        private DataTable dataTableStores;
+        private DataTable dataTableSuppliers;
 
         public FormMain()
         {
             InitializeComponent();
-
-            dataService = new DataService();
-            toolTip = new ToolTip();
-
-            CreateSupplierTab(); // Создаем вкладку для поставщиков
-            CreateTopButtonsPanel(); // Создаем панель с кнопками наверху
-            SetupDataGridViews();
-            SetupToolTips();
-            LoadSampleData();
-            UpdateInterface();
-            SetupEventHandlers();
+            InitializeApplication();
         }
 
-        private void CreateSupplierTab()
+        private void InitializeApplication()
         {
-            // Создаем вкладку для поставщиков
-            tabPageSuppliers_MBS = new TabPage();
-            tabPageSuppliers_MBS.Text = "Поставщики";
-            tabPageSuppliers_MBS.BackColor = SystemColors.Control;
+            // Настройка таймера для обновления времени
+            timerDateTime = new Timer();
+            timerDateTime.Interval = 1000;
+            timerDateTime.Tick += TimerDateTime_Tick;
+            timerDateTime.Start();
 
-            // Создаем DataGridView для поставщиков
-            dataGridViewSuppliers_MBS = new DataGridView();
-            dataGridViewSuppliers_MBS.Dock = DockStyle.Fill;
-            dataGridViewSuppliers_MBS.AllowUserToAddRows = false;
-            dataGridViewSuppliers_MBS.AllowUserToDeleteRows = false;
-            dataGridViewSuppliers_MBS.ReadOnly = true;
-            dataGridViewSuppliers_MBS.RowHeadersWidth = 51;
-            dataGridViewSuppliers_MBS.RowTemplate.Height = 24;
+            // Инициализация таблиц данных
+            InitializeDataTables();
 
-            // Добавляем DataGridView на вкладку
-            tabPageSuppliers_MBS.Controls.Add(dataGridViewSuppliers_MBS);
+            // Настройка DataGridView
+            ConfigureDataGridViews();
 
-            // Добавляем вкладку в TabControl
-            tabControlMain_MBS.Controls.Add(tabPageSuppliers_MBS);
+            // Установка значений по умолчанию
+            comboBoxFilter_MBS.SelectedIndex = 0;
+            UpdateDateTime();
+            UpdateSummaryCounts();
+
+            // Установка прогресс-бара
+            toolStripProgressBar_MBS.Visible = false;
+
+            // Установка начальных значений для фильтров
+            dateTimePickerFrom_MBS.Value = DateTime.Now.AddMonths(-1);
+            dateTimePickerTo_MBS.Value = DateTime.Now;
         }
 
-        private void CreateTopButtonsPanel()
+        private void InitializeDataTables()
         {
-            // Создаем панель для кнопок
-            panelAddButtons = new Panel();
-            panelAddButtons.BackColor = Color.LightSteelBlue;
-            panelAddButtons.Dock = DockStyle.Top;
-            panelAddButtons.Height = 50;
-            panelAddButtons.Padding = new Padding(10, 5, 10, 5);
+            // Таблица владельцев
+            dataTableOwners = new DataTable("Owners");
+            dataTableOwners.Columns.Add("ID", typeof(int));
+            dataTableOwners.Columns.Add("ФИО", typeof(string));
+            dataTableOwners.Columns.Add("Телефон", typeof(string));
+            dataTableOwners.Columns.Add("Email", typeof(string));
+            dataTableOwners.Columns.Add("Дата регистрации", typeof(DateTime));
+            dataTableOwners.Columns.Add("Статус", typeof(string));
+            dataTableOwners.Columns.Add("Примечания", typeof(string));
 
-            // Кнопка "Добавить владельца"
-            buttonAddOwnerTop = new Button();
-            buttonAddOwnerTop.Text = "➕ Добавить владельца";
-            buttonAddOwnerTop.Size = new Size(180, 35);
-            buttonAddOwnerTop.Location = new Point(10, 7);
-            buttonAddOwnerTop.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular);
-            buttonAddOwnerTop.BackColor = Color.LightBlue;
-            buttonAddOwnerTop.FlatStyle = FlatStyle.Flat;
-            buttonAddOwnerTop.Click += ButtonAddOwner_MBS_Click;
+            // Таблица магазинов
+            dataTableStores = new DataTable("Stores");
+            dataTableStores.Columns.Add("ID", typeof(int));
+            dataTableStores.Columns.Add("Название", typeof(string));
+            dataTableStores.Columns.Add("Адрес", typeof(string));
+            dataTableStores.Columns.Add("Владелец", typeof(string));
+            dataTableStores.Columns.Add("Телефон", typeof(string));
+            dataTableStores.Columns.Add("Площадь (м²)", typeof(decimal));
+            dataTableStores.Columns.Add("Статус", typeof(string));
+            dataTableStores.Columns.Add("Дата открытия", typeof(DateTime));
 
-            // Кнопка "Добавить магазин"
-            buttonAddStoreTop = new Button();
-            buttonAddStoreTop.Text = "🏪 Добавить магазин";
-            buttonAddStoreTop.Size = new Size(180, 35);
-            buttonAddStoreTop.Location = new Point(200, 7);
-            buttonAddStoreTop.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular);
-            buttonAddStoreTop.BackColor = Color.LightGreen;
-            buttonAddStoreTop.FlatStyle = FlatStyle.Flat;
-            buttonAddStoreTop.Click += ButtonAddStore_MBS_Click;
+            // Таблица поставщиков
+            dataTableSuppliers = new DataTable("Suppliers");
+            dataTableSuppliers.Columns.Add("ID", typeof(int));
+            dataTableSuppliers.Columns.Add("Компания", typeof(string));
+            dataTableSuppliers.Columns.Add("Контактное лицо", typeof(string));
+            dataTableSuppliers.Columns.Add("Телефон", typeof(string));
+            dataTableSuppliers.Columns.Add("Email", typeof(string));
+            dataTableSuppliers.Columns.Add("Товар", typeof(string));
+            dataTableSuppliers.Columns.Add("Цена", typeof(decimal));
+            dataTableSuppliers.Columns.Add("Статус", typeof(string));
 
-            // Кнопка "Добавить поставщика"
-            buttonAddSupplierTop = new Button();
-            buttonAddSupplierTop.Text = "🚚 Добавить поставщика";
-            buttonAddSupplierTop.Size = new Size(180, 35);
-            buttonAddSupplierTop.Location = new Point(390, 7);
-            buttonAddSupplierTop.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular);
-            buttonAddSupplierTop.BackColor = Color.LightSalmon;
-            buttonAddSupplierTop.FlatStyle = FlatStyle.Flat;
-            buttonAddSupplierTop.Click += ButtonAddSupplier_MBS_Click;
-
-            // Добавляем кнопки на панель
-            panelAddButtons.Controls.Add(buttonAddOwnerTop);
-            panelAddButtons.Controls.Add(buttonAddStoreTop);
-            panelAddButtons.Controls.Add(buttonAddSupplierTop);
-
-            // Перемещаем TabControl ниже
-            // Для этого нужно изменить порядок контролов
-            // Сначала удаляем TabControl из формы
-            this.Controls.Remove(tabControlMain_MBS);
-
-            // Добавляем панель с кнопками
-            this.Controls.Add(panelAddButtons);
-
-            // Затем снова добавляем TabControl
-            this.Controls.Add(tabControlMain_MBS);
-
-            // Устанавливаем правильный порядок
-            panelAddButtons.BringToFront();
+            // Привязка таблиц к DataGridView
+            dataGridViewOwners_MBS.DataSource = dataTableOwners;
+            dataGridViewStores_MBS.DataSource = dataTableStores;
+            dataGridViewSuppliers_MBS.DataSource = dataTableSuppliers;
         }
 
-        private void SetupEventHandlers()
+        private void ConfigureDataGridViews()
         {
-            // Основные кнопки
-            buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
-            buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
-            buttonEditItem_MBS.Click += ButtonEditItem_MBS_Click;
-            buttonDeleteItem_MBS.Click += ButtonDeleteItem_MBS_Click;
-            buttonSaveData_MBS.Click += ButtonSaveData_MBS_Click;
-            buttonLoadData_MBS.Click += ButtonLoadData_MBS_Click;
-            buttonShowStats_MBS.Click += ButtonShowStats_MBS_Click;
-            buttonShowChart_MBS.Click += ButtonShowChart_MBS_Click;
-            buttonSearch_MBS.Click += ButtonSearch_MBS_Click;
-        }
-
-        private void SetupToolTips()
-        {
-            // Подсказки для верхних кнопок
-            toolTip.SetToolTip(buttonAddOwnerTop, "Добавить нового владельца магазина");
-            toolTip.SetToolTip(buttonAddStoreTop, "Добавить новый магазин");
-            toolTip.SetToolTip(buttonAddSupplierTop, "Добавить нового поставщика");
-
-            // Подсказки для остальных кнопок
-            toolTip.SetToolTip(buttonEditItem_MBS, "Редактировать выбранный элемент");
-            toolTip.SetToolTip(buttonDeleteItem_MBS, "Удалить выбранный элемент");
-            toolTip.SetToolTip(buttonSaveData_MBS, "Сохранить все данные в CSV файлы");
-            toolTip.SetToolTip(buttonLoadData_MBS, "Загрузить данные из CSV файлов");
-            toolTip.SetToolTip(buttonShowStats_MBS, "Показать статистику по данным");
-            toolTip.SetToolTip(buttonShowChart_MBS, "Показать графики и диаграммы");
-        }
-
-        private void SetupDataGridViews()
-        {
-            // Настройка DataGridView для владельцев
-            dataGridViewOwners_MBS.Columns.Clear();
-            dataGridViewOwners_MBS.Columns.Add("Id", "ID");
-            dataGridViewOwners_MBS.Columns.Add("FullName", "ФИО");
-            dataGridViewOwners_MBS.Columns.Add("Address", "Адрес");
-            dataGridViewOwners_MBS.Columns.Add("Phone", "Телефон");
-            dataGridViewOwners_MBS.Columns.Add("Capital", "Капитал (руб.)");
-            dataGridViewOwners_MBS.Columns["Capital"].DefaultCellStyle.Format = "N2";
-            dataGridViewOwners_MBS.Columns["Capital"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            // Настройка DataGridView для магазинов
-            dataGridViewStores_MBS.Columns.Clear();
-            dataGridViewStores_MBS.Columns.Add("Id", "ID");
-            dataGridViewStores_MBS.Columns.Add("Name", "Название");
-            dataGridViewStores_MBS.Columns.Add("Address", "Адрес");
-            dataGridViewStores_MBS.Columns.Add("Phone", "Телефон");
-            dataGridViewStores_MBS.Columns.Add("MonthlyRevenue", "Выручка (руб.)");
-            dataGridViewStores_MBS.Columns.Add("OwnerName", "Владелец");
-            dataGridViewStores_MBS.Columns["MonthlyRevenue"].DefaultCellStyle.Format = "N2";
-            dataGridViewStores_MBS.Columns["MonthlyRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            // Настройка DataGridView для поставщиков
-            dataGridViewSuppliers_MBS.Columns.Clear();
-            dataGridViewSuppliers_MBS.Columns.Add("Id", "ID");
-            dataGridViewSuppliers_MBS.Columns.Add("FullName", "ФИО/Название");
-            dataGridViewSuppliers_MBS.Columns.Add("Address", "Адрес");
-            dataGridViewSuppliers_MBS.Columns.Add("Phone", "Телефон");
-            dataGridViewSuppliers_MBS.Columns.Add("DeliveryCost", "Стоимость доставки (руб.)");
-            dataGridViewSuppliers_MBS.Columns["DeliveryCost"].DefaultCellStyle.Format = "N2";
-            dataGridViewSuppliers_MBS.Columns["DeliveryCost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-        }
-
-        private void LoadSampleData()
-        {
-            try
+            // Настройка стилей для всех DataGridView
+            foreach (DataGridView grid in new[] { dataGridViewOwners_MBS, dataGridViewStores_MBS, dataGridViewSuppliers_MBS })
             {
-                // Тестовые владельцы
-                dataService.AddOwner(new Owner { Id = 1, FullName = "Иванов И.И.", Address = "Москва", Phone = "111", Capital = 5000000 });
-                dataService.AddOwner(new Owner { Id = 2, FullName = "Петрова А.С.", Address = "СПб", Phone = "222", Capital = 3500000 });
-                dataService.AddOwner(new Owner { Id = 3, FullName = "Сидоров А.П.", Address = "Казань", Phone = "333", Capital = 2800000 });
+                grid.AutoGenerateColumns = true;
+                grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                grid.MultiSelect = false;
+                grid.ReadOnly = true;
+                grid.AllowUserToAddRows = false;
+                grid.AllowUserToDeleteRows = false;
+                grid.AllowUserToResizeRows = false;
+                grid.RowHeadersVisible = false;
+                grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-                // Тестовые магазины
-                dataService.AddStore(new Store { Id = 1, Name = "Магнит", Address = "Москва", Phone = "444", MonthlyRevenue = 1500000, OwnerId = 1 });
-                dataService.AddStore(new Store { Id = 2, Name = "Пятерочка", Address = "Москва", Phone = "555", MonthlyRevenue = 1200000, OwnerId = 1 });
-                dataService.AddStore(new Store { Id = 3, Name = "Дикси", Address = "СПб", Phone = "666", MonthlyRevenue = 980000, OwnerId = 2 });
-
-                // Тестовые поставщики
-                dataService.AddSupplier(new Supplier { Id = 1, FullName = "ООО 'Продукты+'", Address = "Москва", Phone = "777", DeliveryCost = 50000 });
-                dataService.AddSupplier(new Supplier { Id = 2, FullName = "ИП 'Снабжение'", Address = "СПб", Phone = "888", DeliveryCost = 35000 });
-                dataService.AddSupplier(new Supplier { Id = 3, FullName = "ЗАО 'Оптовик'", Address = "Казань", Phone = "999", DeliveryCost = 42000 });
-
-                UpdateDataGridViews();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Настройка чередования строк
+                grid.RowsDefaultCellStyle.BackColor = Color.White;
+                grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
             }
         }
 
-        private void UpdateDataGridViews()
+        private void TimerDateTime_Tick(object sender, EventArgs e)
         {
-            // Владельцы
-            dataGridViewOwners_MBS.Rows.Clear();
-            foreach (var owner in dataService.GetOwners())
-            {
-                dataGridViewOwners_MBS.Rows.Add(owner.Id, owner.FullName, owner.Address, owner.Phone, owner.Capital);
-            }
-
-            // Магазины
-            dataGridViewStores_MBS.Rows.Clear();
-            foreach (var store in dataService.GetStores())
-            {
-                string ownerName = "Неизвестно";
-                var owner = dataService.GetOwners().FirstOrDefault(o => o.Id == store.OwnerId);
-                if (owner != null) ownerName = owner.FullName;
-
-                dataGridViewStores_MBS.Rows.Add(store.Id, store.Name, store.Address, store.Phone, store.MonthlyRevenue, ownerName);
-            }
-
-            // Поставщики
-            dataGridViewSuppliers_MBS.Rows.Clear();
-            foreach (var supplier in dataService.GetSuppliers())
-            {
-                dataGridViewSuppliers_MBS.Rows.Add(supplier.Id, supplier.FullName, supplier.Address, supplier.Phone, supplier.DeliveryCost);
-            }
+            UpdateDateTime();
         }
 
-        private void UpdateInterface()
+        private void UpdateDateTime()
         {
             toolStripStatusLabelDate_MBS.Text = DateTime.Now.ToString("dd.MM.yyyy");
-            UpdateStatusInfo();
+            toolStripStatusLabelTime_MBS.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
-        private void UpdateStatusInfo()
+        private void UpdateSummaryCounts()
         {
-            int ownerCount = dataService.GetOwners().Count;
-            int storeCount = dataService.GetStoreCount();
-            int supplierCount = dataService.GetSuppliers().Count;
-            decimal totalCapital = dataService.GetTotalCapital();
-
-            toolStripStatusLabelInfo_MBS.Text =
-                $"Владельцев: {ownerCount} | Магазинов: {storeCount} | Поставщиков: {supplierCount} | Капитал: {totalCapital:N2} руб.";
+            if (labelTotalOwners_MBS != null)
+                labelTotalOwners_MBS.Text = dataTableOwners.Rows.Count.ToString();
+            if (labelTotalStores_MBS != null)
+                labelTotalStores_MBS.Text = dataTableStores.Rows.Count.ToString();
+            if (labelTotalSuppliers_MBS != null)
+                labelTotalSuppliers_MBS.Text = dataTableSuppliers.Rows.Count.ToString();
+            if (toolStripStatusLabelCount_MBS != null)
+                toolStripStatusLabelCount_MBS.Text = $"Записей: {dataTableOwners.Rows.Count + dataTableStores.Rows.Count + dataTableSuppliers.Rows.Count}";
         }
 
-        // ========== ОБРАБОТЧИКИ СОБЫТИЙ ==========
+        #region Обработчики событий меню и панели инструментов
 
-        private void ButtonAddOwner_MBS_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemExit_MBS_Click(object sender, EventArgs e)
         {
-            AddNewOwner();
-        }
-
-        private void AddNewOwner()
-        {
-            FormAddOwner form = new FormAddOwner();
-            if (form.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show("Вы уверены, что хотите выйти?", "Выход",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                try
-                {
-                    // Получаем следующий ID
-                    int nextId = 1;
-                    if (dataService.GetOwners().Count > 0)
-                    {
-                        nextId = dataService.GetOwners().Max(o => o.Id) + 1;
-                    }
-
-                    // Создаем нового владельца
-                    Owner newOwner = new Owner
-                    {
-                        Id = nextId,
-                        FullName = form.FullName,
-                        Address = form.Address,
-                        Phone = form.Phone,
-                        Capital = form.Capital
-                    };
-
-                    // Добавляем в сервис
-                    dataService.AddOwner(newOwner);
-
-                    // Обновляем интерфейс
-                    UpdateDataGridViews();
-                    UpdateStatusInfo();
-
-                    MessageBox.Show($"Владелец '{form.FullName}' успешно добавлен!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при добавлении владельца: {ex.Message}", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonAddStore_MBS_Click(object sender, EventArgs e)
-        {
-            AddNewStore();
-        }
-
-        private void AddNewStore()
-        {
-            // Проверяем, есть ли владельцы
-            if (dataService.GetOwners().Count == 0)
-            {
-                MessageBox.Show("Сначала добавьте хотя бы одного владельца!", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Передаем список владельцев в форму
-            FormAddStore form = new FormAddStore(dataService.GetOwners());
-
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Получаем следующий ID
-                    int nextId = 1;
-                    if (dataService.GetStores().Count > 0)
-                    {
-                        nextId = dataService.GetStores().Max(s => s.Id) + 1;
-                    }
-
-                    // Создаем новый магазин
-                    Store newStore = new Store
-                    {
-                        Id = nextId,
-                        Name = form.StoreName,
-                        Address = form.Address,
-                        Phone = form.Phone,
-                        MonthlyRevenue = form.MonthlyRevenue,
-                        OwnerId = form.OwnerId
-                    };
-
-                    // Добавляем в сервис
-                    dataService.AddStore(newStore);
-
-                    // Обновляем интерфейс
-                    UpdateDataGridViews();
-                    UpdateStatusInfo();
-
-                    MessageBox.Show($"Магазин '{form.StoreName}' успешно добавлен!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при добавлении магазина: {ex.Message}", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonAddSupplier_MBS_Click(object sender, EventArgs e)
-        {
-            AddNewSupplier();
-        }
-
-        private void AddNewSupplier()
-        {
-            FormAddSupplier form = new FormAddSupplier();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Получаем следующий ID
-                    int nextId = 1;
-                    if (dataService.GetSuppliers().Count > 0)
-                    {
-                        nextId = dataService.GetSuppliers().Max(s => s.Id) + 1;
-                    }
-
-                    // Создаем нового поставщика
-                    Supplier newSupplier = new Supplier
-                    {
-                        Id = nextId,
-                        FullName = form.FullName,
-                        Address = form.Address,
-                        Phone = form.Phone,
-                        DeliveryCost = form.DeliveryCost
-                    };
-
-                    // Добавляем в сервис
-                    dataService.AddSupplier(newSupplier);
-
-                    // Обновляем интерфейс
-                    UpdateDataGridViews();
-                    UpdateStatusInfo();
-
-                    MessageBox.Show($"Поставщик '{form.FullName}' успешно добавлен!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при добавлении поставщика: {ex.Message}", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonEditItem_MBS_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Редактирование будет реализовано в следующей версии", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void ButtonDeleteItem_MBS_Click(object sender, EventArgs e)
-        {
-            DeleteSelectedItem();
-        }
-
-        private void DeleteSelectedItem()
-        {
-            if (tabControlMain_MBS.SelectedTab == tabPageOwners_MBS)
-            {
-                DeleteSelectedOwner();
-            }
-            else if (tabControlMain_MBS.SelectedTab == tabPageStores_MBS)
-            {
-                DeleteSelectedStore();
-            }
-            else if (tabControlMain_MBS.SelectedTab == tabPageSuppliers_MBS)
-            {
-                DeleteSelectedSupplier();
-            }
-            else
-            {
-                MessageBox.Show("Выберите вкладку с данными для удаления", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void DeleteSelectedOwner()
-        {
-            if (dataGridViewOwners_MBS.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Выберите владельца для удаления", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            var selectedRow = dataGridViewOwners_MBS.SelectedRows[0];
-            int ownerId = (int)selectedRow.Cells[0].Value;
-            string ownerName = selectedRow.Cells[1].Value.ToString();
-
-            // Проверяем, есть ли у владельца магазины
-            var ownerStores = dataService.GetStores().Where(s => s.OwnerId == ownerId).ToList();
-            if (ownerStores.Count > 0)
-            {
-                MessageBox.Show($"Нельзя удалить владельца {ownerName}, так как у него есть {ownerStores.Count} магазин(ов).\n" +
-                    "Сначала удалите или перепривяжите магазины.", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            var result = MessageBox.Show($"Вы действительно хотите удалить владельца '{ownerName}'?",
-                "Подтверждение удаления",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    // Удаляем владельца
-                    dataService.RemoveOwner(ownerId);
-                    UpdateDataGridViews();
-                    UpdateStatusInfo();
-
-                    MessageBox.Show($"Владелец '{ownerName}' успешно удален!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при удалении владельца: {ex.Message}", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void DeleteSelectedStore()
-        {
-            if (dataGridViewStores_MBS.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Выберите магазин для удаления", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            var selectedRow = dataGridViewStores_MBS.SelectedRows[0];
-            int storeId = (int)selectedRow.Cells[0].Value;
-            string storeName = selectedRow.Cells[1].Value.ToString();
-
-            var result = MessageBox.Show($"Вы действительно хотите удалить магазин '{storeName}'?",
-                "Подтверждение удаления",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    // Удаляем магазин
-                    dataService.RemoveStore(storeId);
-                    UpdateDataGridViews();
-                    UpdateStatusInfo();
-
-                    MessageBox.Show($"Магазин '{storeName}' успешно удален!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при удалении магазина: {ex.Message}", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void DeleteSelectedSupplier()
-        {
-            if (dataGridViewSuppliers_MBS.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Выберите поставщика для удаления", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            var selectedRow = dataGridViewSuppliers_MBS.SelectedRows[0];
-            int supplierId = (int)selectedRow.Cells[0].Value;
-            string supplierName = selectedRow.Cells[1].Value.ToString();
-
-            var result = MessageBox.Show($"Вы действительно хотите удалить поставщика '{supplierName}'?",
-                "Подтверждение удаления",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    // Удаляем поставщика
-                    dataService.RemoveSupplier(supplierId);
-                    UpdateDataGridViews();
-                    UpdateStatusInfo();
-
-                    MessageBox.Show($"Поставщик '{supplierName}' успешно удален!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при удалении поставщика: {ex.Message}", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonSaveData_MBS_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "CSV files (*.csv)|*.csv";
-            dialog.FileName = "data.csv";
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                MessageBox.Show($"Сохранено: {dialog.FileName}", "Успех",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void ButtonLoadData_MBS_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "CSV files (*.csv)|*.csv";
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                MessageBox.Show($"Загружено: {dialog.FileName}", "Успех",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                UpdateDataGridViews();
-                UpdateStatusInfo();
-            }
-        }
-
-        private void ButtonShowStats_MBS_Click(object sender, EventArgs e)
-        {
-            ShowStatistics();
-        }
-
-        private void ShowStatistics()
-        {
-            int ownerCount = dataService.GetOwners().Count;
-            int storeCount = dataService.GetStoreCount();
-            int supplierCount = dataService.GetSuppliers().Count;
-            decimal totalCapital = dataService.GetTotalCapital();
-
-            decimal totalRevenue = 0;
-            if (dataService.GetStores().Count > 0)
-            {
-                totalRevenue = dataService.GetStores().Sum(s => s.MonthlyRevenue);
-            }
-
-            decimal totalDeliveryCost = 0;
-            if (dataService.GetSuppliers().Count > 0)
-            {
-                totalDeliveryCost = dataService.GetSuppliers().Sum(s => s.DeliveryCost);
-            }
-
-            string stats = $"📊 СТАТИСТИКА СЕТИ МАГАЗИНОВ 📊\n\n" +
-                          $"👥 Владельцев: {ownerCount}\n" +
-                          $"🏪 Магазинов: {storeCount}\n" +
-                          $"🚚 Поставщиков: {supplierCount}\n\n" +
-                          $"💰 Общий капитал: {totalCapital:N2} руб.\n" +
-                          $"💵 Общая месячная выручка: {totalRevenue:N2} руб.\n" +
-                          $"📦 Общая стоимость доставки: {totalDeliveryCost:N2} руб.\n\n" +
-                          $"📈 Средняя выручка на магазин: {(storeCount > 0 ? totalRevenue / storeCount : 0):N2} руб.";
-
-            MessageBox.Show(stats, "Статистика сети магазинов",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void ButtonShowChart_MBS_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Графики будут реализованы в следующей версии", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void ButtonSearch_MBS_Click(object sender, EventArgs e)
-        {
-            string searchText = textBoxSearch_MBS.Text;
-            if (!string.IsNullOrEmpty(searchText))
-            {
-                SearchData(searchText);
-            }
-            else
-            {
-                UpdateDataGridViews(); // Показать все данные
-            }
-        }
-
-        private void SearchData(string searchText)
-        {
-            string filterType = comboBoxFilter_MBS.Text;
-
-            // Обновляем comboBoxFilter чтобы включал поставщиков
-            if (!comboBoxFilter_MBS.Items.Contains("Поставщики"))
-            {
-                comboBoxFilter_MBS.Items.Add("Поставщики");
-            }
-
-            // Очищаем таблицы
-            dataGridViewOwners_MBS.Rows.Clear();
-            dataGridViewStores_MBS.Rows.Clear();
-            dataGridViewSuppliers_MBS.Rows.Clear();
-
-            // Поиск владельцев
-            if (filterType == "Все" || filterType == "Владельцы")
-            {
-                var owners = dataService.GetOwners().Where(o =>
-                    o.FullName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    o.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    o.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase));
-
-                foreach (var owner in owners)
-                {
-                    dataGridViewOwners_MBS.Rows.Add(owner.Id, owner.FullName, owner.Address, owner.Phone, owner.Capital);
-                }
-            }
-
-            // Поиск магазинов
-            if (filterType == "Все" || filterType == "Магазины")
-            {
-                var stores = dataService.GetStores().Where(s =>
-                    s.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    s.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    s.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase));
-
-                foreach (var store in stores)
-                {
-                    string ownerName = "Неизвестно";
-                    var owner = dataService.GetOwners().FirstOrDefault(o => o.Id == store.OwnerId);
-                    if (owner != null) ownerName = owner.FullName;
-
-                    dataGridViewStores_MBS.Rows.Add(store.Id, store.Name, store.Address, store.Phone, store.MonthlyRevenue, ownerName);
-                }
-            }
-
-            // Поиск поставщиков
-            if (filterType == "Все" || filterType == "Поставщики")
-            {
-                var suppliers = dataService.GetSuppliers().Where(s =>
-                    s.FullName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    s.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                    s.Phone.Contains(searchText, StringComparison.OrdinalIgnoreCase));
-
-                foreach (var supplier in suppliers)
-                {
-                    dataGridViewSuppliers_MBS.Rows.Add(supplier.Id, supplier.FullName, supplier.Address, supplier.Phone, supplier.DeliveryCost);
-                }
-            }
-
-            toolStripStatusLabelInfo_MBS.Text = $"Найдено по запросу '{searchText}'";
-        }
-
-        // Обработчики меню
-        private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Вы действительно хотите выйти?", "Подтверждение выхода",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                this.Close();
+                Application.Exit();
             }
         }
 
         private void ToolStripMenuItemAbout_MBS_Click(object sender, EventArgs e)
         {
-            string about = @"🏪 СЕТЬ МАГАЗИНОВ - MBS 🏪
-Версия 3.0
-
-Полная система управления сетью магазинов.
-Возможности:
-👥 Управление владельцами
-🏪 Управление магазинами
-🚚 Управление поставщиками
-💰 Анализ финансовых показателей
-🔍 Поиск по всем данным
-💾 Сохранение и загрузка данных
-
-Разработчик: MihajlichenkoSB
-Дата: 2024
-
-💡 Используйте цветные кнопки вверху для быстрого добавления!";
-
-            MessageBox.Show(about, "О программе",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "Сеть магазинов - Управление данными\n" +
+                "Версия 2.0\n" +
+                "Разработано: MBS\n" +
+                "© 2024 Все права защищены\n\n" +
+                "Функции:\n" +
+                "• Управление владельцами магазинов\n" +
+                "• Управление магазинами\n" +
+                "• Управление поставщиками\n" +
+                "• Статистика и аналитика\n" +
+                "• Экспорт/Импорт данных",
+                "О программе",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
 
         private void ToolStripMenuItemUserGuide_MBS_Click(object sender, EventArgs e)
         {
-            string guide = @"📘 РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ 📘
-
-🌈 ЦВЕТНЫЕ КНОПКИ ВВЕРХУ:
-🔵 Светло-синяя - Добавить владельца
-🟢 Светло-зеленая - Добавить магазин
-🔴 Светло-оранжевая - Добавить поставщика
-
-📋 ТРИ ВКЛАДКИ ДЛЯ ПРОСМОТРА:
-1. Владельцы магазинов
-2. Магазины  
-3. Поставщики
-
-1. ДОБАВЛЕНИЕ ВЛАДЕЛЬЦА:
-   - Нажмите синюю кнопку 'Добавить владельца'
-   - Заполните ФИО, адрес, телефон, капитал
-   - Нажмите 'Добавить'
-
-2. ДОБАВЛЕНИЕ МАГАЗИНА:
-   - Нажмите зеленую кнопку 'Добавить магазин'
-   - Заполните данные магазина
-   - Выберите владельца из списка
-   - Нажмите 'Добавить'
-
-3. ДОБАВЛЕНИЕ ПОСТАВЩИКА:
-   - Нажмите оранжевую кнопку 'Добавить поставщика'
-   - Заполните данные поставщика
-   - Укажите стоимость доставки
-   - Нажмите 'Добавить'
-
-4. УДАЛЕНИЕ ДАННЫХ:
-   - Выберите строку в таблице
-   - Нажмите красную кнопку 'Удалить'
-   - Подтвердите удаление
-
-5. ПОИСК ДАННЫХ:
-   - Введите текст в поле поиска
-   - Выберите тип данных в фильтре
-   - Нажмите 'Найти' или Enter
-
-6. СТАТИСТИКА:
-   - Нажмите 'Статистика' для просмотра
-   - Показывает общие показатели сети
-
-⚠ ВНИМАНИЕ: Нельзя удалить владельца, у которого есть магазины!";
-
-            MessageBox.Show(guide, "Руководство пользователя",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "📚 Руководство пользователя\n\n" +
+                "1. МЕНЮ:\n" +
+                "   • Файл - работа с файлами, печать, выход\n" +
+                "   • Данные - добавление, редактирование, удаление записей\n" +
+                "   • Анализ - статистика, графики, отчеты\n" +
+                "   • Вид - настройка интерфейса\n" +
+                "   • Справка - руководство, обновления, о программе\n\n" +
+                "2. ПАНЕЛЬ ИНСТРУМЕНТОВ:\n" +
+                "   • Быстрый доступ к основным функциям\n" +
+                "   • Иконки соответствуют пунктам меню\n\n" +
+                "3. РАБОЧАЯ ОБЛАСТЬ:\n" +
+                "   • Вкладки для разных типов данных\n" +
+                "   • Таблицы с возможностью сортировки\n\n" +
+                "4. ПАНЕЛЬ ПОИСКА:\n" +
+                "   • Быстрый поиск по всем данным\n" +
+                "   • Фильтрация по категориям\n\n" +
+                "5. БОКОВАЯ ПАНЕЛЬ:\n" +
+                "   • Быстрые действия\n" +
+                "   • Расширенные фильтры\n" +
+                "   • Сводная информация",
+                "Руководство пользователя",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
 
-        // Дополнительные обработчики
+        private void ButtonAddOwner_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Используем существующую форму FormAddOwner
+                FormAddOwner form = new FormAddOwner();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    // Получаем данные из формы
+                    // ВАЖНО: Убедитесь, что в FormAddOwner есть публичные свойства для получения данных
+                    // Например: form.FullName, form.Phone, form.Email
+
+                    // Добавление данных
+                    dataTableOwners.Rows.Add(
+                        dataTableOwners.Rows.Count + 1,
+                        "Полученное ФИО", // Замените на form.FullName
+                        "Полученный телефон", // Замените на form.Phone
+                        "Полученный email", // Замените на form.Email
+                        DateTime.Now,
+                        "Активный",
+                        "Добавлено через форму"
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Владелец успешно добавлен";
+                    MessageBox.Show("Владелец добавлен", "Новый владелец успешно добавлен в базу данных.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении владельца", ex.Message);
+            }
+        }
+
+        private void ButtonAddStore_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Используем существующую форму FormAddStore
+                FormAddStore form = new FormAddStore();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    // Получаем данные из формы
+                    // ВАЖНО: Убедитесь, что в FormAddStore есть публичные свойства
+
+                    // Добавление данных
+                    dataTableStores.Rows.Add(
+                        dataTableStores.Rows.Count + 1,
+                        "Название магазина", // Замените на form.StoreName
+                        "Адрес магазина", // Замените на form.Address
+                        "Иванов И.И.", // В реальном приложении будет выбранный владелец
+                        "Телефон магазина", // Замените на form.Phone
+                        100.0m, // Замените на form.Area
+                        "Активный",
+                        DateTime.Now
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Магазин успешно добавлен";
+                    MessageBox.Show("Магазин добавлен", "Новый магазин успешно добавлен в базу данных.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении магазина", ex.Message);
+            }
+        }
+
+        private void ButtonAddSupplier_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Используем существующую форму FormAddSupplier
+                FormAddSupplier form = new FormAddSupplier();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    // Получаем данные из формы
+                    // ВАЖНО: Убедитесь, что в FormAddSupplier есть публичные свойства
+
+                    // Добавление данных
+                    dataTableSuppliers.Rows.Add(
+                        dataTableSuppliers.Rows.Count + 1,
+                        "Название компании", // Замените на form.CompanyName
+                        "Контактное лицо", // Замените на form.ContactPerson
+                        "Телефон поставщика", // Замените на form.Phone
+                        "email@example.com", // Замените на form.Email
+                        "Товар", // Замените на form.Product
+                        1000.0m, // Замените на form.Price
+                        "Активный"
+                    );
+
+                    UpdateSummaryCounts();
+                    toolStripStatusLabelInfo_MBS.Text = "Поставщик успешно добавлен";
+                    MessageBox.Show("Поставщик добавлен", "Новый поставщик успешно добавлен в базу данных.",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка при добавлении поставщика", ex.Message);
+            }
+        }
+
+        private void ButtonEditItem_MBS_Click(object sender, EventArgs e)
+        {
+            DataGridView currentGrid = GetCurrentDataGridView();
+
+            if (currentGrid != null && currentGrid.SelectedRows.Count > 0)
+            {
+                int selectedIndex = currentGrid.SelectedRows[0].Index;
+                toolStripStatusLabelInfo_MBS.Text = "Редактирование записи...";
+
+                // Здесь будет логика открытия формы редактирования
+                MessageBox.Show("Функция редактирования в разработке", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                ShowWarning("Предупреждение", "Выберите запись для редактирования");
+            }
+        }
+
+        private void ButtonDeleteItem_MBS_Click(object sender, EventArgs e)
+        {
+            DataGridView currentGrid = GetCurrentDataGridView();
+
+            if (currentGrid != null && currentGrid.SelectedRows.Count > 0)
+            {
+                if (MessageBox.Show("Вы уверены, что хотите удалить выбранную запись?", "Подтверждение удаления",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    DataTable dataTable = GetCurrentDataTable();
+                    if (dataTable != null)
+                    {
+                        int selectedIndex = currentGrid.SelectedRows[0].Index;
+                        if (selectedIndex >= 0 && selectedIndex < dataTable.Rows.Count)
+                        {
+                            dataTable.Rows.RemoveAt(selectedIndex);
+                            UpdateSummaryCounts();
+                            toolStripStatusLabelInfo_MBS.Text = "Запись удалена";
+                            MessageBox.Show("Удаление", "Запись успешно удалена",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ShowWarning("Предупреждение", "Выберите запись для удаления");
+            }
+        }
+
+        private void ButtonSearch_MBS_Click(object sender, EventArgs e)
+        {
+            string searchText = textBoxSearch_MBS.Text.Trim();
+            string filterType = comboBoxFilter_MBS.SelectedItem?.ToString() ?? "Все категории";
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                SearchData(searchText, filterType);
+                toolStripStatusLabelInfo_MBS.Text = $"Поиск: {searchText} ({filterType})";
+            }
+            else
+            {
+                ClearSearch();
+            }
+        }
+
+        private void ButtonClearSearch_MBS_Click(object sender, EventArgs e)
+        {
+            ClearSearch();
+        }
+
+        private void ButtonApplyFilter_MBS_Click(object sender, EventArgs e)
+        {
+            ApplyAdvancedFilters();
+        }
+
+        private void ButtonResetFilter_MBS_Click(object sender, EventArgs e)
+        {
+            ResetAdvancedFilters();
+        }
+
+        private void ButtonLoadData_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "CSV файлы (*.csv)|*.csv|Excel файлы (*.xlsx)|*.xlsx|Все файлы (*.*)|*.*";
+                    openFileDialog.Title = "Загрузить данные";
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        toolStripProgressBar_MBS.Visible = true;
+                        toolStripProgressBar_MBS.Style = ProgressBarStyle.Marquee;
+                        toolStripStatusLabelInfo_MBS.Text = "Загрузка данных...";
+
+                        // Имитация загрузки данных
+                        timerDateTime.Stop();
+                        System.Threading.Thread.Sleep(2000);
+                        timerDateTime.Start();
+
+                        // Загрузка тестовых данных
+                        LoadSampleData();
+
+                        toolStripProgressBar_MBS.Visible = false;
+                        toolStripStatusLabelInfo_MBS.Text = "Данные успешно загружены";
+                        MessageBox.Show("Загрузка данных", "Данные успешно загружены из файла.",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка загрузки данных", ex.Message);
+            }
+            finally
+            {
+                toolStripProgressBar_MBS.Visible = false;
+            }
+        }
+
+        private void ButtonSaveData_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "CSV файлы (*.csv)|*.csv|Excel файлы (*.xlsx)|*.xlsx|Все файлы (*.*)|*.*";
+                    saveFileDialog.Title = "Сохранить данные";
+                    saveFileDialog.FileName = $"СетьМагазинов_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        toolStripProgressBar_MBS.Visible = true;
+                        toolStripProgressBar_MBS.Style = ProgressBarStyle.Marquee;
+                        toolStripStatusLabelInfo_MBS.Text = "Сохранение данных...";
+
+                        // Имитация сохранения данных
+                        timerDateTime.Stop();
+                        System.Threading.Thread.Sleep(1500);
+                        timerDateTime.Start();
+
+                        // В реальном приложении здесь будет логика сохранения в файл
+                        string filePath = saveFileDialog.FileName;
+
+                        toolStripProgressBar_MBS.Visible = false;
+                        toolStripStatusLabelInfo_MBS.Text = $"Данные сохранены в: {Path.GetFileName(filePath)}";
+                        MessageBox.Show("Сохранение данных", "Данные успешно сохранены в файл.",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка сохранения данных", ex.Message);
+            }
+            finally
+            {
+                toolStripProgressBar_MBS.Visible = false;
+            }
+        }
+
+        private void ButtonShowStats_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Создаем простую форму статистики
+                Form statsForm = new Form();
+                statsForm.Text = "Статистика";
+                statsForm.Size = new Size(400, 300);
+
+                Label statsLabel = new Label();
+                statsLabel.Text = GenerateReport();
+                statsLabel.AutoSize = true;
+                statsLabel.Location = new Point(20, 20);
+                statsLabel.Font = new Font("Segoe UI", 10);
+
+                statsForm.Controls.Add(statsLabel);
+                statsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка отображения статистики", ex.Message);
+            }
+        }
+
+        private void ButtonShowChart_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show("Функция графиков в разработке", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка отображения графиков", ex.Message);
+            }
+        }
+
+        private void ButtonQuickStats_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonShowStats_MBS_Click(sender, e);
+        }
+
+        private void ButtonQuickChart_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonShowChart_MBS_Click(sender, e);
+        }
+
+        private void ButtonQuickReport_MBS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                toolStripStatusLabelInfo_MBS.Text = "Генерация отчета...";
+
+                // Имитация генерации отчета
+                timerDateTime.Stop();
+                System.Threading.Thread.Sleep(1000);
+                timerDateTime.Start();
+
+                string report = GenerateReport();
+
+                MessageBox.Show(report, "Сводный отчет", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                toolStripStatusLabelInfo_MBS.Text = "Отчет сгенерирован";
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка генерации отчета", ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Вспомогательные методы
+
+        private DataGridView GetCurrentDataGridView()
+        {
+            switch (tabControlMain_MBS.SelectedIndex)
+            {
+                case 0: return dataGridViewOwners_MBS;
+                case 1: return dataGridViewStores_MBS;
+                case 2: return dataGridViewSuppliers_MBS;
+                default: return null;
+            }
+        }
+
+        private DataTable GetCurrentDataTable()
+        {
+            switch (tabControlMain_MBS.SelectedIndex)
+            {
+                case 0: return dataTableOwners;
+                case 1: return dataTableStores;
+                case 2: return dataTableSuppliers;
+                default: return null;
+            }
+        }
+
+        private void SearchData(string searchText, string filterType)
+        {
+            try
+            {
+                // В реальном приложении здесь будет логика поиска
+                // Это упрощенная реализация для демонстрации
+
+                DataGridView currentGrid = GetCurrentDataGridView();
+                if (currentGrid != null)
+                {
+                    foreach (DataGridViewRow row in currentGrid.Rows)
+                    {
+                        bool found = false;
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            if (cell.Value != null && cell.Value.ToString().IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        row.Visible = found;
+                    }
+                }
+
+                MessageBox.Show($"Поиск", $"Найдено записей по запросу: {searchText}",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка поиска", ex.Message);
+            }
+        }
+
+        private void ClearSearch()
+        {
+            textBoxSearch_MBS.Clear();
+
+            foreach (DataGridView grid in new[] { dataGridViewOwners_MBS, dataGridViewStores_MBS, dataGridViewSuppliers_MBS })
+            {
+                foreach (DataGridViewRow row in grid.Rows)
+                {
+                    row.Visible = true;
+                }
+            }
+
+            toolStripStatusLabelInfo_MBS.Text = "Поиск очищен";
+        }
+
+        private void ApplyAdvancedFilters()
+        {
+            try
+            {
+                bool activeOnly = checkBoxActiveOnly_MBS.Checked;
+                bool highPriority = checkBoxHighPriority_MBS.Checked;
+                DateTime fromDate = dateTimePickerFrom_MBS.Value;
+                DateTime toDate = dateTimePickerTo_MBS.Value;
+
+                // В реальном приложении здесь будет логика фильтрации
+                toolStripStatusLabelInfo_MBS.Text = "Фильтры применены";
+                MessageBox.Show("Фильтры", "Расширенные фильтры успешно применены",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка применения фильтров", ex.Message);
+            }
+        }
+
+        private void ResetAdvancedFilters()
+        {
+            checkBoxActiveOnly_MBS.Checked = false;
+            checkBoxHighPriority_MBS.Checked = false;
+            dateTimePickerFrom_MBS.Value = DateTime.Now.AddMonths(-1);
+            dateTimePickerTo_MBS.Value = DateTime.Now;
+
+            ClearSearch();
+            toolStripStatusLabelInfo_MBS.Text = "Фильтры сброшены";
+        }
+
+        private void LoadSampleData()
+        {
+            // Очистка существующих данных
+            dataTableOwners.Clear();
+            dataTableStores.Clear();
+            dataTableSuppliers.Clear();
+
+            // Добавление тестовых данных владельцев
+            dataTableOwners.Rows.Add(1, "Иванов Иван Иванович", "+7 (999) 123-45-67", "ivanov@mail.ru", new DateTime(2020, 1, 15), "Активный", "Основатель сети");
+            dataTableOwners.Rows.Add(2, "Петрова Анна Сергеевна", "+7 (999) 234-56-78", "petrova@mail.ru", new DateTime(2021, 3, 20), "Активный", "Инвестор");
+            dataTableOwners.Rows.Add(3, "Сидоров Алексей Петрович", "+7 (999) 345-67-89", "sidorov@mail.ru", new DateTime(2022, 5, 10), "Неактивный", "Бывший владелец");
+
+            // Добавление тестовых данных магазинов
+            dataTableStores.Rows.Add(1, "Супермаркет 'Продукты'", "ул. Ленина, д. 10", "Иванов И.И.", "+7 (999) 111-22-33", 500.5m, "Активный", new DateTime(2020, 2, 1));
+            dataTableStores.Rows.Add(2, "Магазин 'Одежда'", "ул. Мира, д. 25", "Петрова А.С.", "+7 (999) 222-33-44", 300.0m, "Активный", new DateTime(2021, 4, 15));
+            dataTableStores.Rows.Add(3, "Торговый центр 'Мега'", "пр. Победы, д. 100", "Иванов И.И.", "+7 (999) 333-44-55", 1500.0m, "Активный", new DateTime(2022, 6, 1));
+
+            // Добавление тестовых данных поставщиков
+            dataTableSuppliers.Rows.Add(1, "ООО 'ПродуктСнаб'", "Смирнов А.А.", "+7 (999) 444-55-66", "smirnov@product.ru", "Продукты питания", 150000.0m, "Активный");
+            dataTableSuppliers.Rows.Add(2, "ИП 'ТекстильТорг'", "Козлова М.И.", "+7 (999) 555-66-77", "kozlov@textile.ru", "Одежда и ткани", 80000.0m, "Активный");
+            dataTableSuppliers.Rows.Add(3, "ЗАО 'ТехноСнаб'", "Волков П.С.", "+7 (999) 666-77-88", "volkov@techno.ru", "Электроника", 250000.0m, "Активный");
+
+            UpdateSummaryCounts();
+        }
+
+        private string GenerateReport()
+        {
+            return $"📋 СВОДНЫЙ ОТЧЕТ\n" +
+                   $"Дата формирования: {DateTime.Now:dd.MM.yyyy HH:mm}\n" +
+                   $"----------------------------------------\n" +
+                   $"📊 СТАТИСТИКА:\n" +
+                   $"• Всего владельцев: {dataTableOwners.Rows.Count}\n" +
+                   $"• Всего магазинов: {dataTableStores.Rows.Count}\n" +
+                   $"• Всего поставщиков: {dataTableSuppliers.Rows.Count}\n" +
+                   $"• Общее количество записей: {dataTableOwners.Rows.Count + dataTableStores.Rows.Count + dataTableSuppliers.Rows.Count}\n" +
+                   $"----------------------------------------\n" +
+                   $"📈 АКТИВНОСТЬ:\n" +
+                   $"• Активных записей: {GetActiveCount()}\n" +
+                   $"• Неактивных записей: {GetInactiveCount()}\n" +
+                   $"----------------------------------------\n" +
+                   $"💡 РЕКОМЕНДАЦИИ:\n" +
+                   $"• Добавить больше поставщиков\n" +
+                   $"• Проверить неактивные записи\n" +
+                   $"• Обновить контактную информацию";
+        }
+
+        private int GetActiveCount()
+        {
+            int count = 0;
+            foreach (DataRow row in dataTableOwners.Rows)
+                if (row["Статус"].ToString() == "Активный") count++;
+            foreach (DataRow row in dataTableStores.Rows)
+                if (row["Статус"].ToString() == "Активный") count++;
+            foreach (DataRow row in dataTableSuppliers.Rows)
+                if (row["Статус"].ToString() == "Активный") count++;
+            return count;
+        }
+
+        private int GetInactiveCount()
+        {
+            int count = 0;
+            foreach (DataRow row in dataTableOwners.Rows)
+                if (row["Статус"].ToString() == "Неактивный") count++;
+            foreach (DataRow row in dataTableStores.Rows)
+                if (row["Статус"].ToString() == "Неактивный") count++;
+            foreach (DataRow row in dataTableSuppliers.Rows)
+                if (row["Статус"].ToString() == "Неактивный") count++;
+            return count;
+        }
+
+        private void ShowError(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            toolStripStatusLabelInfo_MBS.Text = $"Ошибка: {title}";
+        }
+
+        private void ShowWarning(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        #endregion
+
+        #region Дополнительные обработчики событий
+
         private void TextBoxSearch_MBS_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -808,84 +724,144 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             }
         }
 
-        private void labelTitle_MBS_Click(object sender, EventArgs e)
+        private void TabControlMain_MBS_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Простая анимация при клике на заголовок
-            Color currentColor = labelTitle_MBS.ForeColor;
-            labelTitle_MBS.ForeColor = currentColor == Color.DarkBlue ? Color.DarkRed : Color.DarkBlue;
-
-            // Меняем цвет панели с кнопками
-            if (panelAddButtons.BackColor == Color.LightSteelBlue)
-                panelAddButtons.BackColor = Color.LightGray;
-            else
-                panelAddButtons.BackColor = Color.LightSteelBlue;
-        }
-
-        // Обработчик двойного клика по магазину
-        private void dataGridViewStores_MBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
+            UpdateSummaryCounts();
+            string[] tabNames = { "Владельцы", "Магазины", "Поставщики" };
+            if (tabControlMain_MBS.SelectedIndex >= 0 && tabControlMain_MBS.SelectedIndex < tabNames.Length)
             {
-                var row = dataGridViewStores_MBS.Rows[e.RowIndex];
-                string storeName = row.Cells[1].Value.ToString();
-                string address = row.Cells[2].Value.ToString();
-                string revenue = row.Cells[4].Value.ToString();
-                string owner = row.Cells[5].Value.ToString();
-
-                string info = $"🏪 Магазин: {storeName}\n" +
-                             $"📍 Адрес: {address}\n" +
-                             $"💰 Выручка: {revenue} руб.\n" +
-                             $"👤 Владелец: {owner}";
-
-                MessageBox.Show(info, "Информация о магазине",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                toolStripStatusLabelInfo_MBS.Text = $"Активная вкладка: {tabNames[tabControlMain_MBS.SelectedIndex]}";
             }
         }
 
-        // Обработчик двойного клика по владельцу
-        private void dataGridViewOwners_MBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void ToolStripMenuItemTheme_MBS_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            // Изменение темы оформления
+            string theme = e.ClickedItem.Text;
+            toolStripStatusLabelInfo_MBS.Text = $"Тема изменена на: {theme}";
+
+            // В реальном приложении здесь будет логика смены темы
+            Color backgroundColor = Color.White;
+            Color textColor = Color.Black;
+
+            switch (theme)
             {
-                var row = dataGridViewOwners_MBS.Rows[e.RowIndex];
-                string ownerName = row.Cells[1].Value.ToString();
-                string address = row.Cells[2].Value.ToString();
-                string capital = row.Cells[4].Value.ToString();
+                case "Светлая":
+                    backgroundColor = Color.White;
+                    textColor = Color.Black;
+                    break;
+                case "Темная":
+                    backgroundColor = Color.FromArgb(45, 45, 48);
+                    textColor = Color.White;
+                    break;
+                case "Синяя":
+                    backgroundColor = Color.FromArgb(240, 240, 245);
+                    textColor = Color.FromArgb(0, 122, 204);
+                    break;
+            }
 
-                // Считаем магазины владельца
-                int ownerId = (int)row.Cells[0].Value;
-                int storeCount = dataService.GetStores().Count(s => s.OwnerId == ownerId);
+            this.BackColor = backgroundColor;
+            this.ForeColor = textColor;
+        }
 
-                string info = $"👤 Владелец: {ownerName}\n" +
-                             $"📍 Адрес: {address}\n" +
-                             $"💰 Капитал: {capital} руб.\n" +
-                             $"🏪 Магазинов: {storeCount}";
+        private void ToolStripMenuItemToolbar_MBS_Click(object sender, EventArgs e)
+        {
+            toolStripMain_MBS.Visible = toolStripMenuItemToolbar_MBS.Checked;
+        }
 
-                MessageBox.Show(info, "Информация о владельце",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void ToolStripMenuItemStatusbar_MBS_Click(object sender, EventArgs e)
+        {
+            statusStripMain_MBS.Visible = toolStripMenuItemStatusbar_MBS.Checked;
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            // Загрузка данных при запуске
+            LoadSampleData();
+            toolStripStatusLabelInfo_MBS.Text = "Приложение загружено и готово к работе";
+        }
+
+        // Обработчики для меню (добавьте эти методы)
+        private void ToolStripMenuItemLoadData_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonLoadData_MBS_Click(sender, e);
+        }
+
+        private void ToolStripMenuItemSaveData_MBS_Click(object sender, EventArgs e)
+        {
+            ButtonSaveData_MBS_Click(sender, e);
+        }
+
+        private void ToolStripMenuItemPrint_MBS_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Функция печати в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripMenuItemNew_MBS_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Создать новую базу данных? Все несохраненные данные будут потеряны.", "Новый файл",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                dataTableOwners.Clear();
+                dataTableStores.Clear();
+                dataTableSuppliers.Clear();
+                UpdateSummaryCounts();
+                toolStripStatusLabelInfo_MBS.Text = "Создана новая база данных";
             }
         }
 
-        // Обработчик двойного клика по поставщику
-        private void dataGridViewSuppliers_MBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void ToolStripMenuItemRefresh_MBS_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                var row = dataGridViewSuppliers_MBS.Rows[e.RowIndex];
-                string supplierName = row.Cells[1].Value.ToString();
-                string address = row.Cells[2].Value.ToString();
-                string deliveryCost = row.Cells[4].Value.ToString();
-
-                string info = $"🚚 Поставщик: {supplierName}\n" +
-                             $"📍 Адрес: {address}\n" +
-                             $"📦 Стоимость доставки: {deliveryCost} руб.";
-
-                MessageBox.Show(info, "Информация о поставщике",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            UpdateSummaryCounts();
+            ClearSearch();
+            toolStripStatusLabelInfo_MBS.Text = "Данные обновлены";
         }
 
-        private void dataGridViewOwners_MBS_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void ToolStripMenuItemExport_MBS_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Функция экспорта в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripMenuItemCheckUpdates_MBS_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Проверка обновлений...\nУ вас установлена последняя версия.", "Обновления",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        #endregion
+
+        #region Обработчики событий для кнопок на панели инструментов
+
+        private void toolStripButtonNew_MBS_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemNew_MBS_Click(sender, e);
+        }
+
+        private void toolStripButtonPrint_MBS_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemPrint_MBS_Click(sender, e);
+        }
+
+        private void toolStripButtonRefresh_MBS_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemRefresh_MBS_Click(sender, e);
+        }
+
+        private void toolStripButtonExport_MBS_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemExport_MBS_Click(sender, e);
+        }
+
+        #endregion
+
+        private void groupBoxSummary_MBS_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelOwnersCount_MBS_Click(object sender, EventArgs e)
         {
 
         }

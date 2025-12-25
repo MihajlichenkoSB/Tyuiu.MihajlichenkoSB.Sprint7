@@ -7,10 +7,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 {
     public partial class FormMain : Form
     {
-        private Button buttonAddOwner_MBS;
-        private Button buttonAddStore_MBS;
-        private Button buttonAddSupplier_MBS;
-
         private DataTable dataTableOwners;
         private DataTable dataTableStores;
         private DataTable dataTableSuppliers;
@@ -19,10 +15,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         public FormMain()
         {
             InitializeComponent();
-
-
-            // ============ СОЗДАЕМ И НАСТРАИВАЕМ КНОПКИ ============
-            CreateAddButtons();
 
             // Инициализация таймера для обновления времени
             timerDateTime = new Timer();
@@ -39,7 +31,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             buttonQuickChart_MBS.Click += ButtonQuickChart_MBS_Click;
             buttonQuickReport_MBS.Click += ButtonQuickReport_MBS_Click;
 
-            // Обработчики для новых кнопок добавления
+            // Обработчики для кнопок добавления (они уже есть в Designer)
             buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             buttonAddSupplier_MBS.Click += ButtonAddSupplier_MBS_Click;
@@ -95,48 +87,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.Load += FormMain_Load;
 
             InitializeApplication();
-        }
-
-        private void CreateAddButtons()
-        {
-            // Кнопка "Добавить владельца" (зеленая)
-            buttonAddOwner_MBS = new Button();
-            buttonAddOwner_MBS.Name = "buttonAddOwner_MBS";
-            buttonAddOwner_MBS.Text = "➕ Владелец";
-            buttonAddOwner_MBS.BackColor = Color.FromArgb(46, 204, 113);
-            buttonAddOwner_MBS.ForeColor = Color.White;
-            buttonAddOwner_MBS.FlatStyle = FlatStyle.Flat;
-            buttonAddOwner_MBS.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            buttonAddOwner_MBS.Location = new Point(760, 15);
-            buttonAddOwner_MBS.Size = new Size(130, 30);
-            buttonAddOwner_MBS.UseVisualStyleBackColor = false;
-            panelSearch_MBS.Controls.Add(buttonAddOwner_MBS);
-
-            // Кнопка "Добавить магазин" (синяя)
-            buttonAddStore_MBS = new Button();
-            buttonAddStore_MBS.Name = "buttonAddStore_MBS";
-            buttonAddStore_MBS.Text = "➕ Магазин";
-            buttonAddStore_MBS.BackColor = Color.FromArgb(52, 152, 219);
-            buttonAddStore_MBS.ForeColor = Color.White;
-            buttonAddStore_MBS.FlatStyle = FlatStyle.Flat;
-            buttonAddStore_MBS.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            buttonAddStore_MBS.Location = new Point(900, 15);
-            buttonAddStore_MBS.Size = new Size(130, 30);
-            buttonAddStore_MBS.UseVisualStyleBackColor = false;
-            panelSearch_MBS.Controls.Add(buttonAddStore_MBS);
-
-            // Кнопка "Добавить поставщика" (фиолетовая)
-            buttonAddSupplier_MBS = new Button();
-            buttonAddSupplier_MBS.Name = "buttonAddSupplier_MBS";
-            buttonAddSupplier_MBS.Text = "➕ Поставщик";
-            buttonAddSupplier_MBS.BackColor = Color.FromArgb(155, 89, 182);
-            buttonAddSupplier_MBS.ForeColor = Color.White;
-            buttonAddSupplier_MBS.FlatStyle = FlatStyle.Flat;
-            buttonAddSupplier_MBS.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            buttonAddSupplier_MBS.Location = new Point(1040, 15);
-            buttonAddSupplier_MBS.Size = new Size(130, 30);
-            buttonAddSupplier_MBS.UseVisualStyleBackColor = false;
-            panelSearch_MBS.Controls.Add(buttonAddSupplier_MBS);
         }
 
         private void InitializeApplication()
@@ -244,7 +194,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
         #endregion
 
-        #region Обработчики событий новых кнопок добавления
+        #region Обработчики событий кнопок добавления
 
         private void ButtonAddOwner_MBS_Click(object sender, EventArgs e)
         {

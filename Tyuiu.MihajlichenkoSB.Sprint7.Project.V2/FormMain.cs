@@ -31,16 +31,23 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             buttonQuickChart_MBS.Click += ButtonQuickChart_MBS_Click;
             buttonQuickReport_MBS.Click += ButtonQuickReport_MBS_Click;
 
-            // Обработчики для кнопок добавления
+            // Обработчики для кнопок добавления в верхней панели
             buttonAddOwner_MBS.Click += ButtonAddOwner_MBS_Click;
             buttonAddStore_MBS.Click += ButtonAddStore_MBS_Click;
             buttonAddSupplier_MBS.Click += ButtonAddSupplier_MBS_Click;
 
+            // Обработчики для кнопок добавления в боковой панели
+            buttonAddOwnerSidebar_MBS.Click += ButtonAddOwner_MBS_Click;
+            buttonAddStoreSidebar_MBS.Click += ButtonAddStore_MBS_Click;
+            buttonAddSupplierSidebar_MBS.Click += ButtonAddSupplier_MBS_Click;
+
             // Обработчики для кнопок панели инструментов
+            toolStripButtonNew_MBS.Click += ToolStripMenuItemNew_MBS_Click;
             toolStripButtonAddOwner_MBS.Click += ToolStripMenuItemAddOwner_MBS_Click;
             toolStripButtonAddStore_MBS.Click += ToolStripMenuItemAddStore_MBS_Click;
             toolStripButtonAddSupplier_MBS.Click += ToolStripMenuItemAddSupplier_MBS_Click;
-            toolStripButtonNew_MBS.Click += ToolStripMenuItemNew_MBS_Click;
+            toolStripButtonEdit_MBS.Click += ToolStripButtonEdit_MBS_Click;
+            toolStripButtonDelete_MBS.Click += ToolStripButtonDelete_MBS_Click;
             toolStripButtonSave_MBS.Click += ToolStripMenuItemSaveData_MBS_Click;
             toolStripButtonLoad_MBS.Click += ToolStripMenuItemLoadData_MBS_Click;
             toolStripButtonPrint_MBS.Click += ToolStripMenuItemPrint_MBS_Click;
@@ -70,6 +77,9 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             toolStripMenuItemStats_MBS.Click += ToolStripMenuItemStats_MBS_Click;
             toolStripMenuItemCharts_MBS.Click += ToolStripMenuItemCharts_MBS_Click;
             toolStripMenuItemReport_MBS.Click += ToolStripMenuItemReport_MBS_Click;
+            toolStripMenuItemExport_MBS.Click += ToolStripMenuItemExport_MBS_Click;
+            toolStripMenuItemEdit_MBS.Click += ToolStripMenuItemEdit_MBS_Click;
+            toolStripMenuItemDelete_MBS.Click += ToolStripMenuItemDelete_MBS_Click;
 
             // Обработчики для меню вида
             toolStripMenuItemToolbar_MBS.CheckedChanged += ToolStripMenuItemToolbar_MBS_CheckedChanged;
@@ -84,6 +94,36 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             this.Load += FormMain_Load;
 
             InitializeApplication();
+        }
+
+        private void ToolStripButtonDelete_MBS_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show("Функция удаления в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripButtonEdit_MBS_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show("Функция редактирования в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripMenuItemEdit_MBS_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show("Функция редактирования в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripMenuItemDelete_MBS_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show("Функция удаления в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ToolStripMenuItemExport_MBS_Click(object? sender, EventArgs e)
+        {
+            MessageBox.Show("Функция экспорта в разработке", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void InitializeApplication()
@@ -108,6 +148,35 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
 
             // Загрузка тестовых данных
             LoadSampleData();
+        }
+
+        private void ToolStripMenuItemUserGuide_MBS_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "📚 Руководство пользователя\n\n" +
+                "1. МЕНЮ:\n" +
+                "   • Файл - работа с файлами, печать, выход\n" +
+                "   • Данные - добавление, редактирование, удаление записей\n" +
+                "   • Анализ - статистика, графики, отчеты\n" +
+                "   • Вид - настройка интерфейса\n" +
+                "   • Справка - руководство, обновления, о программе\n\n" +
+                "2. ПАНЕЛЬ ИНСТРУМЕНТОВ:\n" +
+                "   • Быстрый доступ к основным функциям\n" +
+                "   • Иконки соответствуют пунктам меню\n\n" +
+                "3. РАБОЧАЯ ОБЛАСТЬ:\n" +
+                "   • Вкладки для разных типов данных\n" +
+                "   • Таблицы с возможностью сортировки\n\n" +
+                "4. ПАНЕЛЬ ПОИСКА:\n" +
+                "   • Быстрый поиск по всем данным\n" +
+                "   • Фильтрация по категориям\n\n" +
+                "5. БОКОВАЯ ПАНЕЛЬ:\n" +
+                "   • Быстрые действия\n" +
+                "   • Расширенные фильтры\n" +
+                "   • Сводная информация",
+                "Руководство пользователя",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
 
         private void InitializeDataTables()
@@ -342,43 +411,6 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             );
         }
 
-        private void ToolStripMenuItemUserGuide_MBS_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "📚 Руководство пользователя\n\n" +
-                "1. МЕНЮ:\n" +
-                "   • Файл - работа с файлами, печать, выход\n" +
-                "   • Данные - добавление, редактирование, удаление записей\n" +
-                "   • Анализ - статистика, графики, отчеты\n" +
-                "   • Вид - настройка интерфейса\n" +
-                "   • Справка - руководство, обновления, о программе\n\n" +
-                "2. ПАНЕЛЬ ИНСТРУМЕНТОВ:\n" +
-                "   • Быстрый доступ к основным функциям\n" +
-                "   • Иконки соответствуют пунктам меню\n\n" +
-                "3. РАБОЧАЯ ОБЛАСТЬ:\n" +
-                "   • Вкладки для разных типов данных\n" +
-                "   • Таблицы с возможностью сортировки\n\n" +
-                "4. ПАНЕЛЬ ПОИСКА:\n" +
-                "   • Быстрый поиск по всем данным\n" +
-                "   • Фильтрация по категориям\n\n" +
-                "5. БОКОВАЯ ПАНЕЛЬ:\n" +
-                "   • Быстрые действия\n" +
-                "   • Расширенные фильтры\n" +
-                "   • Сводная информация\n\n" +
-                "6. ДОБАВЛЕНИЕ ДАННЫХ:\n" +
-                "   • Нажмите кнопку '+Владелец' для добавления владельца\n" +
-                "   • Нажмите кнопку '+Магазин' для добавления магазина\n" +
-                "   • Нажмите кнопку '+Поставщик' для добавления поставщика\n" +
-                "   • Заполните все поля в форме и нажмите 'Добавить'\n\n" +
-                "7. ПРОСМОТР ДАННЫХ:\n" +
-                "   • Переключайтесь между вкладками: Владельцы, Магазины, Поставщики\n" +
-                "   • Используйте поиск для быстрого нахождения записей\n" +
-                "   • Применяйте фильтры для отбора данных",
-                "Руководство пользователя",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-        }
 
         private void ToolStripMenuItemVideoGuide_MBS_Click(object sender, EventArgs e)
         {

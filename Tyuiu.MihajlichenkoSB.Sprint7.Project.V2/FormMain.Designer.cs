@@ -113,10 +113,16 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dataGridViewSuppliers_MBS = new DataGridView();
             panelSidebar_MBS = new Panel();
             groupBoxAddActions_MBS = new GroupBox();
-            groupBoxQuickActions_MBS = new GroupBox();
-            buttonQuickStats_MBS = new Button();
-            buttonQuickChart_MBS = new Button();
-            buttonQuickReport_MBS = new Button();
+            buttonAddSupplierSidebar_MBS = new Button();
+            buttonAddStoreSidebar_MBS = new Button();
+            buttonAddOwnerSidebar_MBS = new Button();
+            groupBoxSummary_MBS = new GroupBox();
+            labelTotalStores_MBS = new Label();
+            labelTotalOwners_MBS = new Label();
+            labelTotalSuppliers_MBS = new Label();
+            labelStoresCount_MBS = new Label();
+            labelOwnersCount_MBS = new Label();
+            labelSuppliersCount_MBS = new Label();
             groupBoxFilters_MBS = new GroupBox();
             checkBoxActiveOnly_MBS = new CheckBox();
             checkBoxHighPriority_MBS = new CheckBox();
@@ -126,13 +132,10 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             dateTimePickerTo_MBS = new DateTimePicker();
             buttonApplyFilter_MBS = new Button();
             buttonResetFilter_MBS = new Button();
-            groupBoxSummary_MBS = new GroupBox();
-            labelTotalStores_MBS = new Label();
-            labelTotalOwners_MBS = new Label();
-            labelTotalSuppliers_MBS = new Label();
-            labelStoresCount_MBS = new Label();
-            labelOwnersCount_MBS = new Label();
-            labelSuppliersCount_MBS = new Label();
+            groupBoxQuickActions_MBS = new GroupBox();
+            buttonQuickStats_MBS = new Button();
+            buttonQuickChart_MBS = new Button();
+            buttonQuickReport_MBS = new Button();
             menuStripMain_MBS.SuspendLayout();
             toolStripMain_MBS.SuspendLayout();
             statusStripMain_MBS.SuspendLayout();
@@ -148,9 +151,9 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             ((System.ComponentModel.ISupportInitialize)dataGridViewSuppliers_MBS).BeginInit();
             panelSidebar_MBS.SuspendLayout();
             groupBoxAddActions_MBS.SuspendLayout();
-            groupBoxQuickActions_MBS.SuspendLayout();
-            groupBoxFilters_MBS.SuspendLayout();
             groupBoxSummary_MBS.SuspendLayout();
+            groupBoxFilters_MBS.SuspendLayout();
+            groupBoxQuickActions_MBS.SuspendLayout();
             SuspendLayout();
             // 
             // menuStripMain_MBS
@@ -976,9 +979,9 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             // 
             panelSidebar_MBS.BackColor = Color.FromArgb(240, 240, 245);
             panelSidebar_MBS.Controls.Add(groupBoxAddActions_MBS);
-            panelSidebar_MBS.Controls.Add(groupBoxQuickActions_MBS);
-            panelSidebar_MBS.Controls.Add(groupBoxFilters_MBS);
             panelSidebar_MBS.Controls.Add(groupBoxSummary_MBS);
+            panelSidebar_MBS.Controls.Add(groupBoxFilters_MBS);
+            panelSidebar_MBS.Controls.Add(groupBoxQuickActions_MBS);
             panelSidebar_MBS.Dock = DockStyle.Left;
             panelSidebar_MBS.Location = new Point(0, 215);
             panelSidebar_MBS.Name = "panelSidebar_MBS";
@@ -987,68 +990,136 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             // 
             // groupBoxAddActions_MBS
             // 
-            groupBoxAddActions_MBS.Controls.Add(buttonAddOwner_MBS);
-            groupBoxAddActions_MBS.Controls.Add(buttonAddStore_MBS);
-            groupBoxAddActions_MBS.Controls.Add(buttonAddSupplier_MBS);
+            groupBoxAddActions_MBS.Controls.Add(buttonAddOwnerSidebar_MBS);
+            groupBoxAddActions_MBS.Controls.Add(buttonAddStoreSidebar_MBS);
+            groupBoxAddActions_MBS.Controls.Add(buttonAddSupplierSidebar_MBS);
             groupBoxAddActions_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            groupBoxAddActions_MBS.Location = new Point(15, 442);
+            groupBoxAddActions_MBS.Location = new Point(15, 10);
             groupBoxAddActions_MBS.Name = "groupBoxAddActions_MBS";
-            groupBoxAddActions_MBS.Size = new Size(270, 176);
-            groupBoxAddActions_MBS.TabIndex = 3;
+            groupBoxAddActions_MBS.Size = new Size(270, 150);
+            groupBoxAddActions_MBS.TabIndex = 0;
             groupBoxAddActions_MBS.TabStop = false;
             groupBoxAddActions_MBS.Text = "Быстрое добавление";
             // 
-            // groupBoxQuickActions_MBS
+            // buttonAddOwnerSidebar_MBS
             // 
-            groupBoxQuickActions_MBS.Controls.Add(buttonQuickStats_MBS);
-            groupBoxQuickActions_MBS.Controls.Add(buttonQuickChart_MBS);
-            groupBoxQuickActions_MBS.Controls.Add(buttonQuickReport_MBS);
-            groupBoxQuickActions_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            groupBoxQuickActions_MBS.Location = new Point(15, 15);
-            groupBoxQuickActions_MBS.Name = "groupBoxQuickActions_MBS";
-            groupBoxQuickActions_MBS.Size = new Size(270, 140);
-            groupBoxQuickActions_MBS.TabIndex = 0;
-            groupBoxQuickActions_MBS.TabStop = false;
-            groupBoxQuickActions_MBS.Text = "Быстрые действия";
+            buttonAddOwnerSidebar_MBS.BackColor = Color.FromArgb(46, 204, 113);
+            buttonAddOwnerSidebar_MBS.Dock = DockStyle.Top;
+            buttonAddOwnerSidebar_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddOwnerSidebar_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddOwnerSidebar_MBS.ForeColor = Color.White;
+            buttonAddOwnerSidebar_MBS.Location = new Point(3, 25);
+            buttonAddOwnerSidebar_MBS.Margin = new Padding(5);
+            buttonAddOwnerSidebar_MBS.Name = "buttonAddOwnerSidebar_MBS";
+            buttonAddOwnerSidebar_MBS.Size = new Size(264, 35);
+            buttonAddOwnerSidebar_MBS.TabIndex = 0;
+            buttonAddOwnerSidebar_MBS.Text = "➕ Добавить владельца";
+            buttonAddOwnerSidebar_MBS.UseVisualStyleBackColor = false;
             // 
-            // buttonQuickStats_MBS
+            // buttonAddStoreSidebar_MBS
             // 
-            buttonQuickStats_MBS.BackColor = Color.FromArgb(52, 152, 219);
-            buttonQuickStats_MBS.FlatStyle = FlatStyle.Flat;
-            buttonQuickStats_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonQuickStats_MBS.ForeColor = Color.White;
-            buttonQuickStats_MBS.Location = new Point(20, 35);
-            buttonQuickStats_MBS.Name = "buttonQuickStats_MBS";
-            buttonQuickStats_MBS.Size = new Size(230, 30);
-            buttonQuickStats_MBS.TabIndex = 0;
-            buttonQuickStats_MBS.Text = "📊  Статистика";
-            buttonQuickStats_MBS.UseVisualStyleBackColor = false;
+            buttonAddStoreSidebar_MBS.BackColor = Color.FromArgb(52, 152, 219);
+            buttonAddStoreSidebar_MBS.Dock = DockStyle.Top;
+            buttonAddStoreSidebar_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddStoreSidebar_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddStoreSidebar_MBS.ForeColor = Color.White;
+            buttonAddStoreSidebar_MBS.Location = new Point(3, 60);
+            buttonAddStoreSidebar_MBS.Margin = new Padding(5);
+            buttonAddStoreSidebar_MBS.Name = "buttonAddStoreSidebar_MBS";
+            buttonAddStoreSidebar_MBS.Size = new Size(264, 35);
+            buttonAddStoreSidebar_MBS.TabIndex = 1;
+            buttonAddStoreSidebar_MBS.Text = "➕ Добавить магазин";
+            buttonAddStoreSidebar_MBS.UseVisualStyleBackColor = false;
             // 
-            // buttonQuickChart_MBS
+            // buttonAddSupplierSidebar_MBS
             // 
-            buttonQuickChart_MBS.BackColor = Color.FromArgb(46, 204, 113);
-            buttonQuickChart_MBS.FlatStyle = FlatStyle.Flat;
-            buttonQuickChart_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonQuickChart_MBS.ForeColor = Color.White;
-            buttonQuickChart_MBS.Location = new Point(20, 70);
-            buttonQuickChart_MBS.Name = "buttonQuickChart_MBS";
-            buttonQuickChart_MBS.Size = new Size(230, 30);
-            buttonQuickChart_MBS.TabIndex = 1;
-            buttonQuickChart_MBS.Text = "📈  Графики";
-            buttonQuickChart_MBS.UseVisualStyleBackColor = false;
+            buttonAddSupplierSidebar_MBS.BackColor = Color.FromArgb(155, 89, 182);
+            buttonAddSupplierSidebar_MBS.Dock = DockStyle.Top;
+            buttonAddSupplierSidebar_MBS.FlatStyle = FlatStyle.Flat;
+            buttonAddSupplierSidebar_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddSupplierSidebar_MBS.ForeColor = Color.White;
+            buttonAddSupplierSidebar_MBS.Location = new Point(3, 95);
+            buttonAddSupplierSidebar_MBS.Margin = new Padding(5);
+            buttonAddSupplierSidebar_MBS.Name = "buttonAddSupplierSidebar_MBS";
+            buttonAddSupplierSidebar_MBS.Size = new Size(264, 35);
+            buttonAddSupplierSidebar_MBS.TabIndex = 2;
+            buttonAddSupplierSidebar_MBS.Text = "➕ Добавить поставщика";
+            buttonAddSupplierSidebar_MBS.UseVisualStyleBackColor = false;
+            // groupBoxSummary_MBS
             // 
-            // buttonQuickReport_MBS
+            groupBoxSummary_MBS.Controls.Add(labelTotalStores_MBS);
+            groupBoxSummary_MBS.Controls.Add(labelTotalOwners_MBS);
+            groupBoxSummary_MBS.Controls.Add(labelTotalSuppliers_MBS);
+            groupBoxSummary_MBS.Controls.Add(labelStoresCount_MBS);
+            groupBoxSummary_MBS.Controls.Add(labelOwnersCount_MBS);
+            groupBoxSummary_MBS.Controls.Add(labelSuppliersCount_MBS);
+            groupBoxSummary_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            groupBoxSummary_MBS.Location = new Point(15, 160);
+            groupBoxSummary_MBS.Name = "groupBoxSummary_MBS";
+            groupBoxSummary_MBS.Size = new Size(270, 70);
+            groupBoxSummary_MBS.TabIndex = 2;
+            groupBoxSummary_MBS.TabStop = false;
+            groupBoxSummary_MBS.Text = "Сводка";
             // 
-            buttonQuickReport_MBS.BackColor = Color.FromArgb(155, 89, 182);
-            buttonQuickReport_MBS.FlatStyle = FlatStyle.Flat;
-            buttonQuickReport_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonQuickReport_MBS.ForeColor = Color.White;
-            buttonQuickReport_MBS.Location = new Point(20, 105);
-            buttonQuickReport_MBS.Name = "buttonQuickReport_MBS";
-            buttonQuickReport_MBS.Size = new Size(230, 30);
-            buttonQuickReport_MBS.TabIndex = 2;
-            buttonQuickReport_MBS.Text = "📋  Отчет";
-            buttonQuickReport_MBS.UseVisualStyleBackColor = false;
+            // labelTotalStores_MBS
+            // 
+            labelTotalStores_MBS.AutoSize = true;
+            labelTotalStores_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalStores_MBS.Location = new Point(200, 47);
+            labelTotalStores_MBS.Name = "labelTotalStores_MBS";
+            labelTotalStores_MBS.Size = new Size(18, 20);
+            labelTotalStores_MBS.TabIndex = 5;
+            labelTotalStores_MBS.Text = "0";
+            // 
+            // labelTotalOwners_MBS
+            // 
+            labelTotalOwners_MBS.AutoSize = true;
+            labelTotalOwners_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalOwners_MBS.Location = new Point(200, 20);
+            labelTotalOwners_MBS.Name = "labelTotalOwners_MBS";
+            labelTotalOwners_MBS.Size = new Size(18, 20);
+            labelTotalOwners_MBS.TabIndex = 4;
+            labelTotalOwners_MBS.Text = "0";
+            // 
+            // labelTotalSuppliers_MBS
+            // 
+            labelTotalSuppliers_MBS.AutoSize = true;
+            labelTotalSuppliers_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalSuppliers_MBS.Location = new Point(200, 65);
+            labelTotalSuppliers_MBS.Name = "labelTotalSuppliers_MBS";
+            labelTotalSuppliers_MBS.Size = new Size(18, 20);
+            labelTotalSuppliers_MBS.TabIndex = 3;
+            labelTotalSuppliers_MBS.Text = "0";
+            // 
+            // labelStoresCount_MBS
+            // 
+            labelStoresCount_MBS.AutoSize = true;
+            labelStoresCount_MBS.Font = new Font("Segoe UI", 9F);
+            labelStoresCount_MBS.Location = new Point(20, 47);
+            labelStoresCount_MBS.Name = "labelStoresCount_MBS";
+            labelStoresCount_MBS.Size = new Size(83, 20);
+            labelStoresCount_MBS.TabIndex = 2;
+            labelStoresCount_MBS.Text = "Магазины:";
+            // 
+            // labelOwnersCount_MBS
+            // 
+            labelOwnersCount_MBS.AutoSize = true;
+            labelOwnersCount_MBS.Font = new Font("Segoe UI", 9F);
+            labelOwnersCount_MBS.Location = new Point(20, 20);
+            labelOwnersCount_MBS.Name = "labelOwnersCount_MBS";
+            labelOwnersCount_MBS.Size = new Size(89, 20);
+            labelOwnersCount_MBS.TabIndex = 1;
+            labelOwnersCount_MBS.Text = "Владельцы:";
+            // 
+            // labelSuppliersCount_MBS
+            // 
+            labelSuppliersCount_MBS.AutoSize = true;
+            labelSuppliersCount_MBS.Font = new Font("Segoe UI", 9F);
+            labelSuppliersCount_MBS.Location = new Point(20, 65);
+            labelSuppliersCount_MBS.Name = "labelSuppliersCount_MBS";
+            labelSuppliersCount_MBS.Size = new Size(98, 20);
+            labelSuppliersCount_MBS.TabIndex = 0;
+            labelSuppliersCount_MBS.Text = "Поставщики:";
             // 
             // groupBoxFilters_MBS
             // 
@@ -1061,7 +1132,7 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             groupBoxFilters_MBS.Controls.Add(buttonApplyFilter_MBS);
             groupBoxFilters_MBS.Controls.Add(buttonResetFilter_MBS);
             groupBoxFilters_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            groupBoxFilters_MBS.Location = new Point(15, 170);
+            groupBoxFilters_MBS.Location = new Point(15, 240);
             groupBoxFilters_MBS.Name = "groupBoxFilters_MBS";
             groupBoxFilters_MBS.Size = new Size(270, 190);
             groupBoxFilters_MBS.TabIndex = 1;
@@ -1153,81 +1224,57 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             buttonResetFilter_MBS.Text = "Сбросить";
             buttonResetFilter_MBS.UseVisualStyleBackColor = false;
             // 
-            // groupBoxSummary_MBS
+            // groupBoxQuickActions_MBS
             // 
-            groupBoxSummary_MBS.Controls.Add(labelTotalStores_MBS);
-            groupBoxSummary_MBS.Controls.Add(labelTotalOwners_MBS);
-            groupBoxSummary_MBS.Controls.Add(labelTotalSuppliers_MBS);
-            groupBoxSummary_MBS.Controls.Add(labelStoresCount_MBS);
-            groupBoxSummary_MBS.Controls.Add(labelOwnersCount_MBS);
-            groupBoxSummary_MBS.Controls.Add(labelSuppliersCount_MBS);
-            groupBoxSummary_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            groupBoxSummary_MBS.Location = new Point(15, 366);
-            groupBoxSummary_MBS.Name = "groupBoxSummary_MBS";
-            groupBoxSummary_MBS.Size = new Size(270, 70);
-            groupBoxSummary_MBS.TabIndex = 2;
-            groupBoxSummary_MBS.TabStop = false;
-            groupBoxSummary_MBS.Text = "Сводка";
+            groupBoxQuickActions_MBS.Controls.Add(buttonQuickStats_MBS);
+            groupBoxQuickActions_MBS.Controls.Add(buttonQuickChart_MBS);
+            groupBoxQuickActions_MBS.Controls.Add(buttonQuickReport_MBS);
+            groupBoxQuickActions_MBS.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            groupBoxQuickActions_MBS.Location = new Point(15, 440);
+            groupBoxQuickActions_MBS.Name = "groupBoxQuickActions_MBS";
+            groupBoxQuickActions_MBS.Size = new Size(270, 140);
+            groupBoxQuickActions_MBS.TabIndex = 3;
+            groupBoxQuickActions_MBS.TabStop = false;
+            groupBoxQuickActions_MBS.Text = "Быстрые действия";
             // 
-            // labelTotalStores_MBS
+            // buttonQuickStats_MBS
             // 
-            labelTotalStores_MBS.AutoSize = true;
-            labelTotalStores_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTotalStores_MBS.Location = new Point(200, 47);
-            labelTotalStores_MBS.Name = "labelTotalStores_MBS";
-            labelTotalStores_MBS.Size = new Size(18, 20);
-            labelTotalStores_MBS.TabIndex = 5;
-            labelTotalStores_MBS.Text = "0";
+            buttonQuickStats_MBS.BackColor = Color.FromArgb(52, 152, 219);
+            buttonQuickStats_MBS.FlatStyle = FlatStyle.Flat;
+            buttonQuickStats_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonQuickStats_MBS.ForeColor = Color.White;
+            buttonQuickStats_MBS.Location = new Point(20, 35);
+            buttonQuickStats_MBS.Name = "buttonQuickStats_MBS";
+            buttonQuickStats_MBS.Size = new Size(230, 30);
+            buttonQuickStats_MBS.TabIndex = 0;
+            buttonQuickStats_MBS.Text = "📊  Статистика";
+            buttonQuickStats_MBS.UseVisualStyleBackColor = false;
             // 
-            // labelTotalOwners_MBS
+            // buttonQuickChart_MBS
             // 
-            labelTotalOwners_MBS.AutoSize = true;
-            labelTotalOwners_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTotalOwners_MBS.Location = new Point(200, 20);
-            labelTotalOwners_MBS.Name = "labelTotalOwners_MBS";
-            labelTotalOwners_MBS.Size = new Size(18, 20);
-            labelTotalOwners_MBS.TabIndex = 4;
-            labelTotalOwners_MBS.Text = "0";
+            buttonQuickChart_MBS.BackColor = Color.FromArgb(46, 204, 113);
+            buttonQuickChart_MBS.FlatStyle = FlatStyle.Flat;
+            buttonQuickChart_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonQuickChart_MBS.ForeColor = Color.White;
+            buttonQuickChart_MBS.Location = new Point(20, 70);
+            buttonQuickChart_MBS.Name = "buttonQuickChart_MBS";
+            buttonQuickChart_MBS.Size = new Size(230, 30);
+            buttonQuickChart_MBS.TabIndex = 1;
+            buttonQuickChart_MBS.Text = "📈  Графики";
+            buttonQuickChart_MBS.UseVisualStyleBackColor = false;
             // 
-            // labelTotalSuppliers_MBS
+            // buttonQuickReport_MBS
             // 
-            labelTotalSuppliers_MBS.AutoSize = true;
-            labelTotalSuppliers_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTotalSuppliers_MBS.Location = new Point(200, 65);
-            labelTotalSuppliers_MBS.Name = "labelTotalSuppliers_MBS";
-            labelTotalSuppliers_MBS.Size = new Size(18, 20);
-            labelTotalSuppliers_MBS.TabIndex = 3;
-            labelTotalSuppliers_MBS.Text = "0";
-            // 
-            // labelStoresCount_MBS
-            // 
-            labelStoresCount_MBS.AutoSize = true;
-            labelStoresCount_MBS.Font = new Font("Segoe UI", 9F);
-            labelStoresCount_MBS.Location = new Point(20, 47);
-            labelStoresCount_MBS.Name = "labelStoresCount_MBS";
-            labelStoresCount_MBS.Size = new Size(83, 20);
-            labelStoresCount_MBS.TabIndex = 2;
-            labelStoresCount_MBS.Text = "Магазины:";
-            // 
-            // labelOwnersCount_MBS
-            // 
-            labelOwnersCount_MBS.AutoSize = true;
-            labelOwnersCount_MBS.Font = new Font("Segoe UI", 9F);
-            labelOwnersCount_MBS.Location = new Point(20, 20);
-            labelOwnersCount_MBS.Name = "labelOwnersCount_MBS";
-            labelOwnersCount_MBS.Size = new Size(89, 20);
-            labelOwnersCount_MBS.TabIndex = 1;
-            labelOwnersCount_MBS.Text = "Владельцы:";
-            // 
-            // labelSuppliersCount_MBS
-            // 
-            labelSuppliersCount_MBS.AutoSize = true;
-            labelSuppliersCount_MBS.Font = new Font("Segoe UI", 9F);
-            labelSuppliersCount_MBS.Location = new Point(20, 65);
-            labelSuppliersCount_MBS.Name = "labelSuppliersCount_MBS";
-            labelSuppliersCount_MBS.Size = new Size(98, 20);
-            labelSuppliersCount_MBS.TabIndex = 0;
-            labelSuppliersCount_MBS.Text = "Поставщики:";
+            buttonQuickReport_MBS.BackColor = Color.FromArgb(155, 89, 182);
+            buttonQuickReport_MBS.FlatStyle = FlatStyle.Flat;
+            buttonQuickReport_MBS.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonQuickReport_MBS.ForeColor = Color.White;
+            buttonQuickReport_MBS.Location = new Point(20, 105);
+            buttonQuickReport_MBS.Name = "buttonQuickReport_MBS";
+            buttonQuickReport_MBS.Size = new Size(230, 30);
+            buttonQuickReport_MBS.TabIndex = 2;
+            buttonQuickReport_MBS.Text = "📋  Отчет";
+            buttonQuickReport_MBS.UseVisualStyleBackColor = false;
             // 
             // FormMain
             // 
@@ -1268,11 +1315,11 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
             ((System.ComponentModel.ISupportInitialize)dataGridViewSuppliers_MBS).EndInit();
             panelSidebar_MBS.ResumeLayout(false);
             groupBoxAddActions_MBS.ResumeLayout(false);
-            groupBoxQuickActions_MBS.ResumeLayout(false);
-            groupBoxFilters_MBS.ResumeLayout(false);
-            groupBoxFilters_MBS.PerformLayout();
             groupBoxSummary_MBS.ResumeLayout(false);
             groupBoxSummary_MBS.PerformLayout();
+            groupBoxFilters_MBS.ResumeLayout(false);
+            groupBoxFilters_MBS.PerformLayout();
+            groupBoxQuickActions_MBS.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1386,5 +1433,8 @@ namespace Tyuiu.MihajlichenkoSB.Sprint7.Project.V2
         private Button buttonAddStore_MBS;
         private Button buttonAddSupplier_MBS;
         private GroupBox groupBoxAddActions_MBS;
+        private Button buttonAddOwnerSidebar_MBS;
+        private Button buttonAddStoreSidebar_MBS;
+        private Button buttonAddSupplierSidebar_MBS;
     }
 }
